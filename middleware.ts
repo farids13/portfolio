@@ -1,12 +1,6 @@
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
-import createMiddleware from "next-intl/middleware";
-
-const intlMiddleware = createMiddleware({
-    locales: ['en', 'id'],
-    defaultLocale: 'en'
-});
 
 export function middleware(request: NextRequest): NextResponse {
     const randomUUID = uuidv4();
@@ -31,6 +25,6 @@ export function middleware(request: NextRequest): NextResponse {
 }
 
 export const config = {
-    matcher: ['/', '/(id|en)/:path*']
+    matcher: ['/', '/:path*']
 };
 
