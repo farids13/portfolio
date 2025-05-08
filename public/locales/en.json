@@ -1,0 +1,10 @@
+{
+    
+    "index" : {
+        "logo": "Farid's Portfolio",
+        "ABOUT": "About",
+        "SKILLS": "Skills",
+        "PROJECTS": "Projects",
+        "CONTACT": "Contact"
+    }
+}

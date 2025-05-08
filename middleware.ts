@@ -1,12 +1,18 @@
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
+import createMiddleware from "next-intl/middleware";
+
+const intlMiddleware = createMiddleware({
+    locales: ['en', 'id'],
+    defaultLocale: 'en'
+});
 
 export function middleware(request: NextRequest): NextResponse {
     const randomUUID = uuidv4();
-
     const isDeviceId = request.cookies.get("deviceId");
     const response = NextResponse.next();
+    const url = request.nextUrl;
 
     response.headers.set("random-uuid", randomUUID);
 
@@ -15,5 +21,16 @@ export function middleware(request: NextRequest): NextResponse {
         console.log(randomUUID);
     }
 
+    if(!url.searchParams.has("lang")){
+        url.searchParams.set("lang", "en");
+        return NextResponse.redirect(url);
+    }
+
     return response;
+    
 }
+
+export const config = {
+    matcher: ['/', '/(id|en)/:path*']
+};
+
