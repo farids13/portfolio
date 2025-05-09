@@ -15,16 +15,14 @@ export function middleware(request: NextRequest): NextResponse {
         console.log(randomUUID);
     }
 
-    if(!url.searchParams.has("lang")){
-        url.searchParams.set("lang", "en");
-        return NextResponse.redirect(url);
-    }
-
     return response;
     
 }
 
-export const config = {
-    matcher: ['/', '/:path*']
-};
-
+// export const config = {
+//     matcher: [
+//         '/\/',
+//         '/:path*',
+//         '/images/:path*'
+//     ]
+// };
