@@ -5,15 +5,13 @@ export default function Home(): ReactElement {
   return (
     <div>
       <header className="flex justify-between items-center m-20 font-bold text-2xl">
-        <Image src="/images/logo.png" alt="logo" width={100} height={100} />
+        <Image src="/images/logo.png" alt="logo" width={80} height={80} />
 
         <div className="flex gap-20">
           <a href="#">ABOUT</a>
           <a href="#">SKILLS</a>
           <a href="#">PROJECTS</a>
         </div>
-
-
         <button
           className="
         flex items-center border border-white rounded-full px-5 py-2
@@ -37,9 +35,11 @@ export default function Home(): ReactElement {
         </button>
 
       </header>
+
+      {/* ================== This Main Page ==================== */}
       <main>
-        <section className="hero">
-          <div className="flex flex-col items-center gap-2 text-6xl">
+        <section id="hero" className="hero relative overflow-hidden">
+          <div className="flex flex-col items-center text-6xl">
             <div className="flex gap-2 justify-center items-center">
               <h1>I&apos;m</h1>
               <h1 className="text-lime-200">Farid Satria</h1>
@@ -49,8 +49,21 @@ export default function Home(): ReactElement {
               <h1>Developer</h1>
             </div>
           </div>
-          <div id="hero-image" className="border border-white rounded-full">
-            <Image src="/images/hero.png" alt="hero" width={500} height={500} />
+          <div id="hero-image" className="flex justify-center mt-10 relative">
+            <div className="absolute w-[650px] h-[650px] rounded-full bg-gradient-to-r from-yellow-200 via-amber-200 to-yellow-100 blur-[99pt] opacity-55"></div>
+            <Image 
+              src="/images/hero.png" 
+              alt="hero" 
+              width={500} 
+              height={500}
+              className="object-contain mix-blend-normal z-10 relative mt-20" 
+              style={{ backgroundColor: 'transparent' }}
+            />
+          </div>
+        </section>
+        <section id="who-am-i" className="relative z-20">
+          <div className="w-full bg-blue-950 py-10">
+            <h1 className="text-6xl text-white text-center">WHO AM I ?</h1>
           </div>
         </section>
       </main>
