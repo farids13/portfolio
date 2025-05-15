@@ -1,4 +1,5 @@
 import SkillCard from "@/components/ui/SkillCard";
+import ExperienceCard from "@/components/main/ExperienceCard";
 import Image from "next/image";
 import { ReactElement } from "react";
 
@@ -97,10 +98,7 @@ export default function Home(): ReactElement {
                     <SkillCard image="/images/logo-html.png" alt="html skill logo" />
                   </div>
                 </div>
-                <div id="card-skill-experience" className="relative bg-[#151d33] w-100 h-full rounded-lg">
-                  <h1>4</h1>
-                  <h1>Years of Experience</h1>
-                </div>
+                <ExperienceCard years={4} className="w-100" />
               </div>
             </div>
           </div>
