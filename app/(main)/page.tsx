@@ -39,31 +39,31 @@ export default function Home(): ReactElement {
       {/* ================== This Main Page ==================== */}
       <main>
         <section id="hero" className="hero relative overflow-hidden">
-          <div className="flex flex-col items-center text-6xl">
-            <div className="flex gap-2 justify-center items-center">
+          <div className="flex flex-col items-center gap-3 text-7xl">
+            <div className="flex gap-5 justify-center items-center">
               <h1>I&apos;m</h1>
               <h1 className="text-lime-200">Farid Satria</h1>
             </div>
-            <div className="flex gap-2 justify-center items-center">
+            <div className="flex gap-5 justify-center items-center">
               <h1 className="border border-white p-2 rounded-xl">Full Stack</h1>
               <h1>Developer</h1>
             </div>
           </div>
-          <div id="hero-image" className="flex justify-center mt-10 relative">
+          <div id="hero-image" className="flex justify-center mt-5 relative">
             <div className="absolute w-[650px] h-[650px] rounded-full bg-gradient-to-r from-yellow-200 via-amber-200 to-yellow-100 blur-[99pt] opacity-55"></div>
             <Image 
               src="/images/hero.png" 
               alt="hero" 
-              width={500} 
-              height={500}
-              className="object-contain mix-blend-normal z-10 relative mt-20" 
+              width={600} 
+              height={600}
+              className="object-contain mix-blend-normal z-10 relative mt-10" 
               style={{ backgroundColor: 'transparent' }}
             />
           </div>
         </section>
         <section id="who-am-i" className="relative z-20">
-          <div className="w-full bg-blue-950 py-10">
-            <h1 className="text-6xl text-white text-center">WHO AM I ?</h1>
+          <div className="w-full bg-[#0a1022] py-10">
+            <h1 className="text-9xl text-white text-center">WHO AM I ?</h1>
           </div>
         </section>
       </main>
