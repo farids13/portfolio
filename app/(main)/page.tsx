@@ -7,9 +7,9 @@ import { ReactElement } from "react";
 import CarouselProject from "@/components/main/CarouselProjectCard";
 import Button from "@/components/ui/Button";
 import ContactForm from "@/components/main/ContactForm";
+import Footer from "@/components/main/Footer";
 
 export default function Home(): ReactElement {
-
   return (
     <div>
       <header className="flex justify-between items-center m-20 font-bold text-2xl">
@@ -41,7 +41,6 @@ export default function Home(): ReactElement {
             {/* <ArrowUpRight size={20} color="#222" /> */}
           </span>
         </button>
-
       </header>
 
       {/* ================== This Main Page ==================== */}
@@ -59,13 +58,13 @@ export default function Home(): ReactElement {
           </div>
           <div id="hero-image" className="flex justify-center mt-5 relative">
             <div className="absolute w-[450px] h-[650px] rounded-full bg-gradient-to-r from-yellow-200 via-amber-200 to-yellow-100 blur-[99pt] opacity-55"></div>
-            <Image 
-              src="/images/hero.png" 
-              alt="hero" 
-              width={600} 
+            <Image
+              src="/images/hero.png"
+              alt="hero"
+              width={600}
               height={600}
-              className="object-contain mix-blend-normal z-10 relative mt-10" 
-              style={{ backgroundColor: 'transparent' }}
+              className="object-contain mix-blend-normal z-10 relative mt-10"
+              style={{ backgroundColor: "transparent" }}
             />
           </div>
         </section>
@@ -73,13 +72,35 @@ export default function Home(): ReactElement {
         <section id="who-am-i" className="relative z-20">
           <div className="w-full bg-[#0a1022] py-10 flex justify-center border border-red-500">
             <div className="flex flex-col gap-6 mt-30 justify-center border max-w-[40%] mx-auto border-yellow-500">
-              <h1 className="text-6xl text-lime-200 font-bold text-center">WHO AM I ?</h1>
+              <h1 className="text-6xl text-lime-200 font-bold text-center">
+                WHO AM I ?
+              </h1>
               <div className="flex flex-col gap-5 text-white justify-center items-center">
-                <p className="text-center">Hi, I&apos;m Farid Satria — a passionate Full Stack Engineer who loves building meaningful digital experiences from front to back.</p>
-                <p className="text-center">With a strong foundation in both frontend and backend development, I specialize in creating clean, efficient, and scalable applications that solve real-world problems.</p>
-                <p className="text-center">I enjoy working with modern technologies, constantly learning new things, and turning complex ideas into simple and elegant solutions.</p>
-                <p className="text-center">Whether it&apos;s crafting smooth UI/UX, optimizing backend APIs, or setting up reliable infrastructure, I thrive on challenges that push me to grow.</p>
-                <p className="text-center">When I&apos;m not coding, I spend my time exploring new tools, contributing to side projects, and sharing knowledge with the dev community.</p>
+                <p className="text-center">
+                  Hi, I&apos;m Farid Satria — a passionate Full Stack Engineer
+                  who loves building meaningful digital experiences from front
+                  to back.
+                </p>
+                <p className="text-center">
+                  With a strong foundation in both frontend and backend
+                  development, I specialize in creating clean, efficient, and
+                  scalable applications that solve real-world problems.
+                </p>
+                <p className="text-center">
+                  I enjoy working with modern technologies, constantly learning
+                  new things, and turning complex ideas into simple and elegant
+                  solutions.
+                </p>
+                <p className="text-center">
+                  Whether it&apos;s crafting smooth UI/UX, optimizing backend
+                  APIs, or setting up reliable infrastructure, I thrive on
+                  challenges that push me to grow.
+                </p>
+                <p className="text-center">
+                  When I&apos;m not coding, I spend my time exploring new tools,
+                  contributing to side projects, and sharing knowledge with the
+                  dev community.
+                </p>
               </div>
             </div>
           </div>
@@ -88,20 +109,46 @@ export default function Home(): ReactElement {
         <section id="skills" className="relative z-20">
           <div className="w-full bg-[#0a1022] py-10 flex justify-center border border-red-500">
             <div className="flex flex-col gap-6 mt-30 justify-center border mx-auto border-yellow-500">
-              <h1 className="text-6xl text-lime-200 font-bold text-center">MY SKILLS</h1>
+              <h1 className="text-6xl text-lime-200 font-bold text-center">
+                MY SKILLS
+              </h1>
               <div className="flex gap-2 ">
                 <div className="flex flex-col gap-2">
                   <div className="flex gap-2">
-                    <SkillCard image="/images/logo-html.png" alt="html skill logo" />
-                    <SkillCard image="/images/logo-html.png" alt="html skill logo" />
-                    <SkillCard image="/images/logo-html.png" alt="html skill logo" />
-                    <SkillCard image="/images/logo-html.png" alt="html skill logo" />
+                    <SkillCard
+                      image="/images/logo-html.png"
+                      alt="html skill logo"
+                    />
+                    <SkillCard
+                      image="/images/logo-html.png"
+                      alt="html skill logo"
+                    />
+                    <SkillCard
+                      image="/images/logo-html.png"
+                      alt="html skill logo"
+                    />
+                    <SkillCard
+                      image="/images/logo-html.png"
+                      alt="html skill logo"
+                    />
                   </div>
                   <div className="flex gap-2">
-                    <SkillCard image="/images/logo-html.png" alt="html skill logo" />
-                    <SkillCard image="/images/logo-html.png" alt="html skill logo" />
-                    <SkillCard image="/images/logo-html.png" alt="html skill logo" />
-                    <SkillCard image="/images/logo-html.png" alt="html skill logo" />
+                    <SkillCard
+                      image="/images/logo-html.png"
+                      alt="html skill logo"
+                    />
+                    <SkillCard
+                      image="/images/logo-html.png"
+                      alt="html skill logo"
+                    />
+                    <SkillCard
+                      image="/images/logo-html.png"
+                      alt="html skill logo"
+                    />
+                    <SkillCard
+                      image="/images/logo-html.png"
+                      alt="html skill logo"
+                    />
                   </div>
                 </div>
                 <ExperienceCard years={4} className="w-100" />
@@ -112,43 +159,84 @@ export default function Home(): ReactElement {
 
         <section id="additional-skills" className="relative z-20">
           <div className="w-full bg-[#0a1022] py-10 flex justify-center border border-red-500">
-            <SkillCard className="flex flex-col gap-10 items-center justify-center w-[80%]" useSpotlight={false}>
-              <h2 className="text-4xl text-center text-lime-200 font-bold">ADDITIONAL SKILLS</h2>
+            <SkillCard
+              className="flex flex-col gap-10 items-center justify-center w-[80%]"
+              useSpotlight={false}
+            >
+              <h2 className="text-4xl text-center text-lime-200 font-bold">
+                ADDITIONAL SKILLS
+              </h2>
               <div className="relative flex gap-5">
-                <div className="absolute  w-full h-full rounded-full bg-white blur-[40pt] opacity-20 -z-10 pointer-events-none"/>
-                <Image width={120} height={120} src="/images/logo-html.png" alt="html skill logo" />
-                <Image width={120} height={120} src="/images/logo-html.png" alt="html skill logo" />
-                <Image width={120} height={120} src="/images/logo-html.png" alt="html skill logo" />
-                <Image width={120} height={120} src="/images/logo-html.png" alt="html skill logo" />
-                <Image width={120} height={120} src="/images/logo-html.png" alt="html skill logo" />
-                <Image width={120} height={120} src="/images/logo-html.png" alt="html skill logo" />
-                <Image width={120} height={120} src="/images/logo-html.png" alt="html skill logo" />
+                <div className="absolute  w-full h-full rounded-full bg-white blur-[40pt] opacity-20 -z-10 pointer-events-none" />
+                <Image
+                  width={120}
+                  height={120}
+                  src="/images/logo-html.png"
+                  alt="html skill logo"
+                />
+                <Image
+                  width={120}
+                  height={120}
+                  src="/images/logo-html.png"
+                  alt="html skill logo"
+                />
+                <Image
+                  width={120}
+                  height={120}
+                  src="/images/logo-html.png"
+                  alt="html skill logo"
+                />
+                <Image
+                  width={120}
+                  height={120}
+                  src="/images/logo-html.png"
+                  alt="html skill logo"
+                />
+                <Image
+                  width={120}
+                  height={120}
+                  src="/images/logo-html.png"
+                  alt="html skill logo"
+                />
+                <Image
+                  width={120}
+                  height={120}
+                  src="/images/logo-html.png"
+                  alt="html skill logo"
+                />
+                <Image
+                  width={120}
+                  height={120}
+                  src="/images/logo-html.png"
+                  alt="html skill logo"
+                />
               </div>
             </SkillCard>
           </div>
         </section>
 
-        <section id = 'projects' className="relative z-20">
+        <section id="projects" className="relative z-20">
           <div className="w-full bg-[#0a1022] py-10 flex justify-center border border-red-500">
             <div className="w-200px px-30 h-500px flex items-center justify-center border border-yellow-200 relative">
-              <h2 className="text-6xl text-lime-200 font-bold text-left">THE WORKS CLOSEST TO <br/>MY HEART</h2>
-              <Button className="absolute bottom-0 text-2xl right-0 px-20 py-5 z-20">SHOW MY PROJECTS</Button>
+              <h2 className="text-6xl text-lime-200 font-bold text-left">
+                THE WORKS CLOSEST TO <br />
+                MY HEART
+              </h2>
+              <Button className="absolute bottom-0 text-2xl right-0 px-20 py-5 z-20">
+                SHOW MY PROJECTS
+              </Button>
             </div>
             <CarouselProject />
           </div>
         </section>
 
-        <section id = 'contact' className="relative z-20">
+        <section id="contact" className="relative z-20">
           <div className="w-full bg-[#0a1022] py-10 flex justify-center border border-red-500">
             <ContactForm />
           </div>
         </section>
-
-
       </main>
-      <footer>
-        <p>Farid&apos;s Portfolio</p>
-      </footer>
+      <Footer /> 
     </div>
   );
 }
