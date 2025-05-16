@@ -1,9 +1,15 @@
+"use client";
+
 import SkillCard from "@/components/ui/SkillCard";
 import ExperienceCard from "@/components/main/ExperienceCard";
 import Image from "next/image";
 import { ReactElement } from "react";
+import CarouselProject from "@/components/main/CarouselProjectCard";
+import Button from "@/components/ui/Button";
+import ContactForm from "@/components/main/ContactForm";
 
 export default function Home(): ReactElement {
+
   return (
     <div>
       <header className="flex justify-between items-center m-20 font-bold text-2xl">
@@ -119,6 +125,22 @@ export default function Home(): ReactElement {
                 <Image width={120} height={120} src="/images/logo-html.png" alt="html skill logo" />
               </div>
             </SkillCard>
+          </div>
+        </section>
+
+        <section id = 'projects' className="relative z-20">
+          <div className="w-full bg-[#0a1022] py-10 flex justify-center border border-red-500">
+            <div className="w-200px px-30 h-500px flex items-center justify-center border border-yellow-200 relative">
+              <h2 className="text-6xl text-lime-200 font-bold text-left">THE WORKS CLOSEST TO <br/>MY HEART</h2>
+              <Button className="absolute bottom-0 text-2xl right-0 px-20 py-5 z-20">SHOW MY PROJECTS</Button>
+            </div>
+            <CarouselProject />
+          </div>
+        </section>
+
+        <section id = 'contact' className="relative z-20">
+          <div className="w-full bg-[#0a1022] py-10 flex justify-center border border-red-500">
+            <ContactForm />
           </div>
         </section>
 
