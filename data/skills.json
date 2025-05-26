@@ -1,0 +1,44 @@
+{
+  "skills": [
+    {
+      "id": 1,
+      "image": "/images/my-skills/java.png",
+      "alt": "Java"
+    },
+    {
+      "id": 2,
+      "image": "/images/my-skills/react.png",
+      "alt": "React"
+    },
+    {
+      "id": 3,
+      "image": "/images/my-skills/logo-html.png",
+      "alt": "JavaScript"
+    },
+    {
+      "id": 4,
+      "image": "/images/my-skills/logo-html.png",
+      "alt": "React"
+    },
+    {
+      "id": 5,
+      "image": "/images/my-skills/logo-html.png",
+      "alt": "Next.js"
+    },
+    {
+      "id": 6,
+      "image": "/images/my-skills/logo-html.png",
+      "alt": "Node.js"
+    },
+    {
+      "id": 7,
+      "image": "/images/my-skills/logo-html.png",
+      "alt": "TypeScript"
+    },
+    {
+      "id": 8,
+      "image": "/images/my-skills/logo-html.png",
+      "alt": "Tailwind CSS"
+    }
+  ]
+} 

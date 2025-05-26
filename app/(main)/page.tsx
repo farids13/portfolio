@@ -1,18 +1,22 @@
 "use client";
-
 import SkillCard from "@/components/ui/SkillCard";
 import ExperienceCard from "@/components/main/ExperienceCard";
 import Image from "next/image";
-import { ReactElement } from "react";
 import CarouselProject from "@/components/main/CarouselProjectCard";
 import Button from "@/components/ui/Button";
 import ContactForm from "@/components/main/ContactForm";
 import Footer from "@/components/main/Footer";
 import Starfield from "@/components/main/StartField";
+import skillsData from "@/data/skills.json";
+import SkillGridCarousel from "@/components/main/SkillGridCarousel";
+import { ReactElement } from "react";
+import DownloadCVButton from "@/components/main/DownloadCVButton";
+import ButtonContact from "@/components/main/ButtonContact";
 
 export default function Home(): ReactElement {
+
   return (
-    <div className="relative">
+    <div className="relative overflow-x-hidden">
       <header className="flex justify-between items-center px-15 py-10 font-bold text-xl  bg-[#0a1022]">
         <Image src="/images/logo.png" alt="logo" width={60} height={60} />
 
@@ -21,26 +25,11 @@ export default function Home(): ReactElement {
           <a href="#skills">SKILLS</a>
           <a href="#projects">PROJECTS</a>
         </div>
-        <button
-          className="
-        flex items-center border border-white rounded-full px-5 py-2
-        bg-transparent text-white relative group transition-all
-        hover:border-lime-300"
-          style={{ borderColor: "#fff" }}
-        >
-          <span className="mr-4">CONTACT</span>
-          <span
-            className="
-          flex items-center justify-center
-          w-8 h-8 rounded-full
-          bg-lime-200
-          group-hover:bg-lime-300
-          transition-colors
-        "
-          >
-            {/* <ArrowUpRight size={20} color="#222" /> */}
-          </span>
-        </button>
+        <ButtonContact
+          onClick={() => {
+            document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
+          }}
+        />
       </header>
 
       {/* ================== This Main Page ==================== */}
@@ -60,7 +49,7 @@ export default function Home(): ReactElement {
               </div>
             </div>
             <div id="hero-image" className="flex justify-center mt-5 relative">
-              <div className="absolute w-[450px] h-[650px] rounded-full bg-gradient-to-r from-yellow-200 via-amber-200 to-yellow-100 blur-[99pt] opacity-55"></div>
+              <div className="absolute bottom-10 w-[450px] h-[500px] rounded-full bg-gradient-to-r from-yellow-200 via-amber-200 to-yellow-100 blur-[69pt] opacity-40"></div>
               <Image
                 src="/images/hero.png"
                 alt="hero"
@@ -89,11 +78,11 @@ export default function Home(): ReactElement {
             <div className="flex flex-col gap-6 mt-30 justify-center items-center max-w-[50%] mx-auto">
               <Starfield count={10} />
               <h1 className="text-6xl text-lime-200 font-bold text-center">
-                  &nbsp; WHO AM I ?
+                    WHO AM I ?
               </h1>
               <div className="flex flex-col gap-5 text-white justify-center items-center mt-10">
                 <p className="text-center">
-                  Hi, I&apos;m Farid Satria — a passionate Full Stack Engineer
+                  Hi, I'm Farid Satria — a passionate Full Stack Engineer
                   who loves building meaningful digital experiences from front
                   to back.
                 </p>
@@ -108,74 +97,37 @@ export default function Home(): ReactElement {
                   solutions.
                 </p>
                 <p className="text-center">
-                  Whether it&apos;s crafting smooth UI/UX, optimizing backend
+                  Whether it's crafting smooth UI/UX, optimizing backend
                   APIs, or setting up reliable infrastructure, I thrive on
                   challenges that push me to grow.
                 </p>
                 <p className="text-center">
-                  When I&apos;m not coding, I spend my time exploring new tools,
+                  When I'm not coding, I spend my time exploring new tools,
                   contributing to side projects, and sharing knowledge with the
                   dev community.
                 </p>
               </div>
-              <Button className="w-1/2 py-5 mt-10 " onClick={() => console.log('Download CV')}>DOWNLOAD MY CV</Button>
+              <DownloadCVButton />
             </div>
           </div>
         </section>
 
         <section id="skills" className="relative z-20">
           <div className="w-full bg-[#0a1022] py-10 flex justify-center">
-            <div className="flex flex-col gap-6 mt-30 justify-center items-center max-w-[50%] mx-auto">
+            <div className="flex flex-col gap-6 mt-30 justify-center items-center max-w-[90%] mx-auto">
               <h1 className="text-6xl text-lime-200 font-bold text-center">
                 MY SKILLS
               </h1>
-              <div className="flex gap-2 ">
-                <div className="flex flex-col gap-2">
-                  <div className="flex gap-2">
-                    <SkillCard
-                      image="/images/logo-html.png"
-                      alt="html skill logo"
-                    />
-                    <SkillCard
-                      image="/images/logo-html.png"
-                      alt="html skill logo"
-                    />
-                    <SkillCard
-                      image="/images/logo-html.png"
-                      alt="html skill logo"
-                    />
-                    <SkillCard
-                      image="/images/logo-html.png"
-                      alt="html skill logo"
-                    />
-                  </div>
-                  <div className="flex gap-2">
-                    <SkillCard
-                      image="/images/logo-html.png"
-                      alt="html skill logo"
-                    />
-                    <SkillCard
-                      image="/images/logo-html.png"
-                      alt="html skill logo"
-                    />
-                    <SkillCard
-                      image="/images/logo-html.png"
-                      alt="html skill logo"
-                    />
-                    <SkillCard
-                      image="/images/logo-html.png"
-                      alt="html skill logo"
-                    />
-                  </div>
-                </div>
-                <ExperienceCard years={4} className="w-100" />
+              <div className="flex gap-2 w-full items-center justify-center ">
+                <SkillGridCarousel skills={skillsData.skills} />
+                <ExperienceCard years={4} className="w-100 flex-shrink-0 h-[98%]" />
               </div>
             </div>
           </div>
         </section>
 
         <section id="additional-skills" className="relative z-20">
-          <div className="w-full bg-[#0a1022] py-10 flex justify-center  border border-red-500">
+          <div className="w-full bg-[#0a1022] py-10 flex justify-center">
             <SkillCard
               className="flex flex-col gap-10 items-center justify-center w-[80%]"
               useSpotlight={false}
@@ -234,7 +186,7 @@ export default function Home(): ReactElement {
 
         <section id="projects" className="relative z-20">
           <div className="w-full bg-[#0a1022] py-10 flex justify-center">
-            <div className="w-200px px-30 h-500px flex items-center justify-center border border-yellow-200 relative">
+            <div className="w-200px px-30 h-500px flex items-center justify-center relative">
               <h2 className="text-6xl text-lime-200 font-bold text-left">
                 THE WORKS CLOSEST TO <br />
                 MY HEART
@@ -248,11 +200,14 @@ export default function Home(): ReactElement {
         </section>
 
         <section id="contact" className="relative z-20">
-          <div className="w-full bg-[#0a1022] py-10 flex justify-center border border-red-500">
+          <div className="w-full bg-[#0a1022] py-10 flex justify-center">
             <ContactForm />
           </div>
         </section>
       </main>
+
+      
+      {/* ================== This Footer ==================== */}
       <Footer />
     </div>
   );
