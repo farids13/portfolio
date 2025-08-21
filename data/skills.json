@@ -7,38 +7,38 @@
     },
     {
       "id": 2,
-      "image": "/images/my-skills/react.png",
-      "alt": "React"
+      "image": "/images/my-skills/quarkus.png",
+      "alt": "Quarkus"
     },
     {
       "id": 3,
-      "image": "/images/my-skills/logo-html.png",
-      "alt": "JavaScript"
+      "image": "/images/my-skills/spring.png",
+      "alt": "Spring Boot"
     },
     {
       "id": 4,
-      "image": "/images/my-skills/logo-html.png",
-      "alt": "React"
+      "image": "/images/my-skills/nextjs.png",
+      "alt": "Next.js"
     },
     {
       "id": 5,
-      "image": "/images/my-skills/logo-html.png",
-      "alt": "Next.js"
+      "image": "/images/my-skills/flutter.png",
+      "alt": "Flutter"
     },
     {
       "id": 6,
       "image": "/images/my-skills/logo-html.png",
-      "alt": "Node.js"
+      "alt": "html5"
     },
     {
       "id": 7,
-      "image": "/images/my-skills/logo-html.png",
-      "alt": "TypeScript"
+      "image": "/images/my-skills/css.png",
+      "alt": "CSS"
     },
     {
       "id": 8,
-      "image": "/images/my-skills/logo-html.png",
-      "alt": "Tailwind CSS"
+      "image": "/images/my-skills/javascript.webp",
+      "alt": "JavaScript"
     }
   ]
 } 

@@ -47,7 +47,7 @@ export default function Footer() {
             <a href="#hero" className="hover:text-lime-400 transition-colors">
               Home
             </a>
-            <a
+            <a  
               href="#who-am-i"
               className="hover:text-lime-400 transition-colors"
             >
