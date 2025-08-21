@@ -1,0 +1,15 @@
+{
+  "items": [
+    { "id": 1, "image": "/images/my-skills/docker.png", "alt": "Docker" },
+    { "id": 2, "image": "/images/my-skills/linux.png", "alt": "Linux" },
+    { "id": 3, "image": "/images/my-skills/macos.png", "alt": "macOS" },
+    { "id": 4, "image": "/images/my-skills/nodejs.png", "alt": "Node.js" },
+    { "id": 5, "image": "/images/my-skills/ollama.webp", "alt": "Ollama" },
+    { "id": 6, "image": "/images/my-skills/postgres.png", "alt": "PostgreSQL" },
+    { "id": 7, "image": "/images/my-skills/powersync.png", "alt": "PowerSync" },
+    { "id": 8, "image": "/images/my-skills/prime-react.png", "alt": "PrimeReact" },
+    { "id": 9, "image": "/images/my-skills/react.png", "alt": "React" },
+    { "id": 10, "image": "/images/my-skills/supabase.png", "alt": "Supabase" },
+    { "id": 11, "image": "/images/my-skills/kafka.jpeg", "alt": "Kafka" }
+  ]
+}

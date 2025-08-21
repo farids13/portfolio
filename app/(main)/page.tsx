@@ -8,10 +8,12 @@ import ContactForm from "@/components/main/ContactForm";
 import Footer from "@/components/main/Footer";
 import Starfield from "@/components/main/StartField";
 import skillsData from "@/data/skills.json";
+import additionalSkillsData from "@/data/additional-skills.json";
 import SkillGridCarousel from "@/components/main/SkillGridCarousel";
 import { ReactElement } from "react";
 import DownloadCVButton from "@/components/main/DownloadCVButton";
 import ButtonContact from "@/components/main/ButtonContact";
+import AdditionalSkills from "@/app/(main)/_components/AdditionalSkills";
 
 export default function Home(): ReactElement {
 
@@ -126,63 +128,7 @@ export default function Home(): ReactElement {
           </div>
         </section>
 
-        <section id="additional-skills" className="relative z-20">
-          <div className="w-full bg-[#0a1022] py-10 flex justify-center">
-            <SkillCard
-              className="flex flex-col gap-10 items-center justify-center w-[80%]"
-              useSpotlight={false}
-            >
-              <h2 className="text-4xl text-center text-lime-200 font-bold">
-                ADDITIONAL SKILLS
-              </h2>
-              <div className="relative flex gap-5">
-                <div className="absolute  w-full h-full rounded-full bg-white blur-[40pt] opacity-20 -z-10 pointer-events-none" />
-                <Image
-                  width={120}
-                  height={120}
-                  src="/images/logo-html.png"
-                  alt="html skill logo"
-                />
-                <Image
-                  width={120}
-                  height={120}
-                  src="/images/logo-html.png"
-                  alt="html skill logo"
-                />
-                <Image
-                  width={120}
-                  height={120}
-                  src="/images/logo-html.png"
-                  alt="html skill logo"
-                />
-                <Image
-                  width={120}
-                  height={120}
-                  src="/images/logo-html.png"
-                  alt="html skill logo"
-                />
-                <Image
-                  width={120}
-                  height={120}
-                  src="/images/logo-html.png"
-                  alt="html skill logo"
-                />
-                <Image
-                  width={120}
-                  height={120}
-                  src="/images/logo-html.png"
-                  alt="html skill logo"
-                />
-                <Image
-                  width={120}
-                  height={120}
-                  src="/images/logo-html.png"
-                  alt="html skill logo"
-                />
-              </div>
-            </SkillCard>
-          </div>
-        </section>
+        <AdditionalSkills items={additionalSkillsData.items} />
 
         <section id="projects" className="relative z-20">
           <div className="w-full bg-[#0a1022] py-10 flex justify-center">
