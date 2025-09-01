@@ -19,6 +19,7 @@ export default function Home(): ReactElement {
 
   return (
     <div className="relative overflow-x-hidden">
+      <Starfield count={500} />
       <header className="flex justify-between items-center px-15 py-10 font-bold text-xl  bg-[#0a1022]">
         <Image src="/images/logo.png" alt="logo" width={60} height={60} />
 
@@ -62,13 +63,13 @@ export default function Home(): ReactElement {
               />
             </div>
             <div className="absolute bottom-0 w-full h-[80%] bg-gradient-to-t from-[#2596be] to-transparent blur-xl z-0 opacity-40"/>
-            <Starfield count={100} />
+            <Starfield count={200} />
           </div>
         </section>
 
         <section id="who-am-i" className="relative z-20">
           <div className="w-full bg-[#0a1022] py-10 flex justify-center">
-            <Starfield count={5} />
+            <Starfield count={50} />
             <div className="absolute bottom-1/30 -left-20 w-[500px] h-[300px] rotate-12 rounded-xl overflow-hidden flex items-center justify-center">
               <div className="absolute w-[220px] h-[220px] right-1/5 bg-white to-transparent rounded-full opacity-15 z-1 blur-xl" />
               <Image className="w-[120px] h-[200px] relative object-cover rounded-xl z-2" src="/images/whoami-1.jpg" alt="who am i" width={600} height={600} />
@@ -78,7 +79,7 @@ export default function Home(): ReactElement {
               <Image className="w-[80px] h-[130px]  relative object-cover rounded-xl z-2" src="/images/whoami-2.jpg" alt="who am i" width={300} height={300} />
             </div>
             <div className="flex flex-col gap-6 mt-30 justify-center items-center max-w-[50%] mx-auto">
-              <Starfield count={10} />
+              <Starfield count={50} />
               <h1 className="text-6xl text-lime-200 font-bold text-center">
                     WHO AM I ?
               </h1>
@@ -115,6 +116,7 @@ export default function Home(): ReactElement {
         </section>
 
         <section id="skills" className="relative z-20">
+          <Starfield count={50} />
           <div className="w-full bg-[#0a1022] py-10 flex justify-center">
             <div className="flex flex-col gap-6 mt-30 justify-center items-center max-w-[90%] mx-auto">
               <h1 className="text-6xl text-lime-200 font-bold text-center">
@@ -131,6 +133,7 @@ export default function Home(): ReactElement {
         <AdditionalSkills items={additionalSkillsData.items} />
 
         <section id="projects" className="relative z-20">
+          <Starfield count={50} />
           <div className="w-full bg-[#0a1022] py-10 flex justify-center">
             <div className="w-200px px-30 h-500px flex items-center justify-center relative">
               <h2 className="text-6xl text-lime-200 font-bold text-left">
