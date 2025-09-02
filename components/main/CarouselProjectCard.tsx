@@ -1,39 +1,93 @@
 // components/HoverCarousel.tsx
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Image from 'next/image';
 import clsx from 'clsx';
 
 const items = [
+
   {
-    title: 'Plumbing Company',
-    image: '/images/hero.png', // ganti dengan path gambar kamu
+    title: 'Ano POS Mobile Apps',
+    image: '/images/job-4.png',
   },
   {
-    title: 'Drink Product',
-    image: '/images/carousel-electrical-engginering.png',
+    title: 'Mercubuana Website Accounting',
+    image: '/images/job-5.png',
   },
   {
-    title: 'Architecture',
-    image: '/images/building.jpg',
+    title: 'Platform Notulensia',
+    image: '/images/job-3.png',
+  },
+  {
+    title: 'BackEnd Ismaya+ Apps',
+    image: '/images/job-2.png',
+  },
+  {
+    title: 'Excel Macro Kasir IR Cell',
+    image: '/images/job-1.1.png',
+  },
+  {
+    title: 'Web Kasir IR Cell',
+    image: '/images/job-1.jpeg',
   },
 ];
 
 export default function HoverCarousel() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
   const [hoveredIndex, setHoveredIndex] = useState<number>(0);
 
+  const startDrag = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!containerRef.current) return;
+    setIsDragging(true);
+    const pageX = 'touches' in e ? e.touches[0].pageX : e.pageX;
+    setStartX(pageX - containerRef.current.offsetLeft);
+    setScrollLeft(containerRef.current.scrollLeft);
+  };
+
+  const dragMove = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!isDragging || !containerRef.current) return;
+    e.preventDefault();
+    const pageX = 'touches' in e ? e.touches[0].pageX : e.pageX;
+    const x = pageX - containerRef.current.offsetLeft;
+    const walk = (x - startX) * 2;
+    containerRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  const endDrag = () => {
+    setIsDragging(false);
+  };
+
   return (
-    <div className="flex items-center justify-between w-full gap-4 mt-10">
+    <div 
+      ref={containerRef}
+      className="flex overflow-x-auto gap-4 w-full mt-10 pb-4 select-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+      style={{
+        cursor: isDragging ? 'grabbing' : 'grab',
+        WebkitOverflowScrolling: 'touch',
+        scrollbarGutter: 'stable',
+        paddingBottom: 0
+      }}
+      onMouseDown={startDrag}
+      onMouseMove={dragMove}
+      onMouseUp={endDrag}
+      onMouseLeave={endDrag}
+      onTouchStart={startDrag}
+      onTouchMove={dragMove}
+      onTouchEnd={endDrag}
+    >
       {items.map((item, index) => (
         <div
           key={index}
           className={clsx(
-            'relative flex-shrink-0 h-[400px] overflow-hidden transition-all duration-300 rounded-2xl cursor-pointer',
+            'relative flex-shrink-0 max-h-full h-[520px] overflow-hidden transition-all duration-300 rounded-2xl cursor-pointer',
             hoveredIndex === index
               ? 'w-[50%]'
               : hoveredIndex === 0
-              ? 'w-[100px]'
-              : 'w-[25%] brightness-75'
+                ? 'w-[100px]'
+                : 'w-[25%] brightness-75'
           )}
           onMouseEnter={() => setHoveredIndex(index)}
           onMouseLeave={() => setHoveredIndex(0)}
@@ -44,8 +98,17 @@ export default function HoverCarousel() {
             fill
             className="object-cover transition-all duration-300"
           />
-          <div className="absolute bottom-4 left-4 text-white text-xl font-semibold drop-shadow-lg">
-            {item.title}
+          <div className="absolute inset-0 flex items-end">
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+            
+            {/* Text container */}
+            <div className="relative p-6 w-full">
+              <h2 className="text-white text-2xl font-bold leading-tight drop-shadow-lg">
+                {item.title}
+              </h2>
+              <div className="w-12 h-1 bg-lime-400 mt-2 rounded-full" />
+            </div>
           </div>
         </div>
       ))}

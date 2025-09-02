@@ -10,12 +10,14 @@ import Starfield from "@/components/main/StartField";
 import skillsData from "@/data/skills.json";
 import additionalSkillsData from "@/data/additional-skills.json";
 import SkillGridCarousel from "@/components/main/SkillGridCarousel";
-import { ReactElement } from "react";
+import { ReactElement, useState } from "react";
 import DownloadCVButton from "@/components/main/DownloadCVButton";
 import ButtonContact from "@/components/main/ButtonContact";
 import AdditionalSkills from "@/app/(main)/_components/AdditionalSkills";
+import ProjectSlide from "@/components/main/ProjectSlide";
 
 export default function Home(): ReactElement {
+  const [showSlide, setShowSlide] = useState(false);
 
   return (
     <div className="relative overflow-x-hidden">
@@ -140,15 +142,39 @@ export default function Home(): ReactElement {
                 THE WORKS CLOSEST TO <br />
                 MY HEART
               </h2>
-              <Button className="absolute bottom-0 text-2xl right-0 px-20 py-5 z-20">
-                SHOW MY PROJECTS
+              <Button 
+                className="absolute bottom-0 text-2xl right-20 px-20 py-5 z-20"
+                onClick={() => setShowSlide(!showSlide)}
+              >
+                {showSlide ? 'HIDE SLIDESHOW' : 'SHOW MY PROJECTS'}
               </Button>
             </div>
-            <CarouselProject />
+            <div className="relative w-full min-h-[500px] overflow-hidden">
+              <div 
+                className={`transition-all duration-700 transform ${
+                  showSlide 
+                    ? 'opacity-0 absolute scale-90 translate-y-2' 
+                    : 'opacity-100 scale-100 translate-y-0 h-full'
+                }`}
+              >
+                <CarouselProject />
+              </div>
+              <div 
+                className={`transition-all duration-700 transform ${
+                  showSlide 
+                    ? 'opacity-100 scale-100 translate-y-0' 
+                    : 'opacity-0 absolute scale-105 -translate-y-2'
+                }`}
+              >
+                <ProjectSlide />
+              </div>
+            </div>
           </div>
+          <Starfield count={50} />
         </section>
 
         <section id="contact" className="relative z-20">
+          <Starfield count={50} />
           <div className="w-full bg-[#0a1022] py-10 flex justify-center">
             <ContactForm />
           </div>
