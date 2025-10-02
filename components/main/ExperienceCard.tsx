@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Button from '../ui/Button';
+import DownloadCVButton from './DownloadCVButton';
 
 interface ExperienceCardProps {
   years: number;
@@ -18,9 +19,7 @@ const ExperienceCard: React.FC<ExperienceCardProps> = ({ years, className = '' }
         </h2>
         <h2 className="text-5xl text-center w-full font-bold text-white mb-4">Years of <br/> Experience Working</h2>
       </div>
-      <Button onClick={() => console.log('Download ')} className="px-10">
-        DOWNLOAD MY CV
-      </Button>
+      <DownloadCVButton className='px-10'/>
     </div>
   );
 };

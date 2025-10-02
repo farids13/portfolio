@@ -1,10 +1,22 @@
 {
-    "index" : {
-        "logo": "Farid's Portfolio",
-        "ABOUT": "About",
-        "SKILLS": "Skills",
-        "PROJECTS": "Projects",
-        "CONTACT": "Contact"
-    }
+  "logo": "Portofolio Farid",
+  "ABOUT": "Tentang",
+  "SKILLS": "Keahlian",
+  "PROJECTS": "Proyek",
+  "CONTACT": "Kontak",
+  "greeting": "Saya",
+  "name": "Farid Satria",
+  "title": "Full Stack Developer",
+  "aboutTitle": "SIAPA SAYA?",
+  "aboutDescription1": "Hai, saya Farid Satria — seorang Full Stack Engineer yang passionate dalam membangun pengalaman digital yang bermakna dari frontend hingga backend.",
+  "aboutDescription2": "Dengan fondasi yang kuat di pengembangan frontend dan backend, saya spesialis dalam menciptakan aplikasi yang bersih, efisien, dan scalable untuk memecahkan masalah dunia nyata.",
+  "aboutDescription3": "Saya senang bekerja dengan teknologi modern, terus belajar hal-hal baru, dan mengubah ide-ide kompleks menjadi solusi yang sederhana dan elegan.",
+  "aboutDescription4": "Baik itu membuat UI/UX yang mulus, mengoptimalkan API backend, atau membangun infrastruktur yang andal, saya berkembang dalam tantangan yang mendorong saya untuk berkembang.",
+  "aboutDescription5": "Ketika tidak coding, saya menghabiskan waktu menjelajahi tools baru, berkontribusi pada proyek sampingan, dan berbagi pengetahuan dengan komunitas developer.",
+  "skillsTitle": "KEAHLIAN SAYA",
+  "projectsTitle": "KARYA YANG PALING DEKAT DENGAN HATI",
+  "showProjects": "TAMPILKAN PROYEK SAYA",
+  "hideProjects": "SEMBUNYIKAN SLIDESHOW",
+  "contactTitle": "Hubungi Saya"
 }
     

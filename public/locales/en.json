@@ -1,10 +1,21 @@
 {
-    
-    "index" : {
-        "logo": "Farid's Portfolio",
-        "ABOUT": "About",
-        "SKILLS": "Skills",
-        "PROJECTS": "Projects",
-        "CONTACT": "Contact"
-    }
+  "logo": "Farid's Portfolio",
+  "ABOUT": "About",
+  "SKILLS": "Skills",
+  "PROJECTS": "Projects",
+  "CONTACT": "Contact",
+  "greeting": "I'm",
+  "name": "Farid Satria",
+  "title": "Full Stack Developer",
+  "aboutTitle": "WHO AM I?",
+  "aboutDescription1": "Hi, I'm Farid Satria — a passionate Full Stack Engineer who loves building meaningful digital experiences from front to back.",
+  "aboutDescription2": "With a strong foundation in both frontend and backend development, I specialize in creating clean, efficient, and scalable applications that solve real-world problems.",
+  "aboutDescription3": "I enjoy working with modern technologies, constantly learning new things, and turning complex ideas into simple and elegant solutions.",
+  "aboutDescription4": "Whether it's crafting smooth UI/UX, optimizing backend APIs, or setting up reliable infrastructure, I thrive on challenges that push me to grow.",
+  "aboutDescription5": "When I'm not coding, I spend my time exploring new tools, contributing to side projects, and sharing knowledge with the dev community.",
+  "skillsTitle": "MY SKILLS",
+  "projectsTitle": "THE WORKS CLOSEST TO MY HEART",
+  "showProjects": "SHOW MY PROJECTS",
+  "hideProjects": "HIDE SLIDESHOW",
+  "contactTitle": "Get In Touch"
 }

@@ -5,8 +5,8 @@ import { v4 as uuidv4 } from "uuid";
 export function middleware(request: NextRequest): NextResponse {
     const randomUUID = uuidv4();
     const isDeviceId = request.cookies.get("deviceId");
+
     const response = NextResponse.next();
-    const url = request.nextUrl;
 
     response.headers.set("random-uuid", randomUUID);
 
@@ -16,13 +16,4 @@ export function middleware(request: NextRequest): NextResponse {
     }
 
     return response;
-    
 }
-
-// export const config = {
-//     matcher: [
-//         '/\/',
-//         '/:path*',
-//         '/images/:path*'
-//     ]
-// };

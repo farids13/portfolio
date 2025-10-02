@@ -15,6 +15,7 @@ import DownloadCVButton from "@/components/main/DownloadCVButton";
 import ButtonContact from "@/components/main/ButtonContact";
 import AdditionalSkills from "@/app/(main)/_components/AdditionalSkills";
 import ProjectSlide from "@/components/main/ProjectSlide";
+import Header from "./_components/Header";
 
 export default function Home(): ReactElement {
   const [showSlide, setShowSlide] = useState(false);
@@ -22,29 +23,16 @@ export default function Home(): ReactElement {
   return (
     <div className="relative overflow-x-hidden">
       <Starfield count={500} />
-      <header className="flex justify-between items-center px-15 py-10 font-bold text-xl  bg-[#0a1022]">
-        <Image src="/images/logo.png" alt="logo" width={60} height={60} />
-
-        <div className="flex gap-20">
-          <a href="#who-am-i">ABOUT</a>
-          <a href="#skills">SKILLS</a>
-          <a href="#projects">PROJECTS</a>
-        </div>
-        <ButtonContact
-          onClick={() => {
-            document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" });
-          }}
-        />
-      </header>
+      <Header />
 
       {/* ================== This Main Page ==================== */}
       <main>
-        <section id="hero" className="hero relative overflow-hidden">
-          <div className="w-full bg-[#0a1022]">
-            <div className="flex flex-col items-center gap-3 text-7xl">
+        <section id="hero" className="h-[85vh]">
+          <div className="bg-base h-full relative flex justify-center">
+            <div className="flex gap-3 flex-col absolute top-20 font-bold text-3xl  xs:text-4xl sm:text-5xl sm:font-light md:text-6xl lg:text-7xl">
               <div className="flex gap-5 justify-center items-center">
                 <h1>I&apos;m</h1>
-                <h1 className="text-lime-200">Farid Satria</h1>
+                <h1 className="text-primary">Farid Satria</h1>
               </div>
               <div className="flex gap-5 justify-center items-center">
                 <h1 className="border border-white p-2 rounded-xl">
@@ -53,19 +41,22 @@ export default function Home(): ReactElement {
                 <h1>Developer</h1>
               </div>
             </div>
-            <div id="hero-image" className="flex justify-center mt-5 relative">
-              <div className="absolute bottom-10 w-[450px] h-[500px] rounded-full bg-gradient-to-r from-yellow-200 via-amber-200 to-yellow-100 blur-[69pt] opacity-40"></div>
-              <Image
-                src="/images/hero.png"
-                alt="hero"
-                width={600}
-                height={600}
-                className="object-contain mix-blend-normal z-10 relative mt-10"
-                style={{ backgroundColor: "transparent" }}
-              />
+            <div id="hero-image" className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-full max-w-4xl h-3/5 flex justify-center items-end z-3">
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[450px] h-[40vh] rounded-full bg-gradient-to-r from-yellow-200 via-amber-200 to-yellow-100 blur-[69pt] opacity-40"></div>
+              <div className="relative w-full h-full flex items-end">
+                <div className="relative w-full h-full">
+                  <Image
+                    src="/images/hero.png"
+                    alt="hero"
+                    fill
+                    priority
+                    className="object-contain object-bottom"
+                  />
+                </div>
+              </div>
             </div>
-            <div className="absolute bottom-0 w-full h-[80%] bg-gradient-to-t from-[#2596be] to-transparent blur-xl z-0 opacity-40"/>
-            <Starfield count={200} />
+            <div className="absolute w-full h-[80%] bg-gradient-to-t from-[#2596be] to-transparent blur-xl z-0 opacity-40" />
+            <Starfield count={100} />
           </div>
         </section>
 
@@ -83,7 +74,7 @@ export default function Home(): ReactElement {
             <div className="flex flex-col gap-6 mt-30 justify-center items-center max-w-[50%] mx-auto">
               <Starfield count={50} />
               <h1 className="text-6xl text-lime-200 font-bold text-center">
-                    WHO AM I ?
+                WHO AM I ?
               </h1>
               <div className="flex flex-col gap-5 text-white justify-center items-center mt-10">
                 <p className="text-center">
@@ -112,7 +103,7 @@ export default function Home(): ReactElement {
                   dev community.
                 </p>
               </div>
-              <DownloadCVButton />
+              <DownloadCVButton className="w-1/2 py-5 mt-10" />
             </div>
           </div>
         </section>
@@ -142,7 +133,7 @@ export default function Home(): ReactElement {
                 THE WORKS CLOSEST TO <br />
                 MY HEART
               </h2>
-              <Button 
+              <Button
                 className="absolute bottom-0 text-2xl right-20 px-20 py-5 z-20"
                 onClick={() => setShowSlide(!showSlide)}
               >
@@ -150,21 +141,19 @@ export default function Home(): ReactElement {
               </Button>
             </div>
             <div className="relative w-full min-h-[500px] overflow-hidden">
-              <div 
-                className={`transition-all duration-700 transform ${
-                  showSlide 
-                    ? 'opacity-0 absolute scale-90 translate-y-2' 
+              <div
+                className={`transition-all duration-700 transform ${showSlide
+                    ? 'opacity-0 absolute scale-90 translate-y-2'
                     : 'opacity-100 scale-100 translate-y-0 h-full'
-                }`}
+                  }`}
               >
                 <CarouselProject />
               </div>
-              <div 
-                className={`transition-all duration-700 transform ${
-                  showSlide 
-                    ? 'opacity-100 scale-100 translate-y-0' 
+              <div
+                className={`transition-all duration-700 transform ${showSlide
+                    ? 'opacity-100 scale-100 translate-y-0'
                     : 'opacity-0 absolute scale-105 -translate-y-2'
-                }`}
+                  }`}
               >
                 <ProjectSlide />
               </div>
@@ -181,7 +170,7 @@ export default function Home(): ReactElement {
         </section>
       </main>
 
-      
+
       {/* ================== This Footer ==================== */}
       <Footer />
     </div>
