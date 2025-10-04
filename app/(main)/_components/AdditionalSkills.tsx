@@ -16,7 +16,6 @@ interface AdditionalSkillsProps {
 }
 
 export default function AdditionalSkills({ items }: AdditionalSkillsProps) {
-  // Arrow visibility (auto-hide)
   const [showArrows, setShowArrows] = useState(false);
   const hideTimer = useRef<NodeJS.Timeout | null>(null);
   const sliderRef = useRef<Slider | null>(null);
@@ -113,7 +112,7 @@ export default function AdditionalSkills({ items }: AdditionalSkillsProps) {
             <Slider ref={sliderRef} {...settings}>
               {items.map((item) => (
                 <div key={item.id} className="px-2">
-                  <div className="relative w-full max-w-[160px] aspect-square mx-auto overflow-hidden rounded-lg">
+                  <div className="relative w-full max-w-[160px] aspect-square mx-auto overflow-hidden rounded-lg skill-image-container" data-tooltip={item.alt}>
                     <Image
                       src={item.image}
                       alt={`${item.alt} logo`}

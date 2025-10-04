@@ -50,3 +50,73 @@ html {
   display: none; /* Chrome, Safari, Opera */
 }
 
+/* Tooltip styles for skill images */
+.skill-image-container {
+  cursor: pointer;
+  position: relative;
+}
+
+.skill-image-container:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  animation: fadeInTooltip 0.2s ease-in-out forwards;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.skill-image-container::before {
+  content: '';
+  position: absolute;
+  bottom: 105%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  animation: fadeInTooltip 0.2s ease-in-out forwards;
+}
+
+@keyframes fadeInTooltip {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Responsive tooltip adjustments */
+@media (max-width: 768px) {
+  .skill-image-container:hover::after {
+    font-size: 10px;
+    padding: 6px 8px;
+  }
+
+  .skill-image-container::before {
+    border-left-width: 4px;
+    border-right-width: 4px;
+    border-top-width: 4px;
+  }
+}
+
