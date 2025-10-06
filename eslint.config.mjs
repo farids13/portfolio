@@ -19,7 +19,15 @@ const eslintConfig = [
       "prettier/prettier": "error",
       "react-hooks/exhaustive-deps": "warn",
       "react/display-name": "off",
-      "@next/next/no-img-element": "off"
+      "@next/next/no-img-element": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "warn",
+        {
+          "argsIgnorePattern": "^_",
+          "varsIgnorePattern": "^_",
+          "caughtErrorsIgnorePattern": "^_"
+        }
+      ]
     }
   }
 ];

@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import '../../style/Starfield.css'; 
+import '../../style/Starfield.css';
 
 interface Star {
   id: number;

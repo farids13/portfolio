@@ -36,7 +36,7 @@ export default function ContactForm() {
 
     const form = e.target as HTMLFormElement;
     const formDataObj = new FormData(form);
-    formDataObj.append('access_key', 'YOUR_WEB3FORMS_ACCESS_KEY'); // Ganti dengan access key Anda
+    formDataObj.append('access_key', 'YOUR_WEB3FORMS_ACCESS_KEY');
     formDataObj.append('subject', 'Pesan Baru dari Portfolio');
     formDataObj.append('from_name', formData.name);
     formDataObj.append('reply_to', formData.email);
@@ -70,9 +70,9 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#0A0E21] px-4">
-      <div className="bg-white rounded-3xl shadow-xl p-10 w-full m-10 ">
-        <h2 className="text-3xl md:text-6xl font-bold text-center text-gray-900 my-10">
+    <div className="h-screen flex items-center justify-center bg-[#0A0E21] px-4 overflow-y-auto w-full">
+      <div className="bg-white rounded-3xl shadow-xl p-8 lg:p-12 w-full max-w-[95%] mx-auto">
+        <h2 className="text-2xl md:text-4xl lg:text-5xl font-bold text-center text-gray-900 mb-8 lg:mb-12">
           LET&apos;S HAVE A CHAT
         </h2>
         
@@ -88,7 +88,7 @@ export default function ContactForm() {
           onSubmit={handleSubmit} 
           action="https://api.web3forms.com/submit" 
           method="POST"
-          className="space-y-8 mt-20 mx-10 text-2xl"
+          className="space-y-6 lg:space-y-8 text-base lg:text-xl"
         >
           <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
           <input type="hidden" name="subject" value="Pesan Baru dari Portfolio" />
@@ -99,7 +99,7 @@ export default function ContactForm() {
             value={formData.name}
             onChange={handleChange}
             placeholder="YOUR NAME"
-            className="w-full bg-gray-200 placeholder-gray-600 text-gray-900 py-8 px-10 rounded-3xl focus:outline-none"
+            className="w-full bg-gray-200 placeholder-gray-600 py-4 lg:py-6 px-6 lg:px-8 rounded-2xl lg:rounded-3xl focus:outline-none text-base lg:text-lg"
             disabled={isSubmitting}
           />
           <input
@@ -108,7 +108,7 @@ export default function ContactForm() {
             value={formData.email}
             onChange={handleChange}
             placeholder="EMAIL ADDRESS"
-            className="w-full bg-gray-200 placeholder-gray-600 text-gray-900 py-8 px-10 rounded-3xl focus:outline-none"
+            className="w-full bg-gray-200 placeholder-gray-600 py-4 lg:py-6 px-6 lg:px-8 rounded-2xl lg:rounded-3xl focus:outline-none text-base lg:text-lg"
             disabled={isSubmitting}
           />
           <textarea
@@ -117,13 +117,13 @@ export default function ContactForm() {
             onChange={handleChange}
             placeholder="CHAT HERE"
             rows={4}
-            className="w-full bg-gray-200 placeholder-gray-600 text-gray-900 py-8 px-10 rounded-3xl focus:outline-none resize-none"
+            className="w-full bg-gray-200 placeholder-gray-600 py-4 lg:py-6 px-6 lg:px-8 rounded-2xl lg:rounded-3xl focus:outline-none resize-none text-base lg:text-lg"
             disabled={isSubmitting}
           ></textarea>
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-[#EFFD60] text-black font-bold py-8 rounded-3xl hover:bg-[#e1ed4f] transition-all"
+            className="w-full bg-[#EFFD60] font-bold py-4 lg:py-6 rounded-2xl lg:rounded-3xl hover:bg-[#e1ed4f] transition-all text-base lg:text-lg"
           >
             {isSubmitting ? 'SENDING...' : 'SUBMIT HERE'}
           </button>

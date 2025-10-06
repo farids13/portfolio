@@ -44,7 +44,7 @@ const SkillGridCarousel: React.FC<SkillGridCarouselProps> = ({ skills }) => {
 
   return (
     <div
-      className="overflow-x-auto scrollbar-hide max-w-full px-2 py-2 relative group"
+      className="overflow-x-auto scrollbar-hide max-w-full h-full px-2 py-2 sm:px-2 sm:py-2 relative"
       ref={gridRef}
       onScroll={checkScroll}
       onMouseEnter={handleMouseEnter}
@@ -60,15 +60,16 @@ const SkillGridCarousel: React.FC<SkillGridCarouselProps> = ({ skills }) => {
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><path d="M9 6l6 6-6 6" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
         </div>
       )}
-      <div className="flex gap-2">
-        <div className="flex flex-col gap-2">
+      <div className="flex gap-3 sm:gap-2 min-h-[300px]">
+        <div className="flex flex-col gap-3 sm:gap-2 min-h-[280px]">
           {rowSkills.map((row, rowIdx) => (
-            <div key={rowIdx} className="flex gap-2">
+            <div key={rowIdx} className="flex gap-3 sm:gap-2">
               {row.map((skill, colIdx) => (
                 <SkillCard
                   key={skill.id}
                   image={skill.image}
                   alt={skill.alt}
+                  className="group"
                 />
               ))}
             </div>

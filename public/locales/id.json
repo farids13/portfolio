@@ -2,7 +2,7 @@
   "logo": "Portofolio Farid",
   "ABOUT": "Tentang",
   "SKILLS": "Keahlian",
-  "PROJECTS": "Proyek",
+  "PROJECTS": "Projects",
   "CONTACT": "KONTAK",
   "greeting": "Saya",
   "name": "Farid Satria",
@@ -14,9 +14,12 @@
   "aboutDescription4": "Baik itu membuat UI/UX yang mulus, mengoptimalkan API backend, atau membangun infrastruktur yang andal, saya berkembang dalam tantangan yang mendorong saya untuk berkembang.",
   "aboutDescription5": "Ketika tidak coding, saya menghabiskan waktu menjelajahi tools baru, berkontribusi pada proyek sampingan, dan berbagi pengetahuan dengan komunitas developer.",
   "skillsTitle": "KEAHLIAN SAYA",
-  "projectsTitle": "KARYA YANG PALING DEKAT DENGAN HATI",
+  "MY SKILLS": "KEAHLIAN SAYA",
+  "projectsTitle": "SEJARAH CODE YANG SUDAH ",
+  "projectsTitle2": "SAYA BANGUN",
   "showProjects": "TAMPILKAN PROYEK SAYA",
   "hideProjects": "SEMBUNYIKAN SLIDESHOW",
+  "additionalSkillsTitle": "KEAHLIAN LAINNYA",
   "contactTitle": "Hubungi Saya"
 }
     

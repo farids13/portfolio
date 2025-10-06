@@ -63,7 +63,7 @@ export default function HoverCarousel() {
   return (
     <div 
       ref={containerRef}
-      className="flex overflow-x-auto gap-4 w-full mt-10 pb-4 select-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+      className="flex overflow-x-auto rounded-2xl gap-4 w-full mt-10 pb-4 select-none [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
       style={{
         cursor: isDragging ? 'grabbing' : 'grab',
         WebkitOverflowScrolling: 'touch',
