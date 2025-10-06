@@ -20,7 +20,11 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    if (!process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY) {
+      setStatus({ type: 'error', message: 'Access key belum di-setup, Silahkan Pesan By WhatsApp' });
+      return;
+    }
+
     if (!formData.name || !formData.email || !formData.message) {
       setStatus({ type: 'error', message: 'Semua field harus diisi' });
       return;
@@ -36,8 +40,8 @@ export default function ContactForm() {
 
     const form = e.target as HTMLFormElement;
     const formDataObj = new FormData(form);
-    formDataObj.append('access_key', 'YOUR_WEB3FORMS_ACCESS_KEY');
-    formDataObj.append('subject', 'Pesan Baru dari Portfolio');
+    formDataObj.append('access_key', process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || '');
+    formDataObj.append('subject', 'Pesan Baru dari Website Portofolio Saya');
     formDataObj.append('from_name', formData.name);
     formDataObj.append('reply_to', formData.email);
 
@@ -90,7 +94,7 @@ export default function ContactForm() {
           method="POST"
           className="space-y-6 lg:space-y-8 text-base lg:text-xl"
         >
-          <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+          <input type="hidden" name="access_key" value={process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY} />
           <input type="hidden" name="subject" value="Pesan Baru dari Portfolio" />
           <input type="hidden" name="from_name" value="Portfolio Contact Form" />
           <input

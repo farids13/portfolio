@@ -3,10 +3,12 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import Starfield from "./StartField";
+import { useI18n } from "@/hooks/useI18n";
 
 export default function Footer() {
   const [year, setYear] = useState<number | null>(null);
   useEffect(() => setYear(new Date().getFullYear()), []);
+  const { t } = useI18n();
 
   return (
     <footer className="w-full bg-[#0a1022] py-12 text-white border-t border-lime-200">
@@ -23,11 +25,10 @@ export default function Footer() {
           </div>
         </div>
         <nav className="flex flex-wrap justify-center md:justify-start gap-8 font-semibold text-lg text-white">
-          <a href="#hero" className="hover:text-lime-400 transition-colors">Home</a>
-          <a href="#who-am-i" className="hover:text-lime-400 transition-colors"> About Me </a>
-          <a href="#skills" className="hover:text-lime-400 transition-colors">Skills</a>
-          <a href="#projects" className="hover:text-lime-400 transition-colors">Projects</a>
-          <a href="#contact" className="hover:text-lime-400 transition-colors">Contact</a>
+          <a href="#hero" className="hover:text-lime-400 transition-colors"> {t("HOME")}</a>
+          <a href="#who-am-i" className="hover:text-lime-400 transition-colors"> {t("ABOUT")}</a>
+          <a href="#skills" className="hover:text-lime-400 transition-colors"> {t("SKILLS")}</a>
+          <a href="#projects" className="hover:text-lime-400 transition-colors"> {t("PROJECTS")}</a>
         </nav>
 
         <div className="flex flex-col items-center md:items-end space-y-3">

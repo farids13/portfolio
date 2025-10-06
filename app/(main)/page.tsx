@@ -133,7 +133,7 @@ export default function Home(): ReactElement {
         </section>
 
         <section id="contact" className="relative z-20">
-          <div className="w-full bg-[#0a1022] py-10 flex justify-center">
+          <div className="w-full bg-[#0a1022] lg:py-10 flex justify-center">
             <ContactForm />
           </div>
         </section>
