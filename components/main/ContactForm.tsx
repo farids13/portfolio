@@ -56,7 +56,7 @@ export default function ContactForm() {
       if (data.success) {
         setStatus({ 
           type: 'success', 
-          message: 'Pesan berhasil dikirim! Saya akan segera menghubungi Anda.' 
+          message: 'Pesan berhasil terkirim ke Developer! Terima Kasih' 
         });
         setFormData({ name: '', email: '', message: '' });
       } else {
