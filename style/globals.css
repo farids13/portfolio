@@ -5,6 +5,7 @@
   --foreground: #171717;
   --wedding-primary: #5d2606;
   --wedding-secondary: #f3dcc4;
+  --wedding-color-font: #f5c861;
 }
 
 @theme inline {
@@ -14,6 +15,7 @@
   --color-base: #0a1022;
   --color-wedding-primary: var(--wedding-primary);
   --color-wedding-secondary: var(--wedding-secondary);
+  --color-wedding-font: var(--wedding-color-font);
   --font-dosis: "Dosis", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
   --font-allura: var(--font-allura);
   --font-family-sans: var(--font-geist-sans);

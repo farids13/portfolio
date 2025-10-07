@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 // Dummy data
-const guestName = "Bapak/Ibu/Saudara/i";
-const groomName = "Fulan";
-const brideName = "Fulanah";
+const guestName = "Ahmad Jailani Kamu Tau itu sapa tes nama panjang";
+const groomName = "Farid Satria";
+const brideName = "Asri Dilla Wahyuni";
 const weddingDate = "01 Januari 2025";
 const weddingVenue = "Gedung Pernikahan, Jl. Contoh No. 123, Kota Bandung";
 
@@ -113,23 +114,77 @@ const WeddingInvitation = () => {
 
   if (!isOpened) {
     return (
-      <div className="border-2 h-[100vh] flex bg-wedding-secondary items-end">
-        <div className="w-full bg-wedding-primary min-h-[80vh] flex flex-col gap-5 justify-end rounded-t-full">
-          <div className="text-center w-full mb-24 border-2">
-            <h3 className="text-2xl font-bold">Invitation Wedding</h3>
-            <h3 className="text-2xl font-bold">The Wedding of</h3>
-            <h1 className="text-6xl font-bold font-allura">{groomName}</h1>
-            <h1 className="text-6xl font-bold font-allura">&</h1>
-            <h1 className="text-6xl font-bold font-allura">{brideName}</h1>
-            <h3 className="text-2xl font-bold">14 Desember 2025</h3>
-            <p className="text-sm">Kepada Yth.</p>
-            <p className="text-lg font-semibold">{guestName}</p>
-            <button onClick={handleOpenInvitation}>
-              Buka Undangan
-            </button>
+      <div className="h-[100vh] flex bg-wedding-secondary items-end">
+        <div className='absolute -top-18 w-full h-[250px] z-0'>
+          <Image
+            src="/images/wedding/frame/frame-top.png"
+            alt="Frame Top"
+            fill
+            className="object-contain scale-150"
+            priority
+          />
+        </div>
+        <div className='absolute top-13 -left-12 w-[150px] h-[150px] flex items-start justify-start z-0'>
+          <Image
+            src="/images/wedding/frame/top-ornamen.png"
+            alt="Frame Top Ornamen"
+            fill
+            className="object-contain scale-100"
+            priority
+          />
+        </div>
+        <div className='absolute top-13 -right-12 w-[150px] h-[150px] flex items-start justify-start z-0'>
+          <Image
+            src="/images/wedding/frame/top-ornamen.png"
+            alt="Frame Top Ornamen"
+            fill
+            className="object-contain scale-100"
+            style={{transform: 'scaleX(-1)'}}
+            priority
+          />
+        </div>
+        <div className='absolute -bottom-5 -left-21 w-[300px] h-[300px] flex items-start justify-start z-0'>
+          <Image
+            src="/images/wedding/frame/bottom-ornamen.png"
+            alt="Frame Top Ornamen"
+            fill
+            className="object-contain scale-100"
+            priority
+          />
+        </div>
+        <div className='absolute -bottom-5 -right-21 w-[300px] h-[300px] flex items-start justify-start z-0'>
+          <Image
+            src="/images/wedding/frame/bottom-ornamen.png"
+            alt="Frame Top Ornamen"
+            fill
+            className="object-contain scale-100"
+            style={{transform: 'scaleX(-1)'}}
+            priority
+          />
+        </div>
+        <div className="w-full bg-wedding-primary min-h-[85vh] flex flex-col gap-5 justify-end rounded-t-full border border-yellow-500">
+          <div className="text-center z-1 flex flex-col gap-5 items-center w-full">
+            <h3 className="text-sm">THE WEDDING OF</h3>
+            <div className='text-wedding-font'>
+              <h1 className="text-6xl font-bold font-allura">Farid</h1>
+              <p className="text-6xl font-bold font-allura">&</p>
+              <h1 className="text-6xl font-bold font-allura">Dilla</h1>
+            </div>
+            <h3 className="text-sm">14 Desember 2025</h3>
+            <div className=''>
+              <p>Kepada Yth.</p>
+              <p>Bapak/Ibu/Saudara/i</p>
+            </div>
+            <div className='w-[300px] min-h-[100px] border border-wedding-secondary rounded-2xl flex items-center justify-center'>
+              <p className="text-lg font-bold">{guestName}</p>
+            </div>
+            <div className="bg-wedding-secondary w-1/2 rounded-full border border-yellow-500 mb-15">
+              <button onClick={handleOpenInvitation} className='text-wedding-primary p-2'>
+                Buka Undangan
+              </button>
+            </div>
           </div>
         </div>
-
       </div>
     );
   }
