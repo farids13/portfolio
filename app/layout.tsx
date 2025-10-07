@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Dosis, Geist } from "next/font/google";
+import { Allura, Dosis, Geist } from "next/font/google";
 import "../style/globals.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -16,6 +16,11 @@ const geistSans = Geist({
   subsets: ["latin"],
 });
 
+const allura = Allura({
+  variable: "--font-allura",
+  weight: ["400"],
+});
+
 export const metadata: Metadata = {
   title: "Farid Satria",
   description: "Full Stack Developer",
@@ -24,7 +29,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="id">
-      <body className={`${dosis.variable} ${geistSans.variable} antialiased`}>
+      <body className={`${dosis.variable} ${geistSans.variable} ${allura.variable} antialiased`}>
         <Starfield count={50} />
         {children}
       </body>
