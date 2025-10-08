@@ -150,8 +150,8 @@ export default function Wedding3DPage() {
   const sofaTransform = `scale(${0.8/4 + scrollY/4 * 0.09/2}) translateY(-${scrollY * 0}px)`;
 
   return (
-    <div className={`h-screen bg-white overflow-hidden max-h-[800px] max-w-[1000px] fixed inset-0 transition-all duration-2000 ease-in-out scale-100`}>
-      <div className="fixed inset-0 flex items-end justify-center border-2">
+    <div className={`h-screen bg-white overflow-hidden fixed inset-0 transition-all duration-2000 ease-in-out scale-100`}>
+      <div className="fixed inset-0 flex items-end justify-center">
         <div className={`absolute w-[1000px] h-[800px] z-51`} style={{ transform: door0Transform }}>
           <Image
             src="/images/wedding/frame/decoration-walk.png"
@@ -164,7 +164,7 @@ export default function Wedding3DPage() {
         <div className={`absolute w-[1000px] h-[800px] z-50 -bottom-15`} style={{ transform: door1Transform }}>
           <Image
             src="/images/wedding/frame/decoration-walk.png"
-            alt="decoration-walk"
+            alt="decoration-walk-1"
             fill
             className="object-contain"
             priority
@@ -174,7 +174,7 @@ export default function Wedding3DPage() {
           <div className="absolute w-full h-full -bottom-30 ">
             <Image
               src="/images/wedding/frame/decoration-walk.png"
-              alt="decoration-walk"
+              alt="decoration-walk-2"
               fill
               className="object-contain"
               priority
@@ -202,13 +202,13 @@ export default function Wedding3DPage() {
         <div className={`absolute w-[1000px] h-[800px] z-48 -bottom-32`} style={{ transform: door3Transform }}>
           <Image
             src="/images/wedding/frame/decoration-walk.png"
-            alt="decoration-walk"
+            alt="decoration-walk-3"
             fill
             className="object-contain"
             priority
           />
         </div>
-        <div className={`absolute w-[1000px] h-[800px] z-47 top-10`} style={{ transform: door4Transform }}>
+        <div className={`absolute w-[1000px] h-[800px] z-47 -bottom-55`} style={{ transform: door4Transform }}>
           <Image
             src="/images/wedding/couple_image.png"
             alt="couple"
@@ -217,7 +217,7 @@ export default function Wedding3DPage() {
             priority
           />
         </div>
-        <div className={`absolute w-[1000px] h-[800px] z-46 top-15`} style={{ transform: sofaTransform }}>
+        <div className={`absolute w-[1000px] h-[800px] z-46 -bottom-60`} style={{ transform: sofaTransform }}>
           <Image
             src="/images/wedding/frame/sofa.png"
             alt="sofa"
@@ -226,7 +226,7 @@ export default function Wedding3DPage() {
             priority
           />
         </div>
-        <div className={`absolute w-[1000px] h-[800px] scale-300 z-45 top-0`} style={{ transform: door4Transform }}>
+        <div className={`absolute w-[1000px] h-[800px] scale-300 z-45 -bottom-40  `} style={{ transform: door4Transform }}>
           <Image
             src="/images/wedding/frame/vector-stage.png"
             alt="vector-stage"
