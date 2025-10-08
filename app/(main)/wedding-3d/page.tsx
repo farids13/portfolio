@@ -9,7 +9,6 @@ export default function Wedding3DPage() {
   const [isDoorOpening, setIsDoorOpening] = useState(false);
   const [buttonOpacity, setButtonOpacity] = useState(1);
   const [isScaleAnimating, setIsScaleAnimating] = useState(false);
-  const [isOpenMenu, setIsOpenMenu] = useState(false);
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
@@ -17,7 +16,6 @@ export default function Wedding3DPage() {
       setScrollY(prev => Math.max(0, Math.min(prev + e.deltaY * 0.1, 100)));
     };
 
-    // Touch event handling for mobile devices
     let touchStartY = 0;
     let touchCurrentY = 0;
 
@@ -59,25 +57,19 @@ export default function Wedding3DPage() {
     setButtonOpacity(0);
     setTimeout(() => {
       setIsDoorOpening(true);
-    },100);
+    }, 100);
     setTimeout(() => {
       setIsScaleAnimating(true);
     }, 1000);
     setTimeout(() => {
       setIsOpened(true);
-      setTimeout(() => {
-        setIsOpenMenu(false);
-      }, 1000);
-      setIsOpenMenu(true);
     }, 3000);
   };
 
-  // Scale animation class
   const scaleClasses = isScaleAnimating
     ? 'scale-[50] transition-transform duration-[3000ms] ease-in'
     : 'lg:scale-120';
 
-  // Animasi untuk pintu terbuka dengan conditional classes
   const leftDoorClasses = isDoorOpening
     ? 'rotate-y-65 origin-left transition-transform duration-2000'
     : '';
@@ -150,19 +142,17 @@ export default function Wedding3DPage() {
     );
   }
 
-  const door1Transform = `scale(${1.5 + scrollY * 0.1}) translateY(-${scrollY * 3}px)`;
-  const door2Transform = `scale(${1 + scrollY * 0.05}) translateY(-${scrollY * 2}px)`;
-  const door3Transform = `scale(${0.75 + scrollY * 0.025}) translateY(-${scrollY * 0.2}px)`;
+  const door0Transform = `scale(${2.5 + scrollY * 0.1}) translateY(-${scrollY * 15}px)`;
+  const door1Transform = `scale(${1.5 + scrollY * 0.1}) translateY(-${scrollY * 10}px)`;
+  const door2Transform = `scale(${1 + scrollY * 0.06}) translateY(-${scrollY * 8}px)`;
+  const door3Transform = `scale(${0.8 + scrollY/2 * 0.09}) translateY(-${scrollY * 3}px)`;
+  const door4Transform = `scale(${0.8/4 + scrollY/4 * 0.09/2}) translateY(-${scrollY * 2}px)`;
+  const sofaTransform = `scale(${0.8/4 + scrollY/4 * 0.09/2}) translateY(-${scrollY * 0}px)`;
 
   return (
-    <div className={`h-screen bg-white overflow-hidden fixed inset-0 transition-all duration-2000 ease-in-out scale-100`}>
-      <div className="fixed inset-0 flex items-center justify-center">
-        <div
-          className="absolute w-full h-full z-3"
-          style={{
-            transform: door1Transform,
-          }}
-        >
+    <div className={`h-screen bg-white overflow-hidden max-h-[800px] max-w-[1000px] fixed inset-0 transition-all duration-2000 ease-in-out scale-100`}>
+      <div className="fixed inset-0 flex items-end justify-center border-2">
+        <div className={`absolute w-[1000px] h-[800px] z-51`} style={{ transform: door0Transform }}>
           <Image
             src="/images/wedding/frame/decoration-walk.png"
             alt="decoration-walk"
@@ -171,9 +161,17 @@ export default function Wedding3DPage() {
             priority
           />
         </div>
-        <div className="absolute w-full h-full z-2" 
-          style={{ transform: door2Transform }}>
-          <div className="absolute w-full h-full z-2 -bottom-10 ">
+        <div className={`absolute w-[1000px] h-[800px] z-50 -bottom-15`} style={{ transform: door1Transform }}>
+          <Image
+            src="/images/wedding/frame/decoration-walk.png"
+            alt="decoration-walk"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
+        <div className={`absolute w-[1000px] h-[800px] z-49`} style={{ transform: door2Transform }}>
+          <div className="absolute w-full h-full -bottom-30 ">
             <Image
               src="/images/wedding/frame/decoration-walk.png"
               alt="decoration-walk"
@@ -182,7 +180,7 @@ export default function Wedding3DPage() {
               priority
             />
           </div>
-          <div className="absolute w-1/3 h-1/3 z-2 left-0 bottom-48">
+          <div className="absolute w-1/2 h-1/2 left-0 -bottom-5">
             <Image
               src="/images/wedding/frame/table-flower.png"
               alt="table-flower"
@@ -191,7 +189,7 @@ export default function Wedding3DPage() {
               priority
             />
           </div>
-          <div className="absolute w-1/3 h-1/3 z-2 -right-10 bottom-48">
+          <div className="absolute w-1/2 h-1/2 z-2 -right-20 -bottom-5">
             <Image
               src="/images/wedding/frame/table-flower.png"
               alt="table-flower"
@@ -201,15 +199,37 @@ export default function Wedding3DPage() {
             />
           </div>
         </div>
-        <div
-          className="absolute w-full h-full z-1 -bottom-15 "
-          style={{
-            transform: door3Transform,
-          }}
-        >
+        <div className={`absolute w-[1000px] h-[800px] z-48 -bottom-32`} style={{ transform: door3Transform }}>
           <Image
             src="/images/wedding/frame/decoration-walk.png"
             alt="decoration-walk"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
+        <div className={`absolute w-[1000px] h-[800px] z-47 top-10`} style={{ transform: door4Transform }}>
+          <Image
+            src="/images/wedding/couple_image.png"
+            alt="couple"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
+        <div className={`absolute w-[1000px] h-[800px] z-46 top-15`} style={{ transform: sofaTransform }}>
+          <Image
+            src="/images/wedding/frame/sofa.png"
+            alt="sofa"
+            fill
+            className="object-contain"
+            priority
+          />
+        </div>
+        <div className={`absolute w-[1000px] h-[800px] scale-300 z-45 top-0`} style={{ transform: door4Transform }}>
+          <Image
+            src="/images/wedding/frame/vector-stage.png"
+            alt="vector-stage"
             fill
             className="object-contain"
             priority
