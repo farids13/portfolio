@@ -18,6 +18,7 @@ const geistSans = Geist({
 
 const allura = Allura({
   variable: "--font-allura",
+  subsets: ["latin"],
   weight: ["400"],
 });
 
