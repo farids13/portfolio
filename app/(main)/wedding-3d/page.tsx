@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export default function Wedding3DPage() {
   const [scrollY, setScrollY] = useState(0);
-  const [isOpened, setIsOpened] = useState(false);
+  const [isOpened, setIsOpened] = useState(true);
   const [isDoorOpening, setIsDoorOpening] = useState(false);
   const [buttonOpacity, setButtonOpacity] = useState(1);
   const [isScaleAnimating, setIsScaleAnimating] = useState(false);
@@ -17,9 +17,43 @@ export default function Wedding3DPage() {
       setScrollY(prev => Math.max(0, Math.min(prev + e.deltaY * 0.1, 100)));
     };
 
+    // Touch event handling for mobile devices
+    let touchStartY = 0;
+    let touchCurrentY = 0;
+
+    const handleTouchStart = (e: TouchEvent) => {
+      touchStartY = e.touches[0].clientY;
+      touchCurrentY = e.touches[0].clientY;
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      e.preventDefault();
+      touchCurrentY = e.touches[0].clientY;
+      const deltaY = touchStartY - touchCurrentY;
+      setScrollY(prev => Math.max(0, Math.min(prev + deltaY * 0.01, 100)));
+    };
+
+    const handleTouchEnd = () => {
+      touchStartY = 0;
+      touchCurrentY = 0;
+    };
+
     window.addEventListener('wheel', handleWheel, { passive: false });
-    return () => window.removeEventListener('wheel', handleWheel);
+    window.addEventListener('touchstart', handleTouchStart, { passive: false });
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd, { passive: false });
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('touchstart', handleTouchStart);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+    };
   }, []);
+
+  useEffect(() => {
+    console.log(scrollY);
+  }, [scrollY])
 
   const handleOpenInvitation = () => {
     setButtonOpacity(0);
