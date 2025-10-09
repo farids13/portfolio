@@ -2,13 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import WelcomeSection from './_components/WelcomeSection';
+import DoorSection from './_components/DoorSection';
 
 export default function Wedding3DPage() {
   const [scrollY, setScrollY] = useState(0);
-  const [isOpened, setIsOpened] = useState(true);
-  const [isDoorOpening, setIsDoorOpening] = useState(false);
-  const [buttonOpacity, setButtonOpacity] = useState(1);
-  const [isScaleAnimating, setIsScaleAnimating] = useState(false);
+  const [isOpened, setIsOpened] = useState(false);
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
@@ -53,101 +52,16 @@ export default function Wedding3DPage() {
     console.log(scrollY);
   }, [scrollY])
 
-  const handleOpenInvitation = () => {
-    setButtonOpacity(0);
-    setTimeout(() => {
-      setIsDoorOpening(true);
-    }, 100);
-    setTimeout(() => {
-      setIsScaleAnimating(true);
-    }, 1000);
-    setTimeout(() => {
-      setIsOpened(true);
-    }, 3000);
-  };
-
-  const scaleClasses = isScaleAnimating
-    ? 'scale-[50] transition-transform duration-[3000ms] ease-in'
-    : 'lg:scale-120';
-
-  const leftDoorClasses = isDoorOpening
-    ? 'rotate-y-65 origin-left transition-transform duration-2000'
-    : '';
-
-  const rightDoorClasses = isDoorOpening
-    ? 'rotate-y-65 origin-right transition-transform duration-2000'
-    : '';
-
   if (!isOpened) {
-    return (
-      <div className={`w-full h-[100vh] bg-white flex items-center justify-center ${scaleClasses}`}>
-        <div className='absolute flex w-[800px] h-[700px]'>
-          <Image
-            src="/images/wedding/frame/outside-door.png"
-            alt="Background"
-            fill
-            className="object-cover scale-92 z-3"
-            priority
-          />
-          <div className='absolute -bottom-0 -left-10 z-4 w-[500px] h-[500px]'>
-            <Image
-              src="/images/wedding/frame/gueses.png"
-              alt="Gueses"
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-          <div className='absolute -bottom-0 -right-10 z-4 w-[500px] h-[500px]'>
-            <Image
-              src="/images/wedding/frame/gueses.png"
-              alt="Gueses"
-              fill
-              className="object-cover scale-x-[-1]"
-              priority
-            />
-          </div>
-          <div className='flex w-full h-full'>
-            <div className={`absolute left-42 top-29 h-[550px] w-[300px] ${leftDoorClasses}`}>
-              <Image
-                src="/images/wedding/frame/door.png"
-                alt="Frame Top"
-                fill
-                className="object-contain scale-120 z-2"
-              />
-            </div>
-            <div className={`absolute right-42 top-29 h-[550px] w-[300px] ${rightDoorClasses}`}>
-              <Image
-                src="/images/wedding/frame/door.png"
-                alt="Frame Top"
-                fill
-                className="object-contain scale-x-[-1.2] scale-120 z-2"
-              />
-            </div>
-          </div>
-        </div>
-
-        <button
-          onClick={handleOpenInvitation}
-          className="absolute z-5 mt-40 w-[200px] h-[50px] bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full font-bold text-lg text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-pulse hover:animate-none border-2 border-yellow-300 hover:border-yellow-200 before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-r before:from-yellow-300 before:to-yellow-500 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300 overflow-hidden group"
-          style={{
-            opacity: buttonOpacity,
-            transition: 'opacity 0.3s ease-in-out'
-          }}
-        >
-          <span className="relative z-10 drop-shadow-md">Buka Undangan</span>
-          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transform -skew-x-12 group-hover:animate-ping"></div>
-        </button>
-      </div>
-    );
+    return <DoorSection onOpenComplete={() => setIsOpened(true)} />;
   }
-
+  
   const door0Transform = `scale(${2.5 + scrollY * 0.1}) translateY(-${scrollY * 15}px)`;
   const door1Transform = `scale(${1.5 + scrollY * 0.1}) translateY(-${scrollY * 10}px)`;
   const door2Transform = `scale(${1 + scrollY * 0.06}) translateY(-${scrollY * 8}px)`;
-  const door3Transform = `scale(${0.8 + scrollY/2 * 0.09}) translateY(-${scrollY * 3}px)`;
-  const door4Transform = `scale(${0.8/4 + scrollY/4 * 0.09/2}) translateY(-${scrollY * 2}px)`;
-  const sofaTransform = `scale(${0.8/4 + scrollY/4 * 0.09/2}) translateY(-${scrollY * 0}px)`;
+  const door3Transform = `scale(${0.8 + scrollY / 2 * 0.09}) translateY(-${scrollY * 3}px)`;
+  const door4Transform = `scale(${0.8 / 4 + scrollY / 4 * 0.09 / 2}) translateY(-${scrollY * 2}px)`;
+  const sofaTransform = `scale(${0.8 / 4 + scrollY / 4 * 0.09 / 2}) translateY(-${scrollY * 0}px)`;
 
   return (
     <div className={`h-screen bg-white overflow-hidden fixed inset-0 transition-all duration-2000 ease-in-out scale-100`}>
@@ -161,6 +75,7 @@ export default function Wedding3DPage() {
             priority
           />
         </div>
+        <WelcomeSection scrollY={scrollY} />
         <div className={`absolute w-[1000px] h-[800px] z-50 -bottom-15`} style={{ transform: door1Transform }}>
           <Image
             src="/images/wedding/frame/decoration-walk.png"

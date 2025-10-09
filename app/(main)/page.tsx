@@ -28,11 +28,11 @@ export default function Home(): ReactElement {
         <section id="hero" className="h-[85vh]">
           <div className="bg-base h-full relative flex justify-center">
             <div className="flex gap-1 sm:gap-3 flex-col absolute top-20 sm:top-10 lg:top-0 text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-6xl sm:font-semibold">
-              <div className="flex gap-2 sm:gap-5 justify-center items-center">
+              <div className="flex gap-2 sm:gap-5 justify-center items-center text-white">
                 <h1>I&apos;m</h1>
                 <h1 className="text-primary">Farid Satria</h1>
               </div>
-              <div className="flex gap-2 sm:gap-5 justify-center items-center">
+              <div className="flex gap-2 sm:gap-5 justify-center items-center text-white">
                 <h1 className="border border-white px-2 py-2 rounded-xl"> Full Stack </h1>
                 <h1>Developer</h1>
               </div>
