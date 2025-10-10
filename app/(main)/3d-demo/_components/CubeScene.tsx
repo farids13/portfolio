@@ -246,7 +246,7 @@ export default function CubeScene() {
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full h-screen overflow-y-auto bg-gray-900">
+    <div ref={containerRef} className="w-full h-screen overflow-y-auto bg-white">
       <div className='h-[1000px] w-full relative z-1'>
         <div className='fixed top-2 left-2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-lg pointer-events-none'>
           Scroll Position: {scrollY.toFixed(0)} / {scrollMax.toFixed(0)}
@@ -260,7 +260,7 @@ export default function CubeScene() {
 
       <div className="fixed inset-0">
         <Canvas camera={{ position: [0, 0, 0], fov: 80 }}>
-          <color attach="background" args={['#111']} />
+          <color attach="background" args={['#fff']} />
           {/* Lights */}
           <ambientLight args={[0xffffff, 0.5]} />
           <directionalLight
@@ -271,7 +271,7 @@ export default function CubeScene() {
           <pointLight args={[0xffffff, 0.5]} position={[0, 0, 0]} />
           
           <ScrollControls scrollY={scrollY} scrollMax={scrollMax} />
-          <gridHelper args={[100, 100]} position={[0, -0.5, 0]} />
+          {/* <gridHelper args={[100, 100]} position={[0, -0.5, 0]} /> */}
         </Canvas>
       </div>
     </div>
