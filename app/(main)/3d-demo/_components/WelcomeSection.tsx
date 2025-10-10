@@ -6,7 +6,7 @@ interface WelcomeSectionProps {
 
 const ANIMATION_DURATION = 300;
 const SCROLL_START = 0;
-const SCROLL_END = 5;
+const SCROLL_END = 40;
 
 export default function WelcomeSection({ scrollY }: WelcomeSectionProps) {
   const getProgress = (startOffset = 0, reverse = false) => {

@@ -3,6 +3,8 @@
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
+import WelcomeSection from './WelcomeSection';
+import QuranVerse from './QuranVerse';
 
 function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: number }) {
   const groupRef = useRef<THREE.Group>(null);
@@ -248,6 +250,10 @@ export default function CubeScene() {
         <div className='fixed top-2 left-2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-lg pointer-events-none'>
           Scroll Position: {scrollY.toFixed(0)} / {scrollMax.toFixed(0)}
         </div>
+      </div>
+      <div>
+        <WelcomeSection scrollY={scrollY} />
+        <QuranVerse scrollY={scrollY} />
       </div>
 
       <div className="fixed inset-0">
