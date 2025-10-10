@@ -5,6 +5,7 @@ import { useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
 import WelcomeSection from './WelcomeSection';
 import QuranVerse from './QuranVerse';
+import WeddingEvent from './WeddingEvent';
 
 function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: number }) {
   const groupRef = useRef<THREE.Group>(null);
@@ -254,6 +255,7 @@ export default function CubeScene() {
       <div>
         <WelcomeSection scrollY={scrollY} />
         <QuranVerse scrollY={scrollY} />
+        <WeddingEvent scrollY={scrollY} />
       </div>
 
       <div className="fixed inset-0">
