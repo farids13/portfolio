@@ -2,18 +2,20 @@ import React from 'react';
 
 interface QuranVerseProps {
   scrollY: number;
+  start: number;
+  end: number;
 }
 
 const ANIMATION_DURATION = 500;
-const SCROLL_START = 40;
-const SCROLL_END = 120;
 
-export default function QuranVerse({ scrollY }: QuranVerseProps) {
+export default function QuranVerse({ scrollY, start, end }: QuranVerseProps) {
   const getProgress = () => {
-    if (scrollY < SCROLL_START) return 0;
-    if (scrollY > SCROLL_END) return 1;
-    return (scrollY - SCROLL_START) / (SCROLL_END - SCROLL_START);
+    if (scrollY < start) return 0;
+    if (scrollY > end) return 1;
+    return (scrollY - start) / (end - start);
   };
+  let SCROLL_START = start ?? 10;
+  let SCROLL_END = end ?? 20;
 
   const progress = getProgress();
   const isVisible = scrollY >= SCROLL_START && scrollY <= SCROLL_END;

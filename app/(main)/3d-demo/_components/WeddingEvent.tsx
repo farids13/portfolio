@@ -3,6 +3,8 @@ import { FaCalendarAlt, FaClock, FaMapMarkerAlt, FaHeart, FaRing, FaGlassCheers,
 
 interface WeddingEventProps {
     scrollY: number;
+    start: number;
+    end: number;
 }
 
 interface EventCardProps {
@@ -19,8 +21,6 @@ interface EventCardProps {
 }
 
 const ANIMATION_DURATION = 500;
-const SCROLL_START = 120;
-const SCROLL_END = 200;
 
 const DateBox = ({ date, month, year }: { date: string; month: string; year: string }) => (
     <div className="flex items-center gap-5 justify-center w-full h-16rounded-lg relative overflow-hidden bg-white/50 backdrop-blur-sm">
@@ -85,7 +85,9 @@ const EventCard: React.FC<EventCardProps> = ({
     </div>
 );
 
-const WeddingEvent: React.FC<WeddingEventProps> = ({ scrollY }) => {
+const WeddingEvent: React.FC<WeddingEventProps> = ({ scrollY, start, end }) => {
+    let SCROLL_START = start ?? 20;
+    let SCROLL_END = end ?? 40;
     const getProgress = () => {
         if (scrollY < SCROLL_START) return 0;
         if (scrollY > SCROLL_END) return 1;

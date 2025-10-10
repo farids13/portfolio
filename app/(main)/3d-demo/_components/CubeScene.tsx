@@ -214,6 +214,7 @@ function TableFlower({x, y, z}: {x: number, y: number, z: number}) {
 
 export default function CubeScene() {
   const [scrollY, setScrollY] = useState(0);
+  const [scrollYPercent, setScrollYPercent] = useState(0);
   const [scrollMax, setScrollMax] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -225,6 +226,7 @@ export default function CubeScene() {
         const currentScroll = Math.max(0, Math.min(scrollTop, maxScroll));
         
         setScrollY(currentScroll);
+        setScrollYPercent((currentScroll / maxScroll) * 100);
         setScrollMax(maxScroll);
       }
     };
@@ -247,16 +249,17 @@ export default function CubeScene() {
 
   return (
     <div ref={containerRef} className="w-full h-screen overflow-y-auto bg-white">
-      <div className='h-[1000px] w-full relative z-1'>
+      <div className='relative z-1 h-[400vh] w-full'></div>
+      <div className='h-full w-full relative z-1'>
         <div className='fixed top-2 left-2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-lg pointer-events-none'>
-          Scroll Position: {scrollY.toFixed(0)} / {scrollMax.toFixed(0)}
+          Scroll Position: {`${scrollYPercent.toFixed(0)}%/${scrollY}`} 
         </div>
       </div>
       <div>
-        <WelcomeSection scrollY={scrollY} />
-        <QuranVerse scrollY={scrollY} />
-        <WeddingEvent scrollY={scrollY} />
-      </div>
+        <WelcomeSection scrollY={Number(scrollYPercent.toFixed(0))} start={0} end={10} />
+        <QuranVerse scrollY={Number(scrollYPercent.toFixed(0))} start={10} end={20} />
+        <WeddingEvent scrollY={Number(scrollYPercent.toFixed(0))} start={20} end={30} />
+      </div>o
 
       <div className="fixed inset-0">
         <Canvas camera={{ position: [0, 0, 0], fov: 80 }}>

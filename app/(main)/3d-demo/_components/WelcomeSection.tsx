@@ -2,13 +2,18 @@ import React from 'react';
 
 interface WelcomeSectionProps {
   scrollY: number;
+  start: number;
+  end: number;
 }
 
 const ANIMATION_DURATION = 300;
-const SCROLL_START = 0;
-const SCROLL_END = 40;
 
-export default function WelcomeSection({ scrollY }: WelcomeSectionProps) {
+
+export default function WelcomeSection({ scrollY, start, end }: WelcomeSectionProps) {
+
+  let SCROLL_START = start ?? 0;
+  let SCROLL_END = end ?? 10;
+  
   const getProgress = (startOffset = 0, reverse = false) => {
     const start = SCROLL_START + startOffset;
     const end = SCROLL_END + startOffset;
@@ -103,11 +108,11 @@ export default function WelcomeSection({ scrollY }: WelcomeSectionProps) {
           </div>
 
           <div className='transform transition-all' style={{
-              opacity: transform.weddingInfo.opacity,
-              transform: `translateY(${transform.weddingInfo.translateY}px)`,
-              transition: `opacity ${ANIMATION_DURATION}ms, transform ${ANIMATION_DURATION}ms`,
-              transitionDelay: '100ms'
-            }}
+            opacity: transform.weddingInfo.opacity,
+            transform: `translateY(${transform.weddingInfo.translateY}px)`,
+            transition: `opacity ${ANIMATION_DURATION}ms, transform ${ANIMATION_DURATION}ms`,
+            transitionDelay: '100ms'
+          }}
           >
             <h3 className='text-sm mb-4 md:text-base font-serif italic text-gray-600'>Invitation Wedding Of</h3>
             <div className='flex flex-col items-center space-y-2'>
