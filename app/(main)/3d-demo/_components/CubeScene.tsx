@@ -11,14 +11,13 @@ function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: nu
   useFrame(({ camera }) => {
     if (!groupRef.current) return;
     
-    camera.position.set(0, 0, -(scrollProgress * 2));
+    camera.position.set(0, 0, -(scrollProgress * 3));
     camera.lookAt(0, 0, -5);
     // console.log(scrollProgress, camera.position);
   });
 
   return (
     <group ref={groupRef}>
-      <RedCarpet startZ={-0.4} endZ={-5} />
       <OutsideGate x={0} y={0} z={-2.2} />
       <OutsideGate x={0} y={0} z={-2} />
       <OutsideGate x={0} y={0} z={-1.6} />
@@ -29,6 +28,8 @@ function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: nu
       <TableFlower x={0} y={-0.2} z={-1} />
       <TableFlower x={0} y={-0.2} z={-1.4} />
       <TableFlower x={0} y={-0.2} z={-1.8} />
+      <RedCarpet startZ={-0.4} endZ={-2.56} />
+      <StagePlatform x={0} y={-0.5} z={-3.5} width={4.5} height={0.1} depth={1.5} />
       <Couple x={0} y={0} z={-2.8} />
       <Sofa x={0} y={-0.05} z={-2.81} />
       <Stage x={0} y={0.8} z={-3.5} />
@@ -42,36 +43,58 @@ function RedCarpet({ startZ, endZ }: { startZ: number; endZ: number }) {
   const length = carpetLength * 1;
   
   return (
-    <group position={[0, -0.8, 0]}>
+    <group position={[0, -0.4, 0]}>
       {/* Main carpet */}
-      <mesh position={[0, -0.02, centerZ]} rotation={[0, 0, 0]}>
-        <boxGeometry args={[0.5, 0.01, length]} />
+      <mesh position={[0, 0, centerZ]} rotation={[0, 0, 0]}>
+        <boxGeometry args={[0.4, 0.01, length]} />
         <meshStandardMaterial 
           color="#ff0000"
-          roughness={0.7}
+          roughness={10}
+        />
+      </mesh>
+    </group>
+  );
+}
+
+function StagePlatform({x, y, z, width, height, depth}: {x: number, y: number, z: number, width: number, height: number, depth: number}) {
+  // Single material for the entire stage
+  const stageMaterial = new THREE.MeshStandardMaterial({
+    color: 0x8B5A2B, // Warm brown color
+    roughness: 0.5,
+    metalness: 0.1,
+  });
+  
+  return (
+    <group position={[x, y, z]}>
+      {/* Main stage platform */}
+      <mesh position={[0, 0, 0]}>
+        <boxGeometry args={[width, height, depth]} />
+        <primitive object={stageMaterial} attach="material" />
+      </mesh>
+      
+      {/* Top surface with different color for contrast */}
+      <mesh position={[0, height/2, 0]}>
+        <boxGeometry args={[width + 0.2, 0.1, depth + 0.2]} />
+        <meshStandardMaterial 
+          color="#A67C52" 
+          roughness={0.4}
+          metalness={0.0}
+        />
+      </mesh>
+      
+      {/* Decorative borders */}
+      <mesh position={[0, height/2 - 0.05, 0]} rotation={[0, 0, 0]}>
+        <boxGeometry args={[width + 0.2, 0.05, depth + 0.2]} />
+        <meshStandardMaterial 
+          color="#5D4037" 
+          roughness={0.5}
           metalness={0.1}
         />
       </mesh>
       
-      {/* Left trim */}
-      <mesh position={[-0.75, 0.02, centerZ]} rotation={[0, 0, 0]}>
-        <boxGeometry args={[0.05, 0.03, length]} />
-        <meshStandardMaterial 
-          color="#FFD700" 
-          metalness={0.8} 
-          roughness={0.2} 
-        />
-      </mesh>
-      
-      {/* Right trim */}
-      <mesh position={[0.75, 0.02, centerZ]} rotation={[0, 0, 0]}>
-        <boxGeometry args={[0.05, 0.03, length]} />
-        <meshStandardMaterial 
-          color="#FFD700" 
-          metalness={0.8} 
-          roughness={0.2} 
-        />
-      </mesh>
+      {/* Add some ambient light to brighten the platform */}
+      <ambientLight intensity={0.7} />
+      <pointLight position={[0, 2, 0]} intensity={1} distance={10} />
     </group>
   );
 }
@@ -100,7 +123,7 @@ function Sofa({x, y, z}: {x: number, y: number, z: number}) {
   const texture = useLoader(THREE.TextureLoader, '/images/wedding/frame/sofa.png');
   
   const aspectRatio = texture.image ? texture.image.width / texture.image.height : 1;
-  const width = 0.9;
+  const width = 0.7;
   const height = width / aspectRatio;
   
   return (
@@ -228,7 +251,7 @@ export default function CubeScene() {
       </div>
 
       <div className="fixed inset-0">
-        <Canvas camera={{ position: [0, 0, 0], fov: 50 }}>
+        <Canvas camera={{ position: [0, 0, 0], fov: 80 }}>
           <color attach="background" args={['#111']} />
           {/* Lights */}
           <ambientLight args={[0xffffff, 0.5]} />
@@ -240,7 +263,7 @@ export default function CubeScene() {
           <pointLight args={[0xffffff, 0.5]} position={[0, 0, 0]} />
           
           <ScrollControls scrollY={scrollY} scrollMax={scrollMax} />
-          <gridHelper args={[100, 100]} position={[0, -1, 0]} />
+          <gridHelper args={[100, 100]} position={[0, -0.5, 0]} />
         </Canvas>
       </div>
     </div>
