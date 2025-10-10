@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Allura, Dosis, Geist } from "next/font/google";
+import { Amiri } from "next/font/google";
 import "../style/globals.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -20,6 +21,13 @@ const allura = Allura({
   variable: "--font-allura",
   subsets: ["latin"],
   weight: ["400"],
+  display: 'swap', 
+});
+
+const amiri = Amiri({
+  variable: "--font-amiri",
+  subsets: ["arabic", "latin"],
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
@@ -30,7 +38,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="id">
-      <body className={`${dosis.variable} ${geistSans.variable} ${allura.variable} antialiased`}>
+      <body className={`${dosis.variable} ${geistSans.variable} ${allura.variable} ${amiri.variable} antialiased`}>
         <Starfield count={50} />
         {children}
       </body>

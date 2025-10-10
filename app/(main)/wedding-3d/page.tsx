@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import WelcomeSection from './_components/WelcomeSection';
 import DoorSection from './_components/DoorSection';
+import QuranVerse from './_components/QuranVerse';
 
 export default function Wedding3DPage() {
   const [scrollY, setScrollY] = useState(0);
@@ -75,7 +76,6 @@ export default function Wedding3DPage() {
             priority
           />
         </div>
-        <WelcomeSection scrollY={scrollY} />
         <div className={`absolute w-[1000px] h-[800px] z-50 -bottom-15`} style={{ transform: door1Transform }}>
           <Image
             src="/images/wedding/frame/decoration-walk.png"
@@ -151,6 +151,9 @@ export default function Wedding3DPage() {
           />
         </div>
       </div>
+      <WelcomeSection scrollY={scrollY} />
+      <QuranVerse scrollY={scrollY} />
     </div>
+    
   );
 }
