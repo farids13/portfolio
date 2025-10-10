@@ -151,8 +151,6 @@ export default function Wedding3DPage() {
           />
         </div>
       </div>
-      <WelcomeSection scrollY={scrollY} />
-      <QuranVerse scrollY={scrollY} />
     </div>
     
   );
