@@ -10,32 +10,60 @@ import WeddingEvent from './WeddingEvent';
 function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: number }) {
   const groupRef = useRef<THREE.Group>(null);
   const scrollProgress = scrollMax > 0 ? Math.min(scrollY / scrollMax, 1) : 0;
-  
+  const scrollPercent = scrollY / scrollMax * 100;
+
   useFrame(({ camera }) => {
     if (!groupRef.current) return;
-    
-    camera.position.set(0, 0, -(scrollProgress * 3));
-    camera.lookAt(0, 0, -5);
+    let valueMoveZ = -(scrollProgress * 8)
+    if (scrollPercent <= 28) {
+      camera.position.set(0, 0, valueMoveZ);
+      camera.lookAt(0, 0, -8);
+    }
+    if (scrollPercent >= 28) {
+      const moveSpeed = 0.05;
+      let moveX = (scrollPercent - 28) * moveSpeed;
+      let moveY = (scrollPercent - 28) * moveSpeed * 2;
+
+      let limitX = 0.2;
+      let limitY = 0.23;
+      let limitZ = -2.45;
+
+      if (scrollPercent > 38) {
+        const transition = Math.min((scrollPercent - 38) * 0.2, 1);
+        limitX = 0.2 - (transition * 0.3);
+      }
+      if (scrollPercent > 50) {
+        limitX = (limitX + (scrollPercent - 50) * 0.05) <= 0.01 ? (limitX + (scrollPercent - 50) * 0.05) : 0.01;
+        limitZ = (limitZ + (scrollPercent - 50) * 0.05) <= -2.1 ? (limitZ + (scrollPercent - 50) * 0.05) : -2.1;
+      }
+
+      moveX = Math.min(moveX, Math.abs(limitX));
+      moveY = Math.min(moveY, limitY);
+      valueMoveZ = Math.max(valueMoveZ, limitZ);
+
+      camera.position.set(limitX > 0 ? -moveX : -limitX + (moveX * 0.5), moveY, valueMoveZ);
+      camera.lookAt(camera.position.x, camera.position.y, -8);
+    }
+
     // console.log(scrollProgress, camera.position);
   });
 
   return (
     <group ref={groupRef}>
-      <OutsideGate x={0} y={0} z={-2.2} />
+      <OutsideGate x={0} y={0} z={-2.} />
       <OutsideGate x={0} y={0} z={-2} />
       <OutsideGate x={0} y={0} z={-1.6} />
       <OutsideGate x={0} y={0} z={-1.2} />
       <OutsideGate x={0} y={0} z={-0.8} />
       <OutsideGate x={0} y={0} z={-0.4} />
-      <TableFlower x={0} y={-0.2} z={-0.6} />
       <TableFlower x={0} y={-0.2} z={-1} />
       <TableFlower x={0} y={-0.2} z={-1.4} />
       <TableFlower x={0} y={-0.2} z={-1.8} />
-      <RedCarpet startZ={-0.4} endZ={-2.56} />
-      <StagePlatform x={0} y={-0.5} z={-3.5} width={4.5} height={0.1} depth={1.5} />
-      <Couple x={0} y={0} z={-2.8} />
+      <RedCarpet startZ={-0.3} endZ={-3} />
+      <StagePlatform x={0} y={-0.5} z={-3.5} width={3.5} height={0.1} depth={1.5} />
+      <Couple x={0} y={0.03} z={-2.8} />
       <Sofa x={0} y={-0.05} z={-2.81} />
-      <Stage x={0} y={0.8} z={-3.5} />
+      <Stage x={0} y={0.4} z={-3.2} />
     </group>
   );
 }
@@ -44,13 +72,12 @@ function RedCarpet({ startZ, endZ }: { startZ: number; endZ: number }) {
   const carpetLength = Math.abs(startZ - endZ);
   const centerZ = (startZ + endZ) / 2;
   const length = carpetLength * 1;
-  
+
   return (
-    <group position={[0, -0.4, 0]}>
-      {/* Main carpet */}
+    <group position={[0, -0.6, 0]}>
       <mesh position={[0, 0, centerZ]} rotation={[0, 0, 0]}>
-        <boxGeometry args={[0.4, 0.01, length]} />
-        <meshStandardMaterial 
+        <boxGeometry args={[0.4, 0.04, length]} />
+        <meshStandardMaterial
           color="#ff0000"
           roughness={10}
         />
@@ -59,42 +86,40 @@ function RedCarpet({ startZ, endZ }: { startZ: number; endZ: number }) {
   );
 }
 
-function StagePlatform({x, y, z, width, height, depth}: {x: number, y: number, z: number, width: number, height: number, depth: number}) {
-  // Single material for the entire stage
+function StagePlatform({ x, y, z, width, height, depth }: { x: number, y: number, z: number, width: number, height: number, depth: number }) {
   const stageMaterial = new THREE.MeshStandardMaterial({
-    color: 0x8B5A2B, // Warm brown color
+    color: 0x8B5A2B,
     roughness: 0.5,
     metalness: 0.1,
   });
-  
+
   return (
     <group position={[x, y, z]}>
-      {/* Main stage platform */}
       <mesh position={[0, 0, 0]}>
         <boxGeometry args={[width, height, depth]} />
         <primitive object={stageMaterial} attach="material" />
       </mesh>
-      
+
       {/* Top surface with different color for contrast */}
-      <mesh position={[0, height/2, 0]}>
+      <mesh position={[0, height / 2, 0]}>
         <boxGeometry args={[width + 0.2, 0.1, depth + 0.2]} />
-        <meshStandardMaterial 
-          color="#A67C52" 
+        <meshStandardMaterial
+          color="#A67C52"
           roughness={0.4}
           metalness={0.0}
         />
       </mesh>
-      
+
       {/* Decorative borders */}
-      <mesh position={[0, height/2 - 0.05, 0]} rotation={[0, 0, 0]}>
+      <mesh position={[0, height / 2 - 0.05, 0]} rotation={[0, 0, 0]}>
         <boxGeometry args={[width + 0.2, 0.05, depth + 0.2]} />
-        <meshStandardMaterial 
-          color="#5D4037" 
+        <meshStandardMaterial
+          color="#5D4037"
           roughness={0.5}
           metalness={0.1}
         />
       </mesh>
-      
+
       {/* Add some ambient light to brighten the platform */}
       <ambientLight intensity={0.7} />
       <pointLight position={[0, 2, 0]} intensity={1} distance={10} />
@@ -102,19 +127,19 @@ function StagePlatform({x, y, z, width, height, depth}: {x: number, y: number, z
   );
 }
 
-function Stage({x, y, z}: {x: number, y: number, z: number}) {
+function Stage({ x, y, z }: { x: number, y: number, z: number }) {
   const texture = useLoader(THREE.TextureLoader, '/images/wedding/frame/vector-stage.png');
-  
+
   const aspectRatio = texture.image ? texture.image.width / texture.image.height : 1;
-  const width = 5;
+  const width = 3;
   const height = width / aspectRatio;
-  
+
   return (
     <group position={[x, y, z]}>
       <mesh position={[0, 0, 0]} rotation={[0, 0, 0]}>
         <planeGeometry args={[width, height, 1]} />
-        <meshBasicMaterial 
-          map={texture} 
+        <meshBasicMaterial
+          map={texture}
           transparent={true}
           side={THREE.DoubleSide}
         />
@@ -122,19 +147,19 @@ function Stage({x, y, z}: {x: number, y: number, z: number}) {
     </group>
   );
 }
-function Sofa({x, y, z}: {x: number, y: number, z: number}) {
+function Sofa({ x, y, z }: { x: number, y: number, z: number }) {
   const texture = useLoader(THREE.TextureLoader, '/images/wedding/frame/sofa.png');
-  
+
   const aspectRatio = texture.image ? texture.image.width / texture.image.height : 1;
   const width = 0.7;
   const height = width / aspectRatio;
-  
+
   return (
     <group position={[x, y, z]}>
       <mesh position={[0, 0, 0]} rotation={[0, 0, 0]}>
         <planeGeometry args={[width, height, 1]} />
-        <meshBasicMaterial 
-          map={texture} 
+        <meshBasicMaterial
+          map={texture}
           transparent={true}
           side={THREE.DoubleSide}
         />
@@ -143,19 +168,19 @@ function Sofa({x, y, z}: {x: number, y: number, z: number}) {
   );
 }
 
-function Couple({x, y, z}: {x: number, y: number, z: number}) {
+function Couple({ x, y, z }: { x: number, y: number, z: number }) {
   const texture = useLoader(THREE.TextureLoader, '/images/wedding/couple_image.png');
-  
+
   const aspectRatio = texture.image ? texture.image.width / texture.image.height : 1;
   const width = 0.7;
   const height = width / aspectRatio;
-  
+
   return (
     <group position={[x, y, z]}>
       <mesh position={[0, 0, 0]} rotation={[0, 0, 0]}>
         <planeGeometry args={[width, height, 1]} />
-        <meshBasicMaterial 
-          map={texture} 
+        <meshBasicMaterial
+          map={texture}
           transparent={true}
           side={THREE.DoubleSide}
         />
@@ -164,17 +189,17 @@ function Couple({x, y, z}: {x: number, y: number, z: number}) {
   );
 }
 
-function OutsideGate({x, y, z}: {x: number, y: number, z: number}) {
+function OutsideGate({ x, y, z }: { x: number, y: number, z: number }) {
   const texture = useLoader(THREE.TextureLoader, '/images/wedding/frame/outside-door.png');
-  
+
   const aspectRatio = texture.image ? texture.image.width / texture.image.height : 1;
-  const width = 1;
+  const width = 2;
   const height = width / aspectRatio;
-  
+
   return (
     <mesh position={[x, y, z]} rotation={[0, 0, 0]}>
       <planeGeometry args={[width, height, 1]} />
-      <meshBasicMaterial map={texture} 
+      <meshBasicMaterial map={texture}
         transparent={true}
         side={THREE.DoubleSide}
       />
@@ -182,28 +207,28 @@ function OutsideGate({x, y, z}: {x: number, y: number, z: number}) {
   );
 }
 
-function TableFlower({x, y, z}: {x: number, y: number, z: number}) {
+function TableFlower({ x, y, z }: { x: number, y: number, z: number }) {
   const texture = useLoader(THREE.TextureLoader, '/images/wedding/frame/table-flower.png');
-  
+
   const aspectRatio = texture.image ? texture.image.width / texture.image.height : 1;
-  const width = 0.2;
+  const width = 0.3;
   const height = width / aspectRatio;
-  const offset = 0.25; 
-  
+  const offset = 0.42;
+
   return (
-    <group position={[x, y, z]}>
+    <group position={[x, -0.54, z]}>
       <mesh position={[offset, 0, 0]} rotation={[0, 0, 0]}>
         <planeGeometry args={[width, height, 1]} />
-        <meshBasicMaterial 
-          map={texture} 
+        <meshBasicMaterial
+          map={texture}
           transparent={true}
           side={THREE.DoubleSide}
         />
       </mesh>
       <mesh position={[-offset, 0, 0]} rotation={[0, 0, 0]} scale={[-1, 1, 1]}>
         <planeGeometry args={[width, height, 1]} />
-        <meshBasicMaterial 
-          map={texture} 
+        <meshBasicMaterial
+          map={texture}
           transparent={true}
           side={THREE.DoubleSide}
         />
@@ -224,7 +249,7 @@ export default function CubeScene() {
         const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
         const maxScroll = scrollHeight - clientHeight;
         const currentScroll = Math.max(0, Math.min(scrollTop, maxScroll));
-        
+
         setScrollY(currentScroll);
         setScrollYPercent((currentScroll / maxScroll) * 100);
         setScrollMax(maxScroll);
@@ -252,13 +277,13 @@ export default function CubeScene() {
       <div className='relative z-1 h-[400vh] w-full'></div>
       <div className='h-full w-full relative z-1'>
         <div className='fixed top-2 left-2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-lg pointer-events-none'>
-          Scroll Position: {`${scrollYPercent.toFixed(0)}%/${scrollY.toFixed(0)}`} 
+          Scroll Position: {`${scrollYPercent.toFixed(0)}%/${scrollY.toFixed(0)}`}
         </div>
       </div>
       <div>
-        <WelcomeSection scrollY={Number(scrollYPercent.toFixed(0))} start={0} end={10} />
+        {/* <WelcomeSection scrollY={Number(scrollYPercent.toFixed(0))} start={0} end={10} />
         <QuranVerse scrollY={Number(scrollYPercent.toFixed(0))} start={10} end={25} />
-        <WeddingEvent scrollY={Number(scrollYPercent.toFixed(0))} start={25} end={40} />
+        <WeddingEvent scrollY={Number(scrollYPercent.toFixed(0))} start={25} end={40} /> */}
       </div>o
 
       <div className="fixed inset-0">
@@ -272,12 +297,12 @@ export default function CubeScene() {
             castShadow
           />
           <pointLight args={[0xffffff, 0.5]} position={[0, 0, 0]} />
-          
+
           <ScrollControls scrollY={scrollY} scrollMax={scrollMax} />
-          {/* <gridHelper args={[100, 100]} position={[0, -0.5, 0]} /> */}
+          <gridHelper args={[100, 100]} position={[0, -0.2, 0]} />
         </Canvas>
       </div>
     </div>
-  
+
   );
 }
