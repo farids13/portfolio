@@ -6,7 +6,6 @@ import * as THREE from 'three';
 import WelcomeSection from './_components/WelcomeSection';
 import QuranVerse from './_components/QuranVerse';
 import WeddingEvent from './_components/WeddingEvent';
-import GroomName from './_components/CoupleNames';
 import CoupleNames from './_components/CoupleNames';
 import DigitalWallet from './_components/DigitalWallet';
 import RSVPSection from './_components/RSVPSection';
@@ -287,7 +286,9 @@ export default function CubeScene() {
         </div>
       </div>
       <div>
-        <WelcomeSection scrollY={Number(scrollYPercent.toFixed(0))} start={0} end={5} />
+        {scrollYPercent >= 0 && scrollYPercent <= 6 && (
+          <WelcomeSection scrollY={Number(scrollYPercent.toFixed(0))} start={0} end={5} />
+        )}
         <QuranVerse scrollY={Number(scrollYPercent.toFixed(0))} start={5} end={15} />
         <WeddingEvent scrollY={Number(scrollYPercent.toFixed(0))} start={15} end={25} />
         <CoupleNames

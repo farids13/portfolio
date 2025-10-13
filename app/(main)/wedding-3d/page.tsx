@@ -2,9 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
-import WelcomeSection from '../wedding/_components/WelcomeSection';
-import DoorSection from './_components/DoorSection';
-import QuranVerse from '../wedding/_components/QuranVerse';
+import DoorSection from '../wedding/_components/DoorSection';
 
 export default function Wedding3DPage() {
   const [scrollY, setScrollY] = useState(0);

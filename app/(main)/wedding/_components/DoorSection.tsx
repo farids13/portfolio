@@ -36,7 +36,7 @@ export default function DoorSection({ onOpenComplete }: DoorSectionProps) {
   };
   return (
     <div className={`w-full h-[100vh] bg-white flex items-center justify-center ${scaleClasses}`}>
-      <div className='absolute flex w-[800px] h-[700px]'>
+      <div className='absolute flex w-[800px] h-[700px] border border-red-500'>
         <Image
           src="/images/wedding/frame/outside-door.png"
           alt="Background"
@@ -84,10 +84,10 @@ export default function DoorSection({ onOpenComplete }: DoorSectionProps) {
 
       <button
         onClick={handleOpenInvitation}
-        className="absolute z-5 mt-40 w-[200px] h-[50px] bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full font-bold text-lg text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-pulse hover:animate-none border-2 border-yellow-300 hover:border-yellow-200 before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-r before:from-yellow-300 before:to-yellow-500 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300 overflow-hidden group"
+        className="absolute  z-5 mt-40 w-[200px] h-[50px] bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full font-bold text-lg text-white shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 animate-pulse hover:animate-none border-2 border-yellow-300 hover:border-yellow-200 before:absolute before:inset-0 before:rounded-full before:bg-gradient-to-r before:from-yellow-300 before:to-yellow-500 before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300 overflow-hidden group"
         style={{
-          opacity: buttonOpacity,
-          transition: 'opacity 0.3s ease-in-out'
+          transition: 'opacity 0.3s ease-in-out',
+          opacity: 0,
         }}
       >
         <span className="relative z-10 drop-shadow-md">Buka Undangan</span>
