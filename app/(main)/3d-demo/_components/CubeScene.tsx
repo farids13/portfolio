@@ -10,6 +10,7 @@ import GroomName from './CoupleNames';
 import CoupleNames from './CoupleNames';
 import DigitalWallet from './DigitalWallet';
 import RSVPSection from './RSVPSection';
+import CommentsSection from './CommentsSection';
 
 function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: number }) {
   const groupRef = useRef<THREE.Group>(null);
@@ -328,6 +329,12 @@ export default function CubeScene() {
         /> */}
         {/* <DigitalWallet scrollY={Number(scrollYPercent.toFixed(0))} start={60} end={70} /> */}
         {/* <RSVPSection scrollY={Number(scrollYPercent.toFixed(0))} start={0} end={10} /> */}
+        <CommentsSection 
+            scrollY={Number(scrollYPercent.toFixed(0))} 
+            start={5} 
+            end={15}
+            stay={10} // The section will stay fully visible between 10% and 15% scroll
+        />
       </div>
 
       <div className="fixed inset-0">
