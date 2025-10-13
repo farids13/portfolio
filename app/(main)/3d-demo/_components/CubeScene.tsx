@@ -11,6 +11,7 @@ import CoupleNames from './CoupleNames';
 import DigitalWallet from './DigitalWallet';
 import RSVPSection from './RSVPSection';
 import CommentsSection from './CommentsSection';
+import ThankYouSection from './ThankYouSection';
 
 function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: number }) {
   const groupRef = useRef<THREE.Group>(null);
@@ -334,6 +335,11 @@ export default function CubeScene() {
             start={5} 
             end={15}
             stay={10} // The section will stay fully visible between 10% and 15% scroll
+        />
+        <ThankYouSection 
+            scrollY={Number(scrollYPercent.toFixed(0))} 
+            start={15} 
+            end={25}
         />
       </div>
 
