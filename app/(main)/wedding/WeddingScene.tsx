@@ -4,13 +4,14 @@ import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
 import WelcomeSection from './_components/WelcomeSection';
-import QuranVerse from './_components/QuranSection';
-import WeddingEvent from './_components/WeddingEvent';
+import QuranSection from './_components/QuranSection';
+import WeddingEvent from './_components/EventInformationSection';
 import CoupleNames from './_components/CoupleNames';
 import DigitalWallet from './_components/DigitalWallet';
 import RSVPSection from './_components/RSVPSection';
 import CommentsSection from './_components/CommentsSection';
 import ThankYouSection from './_components/ThankYouSection';
+import EventInformationSection from './_components/EventInformationSection';
 
 function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: number }) {
   const groupRef = useRef<THREE.Group>(null);
@@ -290,9 +291,11 @@ export default function CubeScene() {
           <WelcomeSection scrollY={Number(scrollYPercent.toFixed(0))} start={0} end={5} />
         )}
         {scrollYPercent >= 4 && scrollYPercent <= 16 && (
-          <QuranVerse scrollY={Number(scrollYPercent.toFixed(0))} start={5} end={15} />
+          <QuranSection scrollY={Number(scrollYPercent.toFixed(0))} start={5} end={15} />
         )}
-        <WeddingEvent scrollY={Number(scrollYPercent.toFixed(0))} start={15} end={25} />
+        {scrollYPercent >= 14 && scrollYPercent <= 26 && (  
+          <EventInformationSection scrollY={Number(scrollYPercent.toFixed(0))} start={15} end={25} />
+        )}
         <CoupleNames
           scrollY={Number(scrollYPercent.toFixed(0))} 
           start={30} 

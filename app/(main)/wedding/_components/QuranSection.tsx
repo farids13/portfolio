@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface QuranVerseProps {
+interface QuranSectionProps {
   scrollY: number;
   start: number;
   end: number;
@@ -8,7 +8,7 @@ interface QuranVerseProps {
 
 const ANIMATION_DURATION = 500;
 
-export default function QuranVerse({ scrollY, start, end }: QuranVerseProps) {
+export default function QuranSection({ scrollY, start, end }: QuranSectionProps) {
   const getProgress = () => {
     if (scrollY < start) return 0;
     if (scrollY > end) return 1;
@@ -19,8 +19,6 @@ export default function QuranVerse({ scrollY, start, end }: QuranVerseProps) {
 
   const progress = getProgress();
   const isVisible = scrollY >= SCROLL_START && scrollY <= SCROLL_END;
-
-  console.log(progress);
 
   if (!isVisible && progress === 0) return null;
 
