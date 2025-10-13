@@ -2,16 +2,16 @@
 
 import dynamic from 'next/dynamic';
 
-const CubeScene = dynamic(
-  () => import('@/app/(main)/wedding/_components/CubeScene'),
+const WeddingScene = dynamic(
+  () => import('@/app/(main)/wedding/WeddingScene'),
   { ssr: false }
 );
 
-export default function DDemoPage() {
+export default function Wedding() {
   return (
     <div className="w-full h-full">
       <div className="w-full h-full">
-        <CubeScene />
+        <WeddingScene />
       </div>
     </div>
   );

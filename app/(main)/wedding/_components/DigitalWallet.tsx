@@ -50,8 +50,12 @@ const DigitalWallet: React.FC<DigitalWalletProps> = ({ scrollY, start, end }) =>
 
   return (
     <div 
-      className="fixed z-50 flex items-center justify-center p-4"
-      style={{ opacity, transition: `opacity ${ANIMATION_DURATION}ms`,}}
+      className="fixed inset-0 z-50 flex items-center justify-center p-4"
+      style={{ 
+        opacity, 
+        transition: `opacity ${ANIMATION_DURATION}ms`,
+        pointerEvents: 'none'
+      }}
     >
         <div className="relative rounded-2xl bg-gradient-to-br from-white/60 to-white/30 backdrop-blur-xl border-3 border-white/30 shadow-3xl">
           <div className="absolute inset-0 opacity-100">

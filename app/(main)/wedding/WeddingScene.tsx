@@ -3,15 +3,15 @@
 import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
-import WelcomeSection from './WelcomeSection';
-import QuranVerse from './QuranVerse';
-import WeddingEvent from './WeddingEvent';
-import GroomName from './CoupleNames';
-import CoupleNames from './CoupleNames';
-import DigitalWallet from './DigitalWallet';
-import RSVPSection from './RSVPSection';
-import CommentsSection from './CommentsSection';
-import ThankYouSection from './ThankYouSection';
+import WelcomeSection from './_components/WelcomeSection';
+import QuranVerse from './_components/QuranVerse';
+import WeddingEvent from './_components/WeddingEvent';
+import GroomName from './_components/CoupleNames';
+import CoupleNames from './_components/CoupleNames';
+import DigitalWallet from './_components/DigitalWallet';
+import RSVPSection from './_components/RSVPSection';
+import CommentsSection from './_components/CommentsSection';
+import ThankYouSection from './_components/ThankYouSection';
 
 function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: number }) {
   const groupRef = useRef<THREE.Group>(null);
@@ -287,7 +287,7 @@ export default function CubeScene() {
         </div>
       </div>
       <div>
-        {/* <WelcomeSection scrollY={Number(scrollYPercent.toFixed(0))} start={0} end={5} />
+        <WelcomeSection scrollY={Number(scrollYPercent.toFixed(0))} start={0} end={5} />
         <QuranVerse scrollY={Number(scrollYPercent.toFixed(0))} start={5} end={15} />
         <WeddingEvent scrollY={Number(scrollYPercent.toFixed(0))} start={15} end={25} />
         <CoupleNames
@@ -327,19 +327,19 @@ export default function CubeScene() {
             name: 'text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl',
             parents: 'text-xs xs:text-xs sm:text-sm md:text-base lg:text-base'
           }}
-        /> */}
-        {/* <DigitalWallet scrollY={Number(scrollYPercent.toFixed(0))} start={60} end={70} /> */}
-        {/* <RSVPSection scrollY={Number(scrollYPercent.toFixed(0))} start={0} end={10} /> */}
+        />
+        <DigitalWallet scrollY={Number(scrollYPercent.toFixed(0))} start={60} end={70} />
+        <RSVPSection scrollY={Number(scrollYPercent.toFixed(0))} start={70} end={80} />
         <CommentsSection 
             scrollY={Number(scrollYPercent.toFixed(0))} 
-            start={5} 
-            end={15}
-            stay={10} // The section will stay fully visible between 10% and 15% scroll
+            start={80} 
+            end={90}
+            stay={87}
         />
         <ThankYouSection 
             scrollY={Number(scrollYPercent.toFixed(0))} 
-            start={15} 
-            end={25}
+            start={90} 
+            end={100}
         />
       </div>
 
