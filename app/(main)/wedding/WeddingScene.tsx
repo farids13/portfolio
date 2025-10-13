@@ -4,7 +4,7 @@ import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
 import { useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
 import WelcomeSection from './_components/WelcomeSection';
-import QuranVerse from './_components/QuranVerse';
+import QuranVerse from './_components/QuranSection';
 import WeddingEvent from './_components/WeddingEvent';
 import CoupleNames from './_components/CoupleNames';
 import DigitalWallet from './_components/DigitalWallet';
@@ -289,7 +289,9 @@ export default function CubeScene() {
         {scrollYPercent >= 0 && scrollYPercent <= 6 && (
           <WelcomeSection scrollY={Number(scrollYPercent.toFixed(0))} start={0} end={5} />
         )}
-        <QuranVerse scrollY={Number(scrollYPercent.toFixed(0))} start={5} end={15} />
+        {scrollYPercent >= 4 && scrollYPercent <= 16 && (
+          <QuranVerse scrollY={Number(scrollYPercent.toFixed(0))} start={5} end={15} />
+        )}
         <WeddingEvent scrollY={Number(scrollYPercent.toFixed(0))} start={15} end={25} />
         <CoupleNames
           scrollY={Number(scrollYPercent.toFixed(0))} 
