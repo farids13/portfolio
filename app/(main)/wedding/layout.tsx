@@ -1,19 +1,18 @@
-import { Metadata } from "next";
+import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-    title: "Invitation Wedding Farid Satria & Asri Dilla Wahyuni",
-    description:
-      "Invitation Wedding Farid Satria & Asri Dilla Wahyuni, a beautiful couple who are going to start their new life together.",
-  };
+  title: '3D Demo | Wedding',
+  description: '3D Demo for Wedding Page',
+};
 
-export default function WeddingLayout({
-    children,
-  }: {
-    children: React.ReactNode
-  }) {
-    return (
-      <div>
-        {children}
-      </div>
-    )
-  }
+export default function ThreeDDemoLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="w-full h-full">
+      {children}
+    </div>
+  );
+}
