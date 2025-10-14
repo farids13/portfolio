@@ -293,59 +293,67 @@ export default function CubeScene() {
         {scrollYPercent >= 4 && scrollYPercent <= 16 && (
           <QuranSection scrollY={Number(scrollYPercent.toFixed(0))} start={5} end={15} />
         )}
-        {scrollYPercent >= 14 && scrollYPercent <= 26 && (  
+        {scrollYPercent >= 14 && scrollYPercent <= 26 && (
           <EventInformationSection scrollY={Number(scrollYPercent.toFixed(0))} start={15} end={25} />
         )}
-        <CoupleNames
-          scrollY={Number(scrollYPercent.toFixed(0))} 
-          start={30} 
-          end={40}
-          name="Farid Satria"
-          parents="Putra dari Bapak Ahmad & Ibu Siti"
-          position={{
-            top: 'top-20 xs:top-21 md:top-22 lg:top-23',
-            left: '-left-5 xs:left-0 sm:left-3 md:left-5 lg:left-9'
-          }}
-          size={{
-            width: 'w-[300px] xs:w-[330px] sm:w-[450px] md:w-[500px] lg:w-[600px]',
-            height: 'h-[200px] xs:h-[220px] sm:h-[250px] md:h-[250px] lg:h-[350px]'
-          }}
-          textSize={{
-            name: 'text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl',
-            parents: 'text-xs xs:text-xs sm:text-sm md:text-base lg:text-base'
-          }}
-        />
-         <CoupleNames
-          scrollY={Number(scrollYPercent.toFixed(0))} 
-          start={43} 
-          end={50}
-          name="Asri Dilla Wahyuni"
-          parents="Putra dari Bapak Ahmad & Ibu Siti"
-          position={{
-            top: 'top-28 xs:top-29 md:top-30 lg:top-31',
-            left: '-right-10 xs:-right-4 sm:right-3 md:right-5 lg:right-9'
-          }}
-          size={{
-            width: 'w-[350px] xs:w-[330px] sm:w-[450px] md:w-[500px] lg:w-[600px]',
-            height: 'h-[200px] xs:h-[220px] sm:h-[250px] md:h-[250px] lg:h-[350px]'
-          }}
-          textSize={{
-            name: 'text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl',
-            parents: 'text-xs xs:text-xs sm:text-sm md:text-base lg:text-base'
-          }}
-        />
-        <DigitalWallet scrollY={Number(scrollYPercent.toFixed(0))} start={60} end={70} />
+        {scrollYPercent >= 29 && scrollYPercent <= 41 && (
+          <CoupleNames
+            scrollY={Number(scrollYPercent.toFixed(0))}
+            start={30}
+            end={40}
+            name="Farid Satria"
+            parents="Putra dari "
+            dad="Bapak Muhammad Sholeh"
+            mom="Ibu Alm. Chuzaimah"
+            position={{
+              top: 'top-1/6',
+              left: '-left-18 xs:-left-15 sm:-left-5 md:-left-2 lg:left-9'
+            }}
+            size={{
+              width: 'w-[350px] xs:w-[400px] sm:w-[450px] md:w-[500px] lg:w-[600px]',
+              height: 'h-[200px] xs:h-[220px] sm:h-[250px] md:h-[250px] lg:h-[350px]'
+            }}
+            textSize={{
+              name: 'text-4xl xs:text-5xl sm:text-5xl md:text-6xl ',
+              parents: 'max-w-[70vw] ml-2 text-[9px] xs:text-[12px] sm:text-sm md:text-md lg:text-lg'
+            }}
+          />
+        )}
+        {scrollYPercent >= 42 && scrollYPercent <= 51 && (
+          <CoupleNames
+            scrollY={Number(scrollYPercent.toFixed(0))}
+            start={43}
+            end={50}
+            name="Asri Dilla Wahyuni"
+            parents="Putri dari "
+            dad="Bapak Maryono"
+            mom="Ibu Masfuah"
+            position={{
+              top: 'top-28 xs:top-29 md:top-30 lg:top-31',
+              left: '-right-10 xs:-right-4 sm:right-3 md:right-5 lg:right-9'
+            }}
+            size={{
+              width: 'w-[350px] xs:w-[330px] sm:w-[450px] md:w-[500px] lg:w-[600px]',
+              height: 'h-[200px] xs:h-[220px] sm:h-[250px] md:h-[250px] lg:h-[350px]'
+            }}
+            textSize={{
+              name: 'text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl',
+              parents: 'text-xs xs:text-xs sm:text-sm md:text-base lg:text-base'
+            }}
+          />
+        )}
+        <DigitalWallet scrollY={Number(scrollYPercent.toFixed(0))} start={57} end={70} />
         <RSVPSection scrollY={Number(scrollYPercent.toFixed(0))} start={70} end={80} />
-        <CommentsSection 
-            scrollY={Number(scrollYPercent.toFixed(0))} 
-            start={80} 
-            end={90}
-            stay={87}
+        <CommentsSection
+          scrollY={Number(scrollYPercent.toFixed(0))}
+          start={80}
+          end={90}
+          stay={87}
         />
-        <ThankYouSection 
-            scrollY={Number(scrollYPercent.toFixed(0))} 
-            start={90} 
-            end={100}
+        <ThankYouSection
+          scrollY={Number(scrollYPercent.toFixed(0))}
+          start={90}
+          end={100}
         />
       </div>
 

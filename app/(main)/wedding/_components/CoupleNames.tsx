@@ -30,6 +30,8 @@ interface CoupleNamesProps {
     end: number;
     name?: string;
     parents?: string;
+    dad? : string;
+    mom? : string;
     position?: {
         top?: string;
         right?: string;
@@ -53,7 +55,9 @@ export default function CoupleNames({
     start,
     end,
     name = "Farid Satria",
-    parents = "Putra dari Bapak Ahmad & Ibu Siti",
+    parents = "Putra dari ",
+    dad = "Bapak Muhammad Sholeh",
+    mom = "Ibu Alm. Chuzaimah",
     position = {
         top: 'top-8',
         left: 'left-4'
@@ -79,7 +83,7 @@ export default function CoupleNames({
     const getFadeInOutOpacity = () => {
         if (scrollY <= SCROLL_START) return 0;
         if (scrollY >= SCROLL_END) return 0;
-        
+
         const progress = (scrollY - SCROLL_START) / (SCROLL_END - SCROLL_START);
         const smoothStep = (t: number) => t * t * (3 - 2 * t);
         if (progress <= 0.3) {
@@ -93,12 +97,12 @@ export default function CoupleNames({
 
     const progress = getProgress();
     const opacity = getFadeInOutOpacity();
-    
+
     // Only apply translateY, no scale
     const translateY = 10 * (1 - progress);
-    
+
     // Add a subtle bounce effect at the end
-    const bounce = progress > 0.9 ? 
+    const bounce = progress > 0.9 ?
         Math.sin((progress - 0.9) * Math.PI * 5) * 5 : 0;
 
     const containerStyle = {
@@ -119,19 +123,22 @@ export default function CoupleNames({
     ].filter(Boolean).join(' ');
 
     return (
-        <div 
+        <div
             className={`fixed z-50 pointer-events-none ${positionClasses}`}
             style={containerStyle}
         >
             <div className="flex justify-center items-center">
+                <div className="absolute inside-flex justify-center items-center w-2/3 h-2/3 blur-lg rounded-full bg-white/60 backdrop-blur-sm" />
                 <div className={`relative ${size.height} ${size.width}`}>
                     <div className="relative z-10 flex flex-col justify-center items-center h-full">
-                        <h2 className={`${textSize.name} font-bold font-allura text-amber-800 text-center px-4`}>
+                        <h2 className={`${textSize.name} font-allura text-amber-700/80 text-center px-4`}>
                             {name}
                         </h2>
-                        <p className={`${textSize.parents} text-base mt-1 font-medium drop-shadow-md text-center px-4`}>
-                            {parents}
+                        <p className={`${textSize.parents} text-base/60 font-sans text-center px-2`}>
+                            {parents} {dad ?? {dad}} {` & `}
+                            <p>{mom ?? {mom}}</p>
                         </p>
+
                     </div>
                     <Image
                         src="/images/wedding/frame/cloud.png"
