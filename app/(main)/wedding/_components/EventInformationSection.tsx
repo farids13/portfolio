@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaCalendarAlt, FaClock, FaMapMarkerAlt, FaHeart, FaRing, FaGlassCheers, FaMapMarkedAlt } from 'react-icons/fa';
+import { FaCalendarAlt, FaClock, FaMapMarkerAlt, FaHeart, FaRing, FaGlassCheers, FaMapMarkedAlt, FaCalendarPlus } from 'react-icons/fa';
 import { MdHandshake } from 'react-icons/md';
 
 interface EventInformationProps {
@@ -65,15 +65,26 @@ const EventCard: React.FC<EventCardProps> = ({
                     <p className="text-amber-700 text-sm">{address}</p>
                 </div>
             </div>
-            <a
-                href={mapsLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="pointer-events-auto inline-flex items-center justify-center w-[250px] mt-2 px-4 py-2 border-2 border-amber-300 text-amber-700 rounded-md shadow-lg shadow-black/10 text-sm font-medium"
-            >
-                <FaMapMarkedAlt className="mr-2" />
-                Buka di Google Maps
-            </a>
+            <div className="flex gap-2 w-full mt-3 justify-center items-center">
+                <a
+                    href={mapsLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pointer-events-auto inline-flex items-center justify-center w-1/2 max-w-[200px] px-4 py-2 border-2 border-amber-300 text-amber-700 rounded-md shadow-lg shadow-black/10 text-sm font-medium hover:bg-amber-50 transition-colors"
+                >
+                    <FaMapMarkedAlt className="mr-2" />
+                    Buka di Maps
+                </a>
+                <a
+                    href={`https://www.google.com/calendar/render?action=TEMPLATE&text=Pernikahan%20${encodeURIComponent(title)}&dates=${year}${month.padStart(2, '0')}${date.padStart(2, '0')}T${time.split(':')[0]}${time.split(':')[1]}00/${year}${month.padStart(2, '0')}${date.padStart(2, '0')}T${(parseInt(time.split(':')[0]) + 2).toString().padStart(2, '0')}${time.split(':')[1]}00&details=${encodeURIComponent(`Acara: ${title}%0ALokasi: ${location} - ${address}`)}&location=${encodeURIComponent(`${location}, ${address}`)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="pointer-events-auto inline-flex items-center justify-center w-1/2 max-w-[200px] px-4 py-2 border-2 border-amber-300 text-amber-700 rounded-md shadow-lg shadow-black/10 text-sm font-medium hover:bg-amber-50 transition-colors"
+                >
+                    <FaCalendarPlus className="mr-2" />
+                    Ingatkan Saya
+                </a>
+            </div>
         </div>
     </div>
 );

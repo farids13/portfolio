@@ -12,6 +12,7 @@ import RSVPSection from './_components/RSVPSection';
 import CommentsSection from './_components/CommentsSection';
 import ThankYouSection from './_components/ThankYouSection';
 import EventInformationSection from './_components/EventInformationSection';
+import SaveTheDateSection from './_components/SaveTheDateSection';
 
 function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: number }) {
   const groupRef = useRef<THREE.Group>(null);
@@ -290,11 +291,14 @@ export default function CubeScene() {
         {scrollYPercent >= 0 && scrollYPercent <= 6 && (
           <WelcomeSection scrollY={Number(scrollYPercent.toFixed(0))} start={0} end={5} />
         )}
-        {scrollYPercent >= 4 && scrollYPercent <= 16 && (
-          <QuranSection scrollY={Number(scrollYPercent.toFixed(0))} start={5} end={15} />
+        {scrollYPercent >= 4 && scrollYPercent <= 13 && (
+          <QuranSection scrollY={Number(scrollYPercent.toFixed(0))} start={5} end={12} />
         )}
-        {scrollYPercent >= 14 && scrollYPercent <= 26 && (
-          <EventInformationSection scrollY={Number(scrollYPercent.toFixed(0))} start={15} end={25} />
+        {scrollYPercent >= 12 && scrollYPercent <= 29 && (
+          <>
+            <SaveTheDateSection scrollY={Number(scrollYPercent.toFixed(0))} start={13} end={19} />
+            <EventInformationSection scrollY={Number(scrollYPercent.toFixed(0))} start={19} end={27} />
+          </>
         )}
         {scrollYPercent >= 29 && scrollYPercent <= 41 && (
           <CoupleNames
