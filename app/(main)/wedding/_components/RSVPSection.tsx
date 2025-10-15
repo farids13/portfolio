@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { saveRSVP } from '../_utils/rsvpStorage';
+import { saveRSVP } from '../_utils/rsvpService';
 import Logger from '@/app/(main)/_utils/logger';
 
 interface RSVPSectionProps {
@@ -56,21 +56,27 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ scrollY, start, end }) => {
     e.preventDefault();
     if (!selectedOption || !name.trim()) return;
     
+    // Ensure the selectedOption is a valid RSVPStatus
+    const status = selectedOption as 'hadir' | 'tidak-hadir' | 'belum-tau';
+    
     try {
       const result = await saveRSVP({
         name: name.trim(),
         guestCount,
-        status: selectedOption,
+        status,
       });
       
       if (result.success) {
-        Logger.info('RSVP berhasil disimpan', { name, status: selectedOption });
+        Logger.info('RSVP berhasil disimpan', { name, status });
         setIsSubmitted(true);
       } else {
         Logger.error('Gagal menyimpan RSVP', result.error);
+        // Show error message to user
+        alert(result.error || 'Gagal menyimpan RSVP. Silakan coba lagi.');
       }
     } catch (error) {
       Logger.error('Error saat menyimpan RSVP', error);
+      alert('Terjadi kesalahan. Silakan coba lagi nanti.');
     }
   };
 

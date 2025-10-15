@@ -3,164 +3,226 @@
 import { useEffect, useState } from 'react';
 import { db } from '@/lib/firebase';
 import { collection, getDocs, addDoc, serverTimestamp, DocumentData } from 'firebase/firestore';
+import { getAnalytics, logEvent } from 'firebase/analytics';
+import { trackError, trackEvent } from '@/lib/errorTracking';
 
 interface TestResult {
   id: string;
   message: string;
+  type?: 'info' | 'success' | 'error' | 'warning';
 }
 
 export default function TestFirebase() {
   const [status, setStatus] = useState('Menguji koneksi...');
   const [testData, setTestData] = useState('');
   const [testResults, setTestResults] = useState<TestResult[]>([]);
+  const [analytics, setAnalytics] = useState<any>(null);
 
-  const handleError = (error: unknown, defaultMessage: string): string => {
-    if (error instanceof Error) {
-      return error.message;
+  // Initialize analytics
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      import('firebase/analytics').then(({ getAnalytics }) => {
+        const analytics = getAnalytics();
+        setAnalytics(analytics);
+        logEvent(analytics, 'page_view', { page_title: 'Test Firebase' });
+      }).catch(console.error);
     }
-    return typeof error === 'string' ? error : defaultMessage;
+  }, []);
+
+  const addTestResult = (message: string, type: TestResult['type'] = 'info') => {
+    const result = {
+      id: Date.now().toString(),
+      message,
+      type
+    };
+    setTestResults(prev => [...prev, result]);
+    return result;
   };
 
+  const handleError = (error: unknown, defaultMessage: string): string => {
+    const errorMessage = error instanceof Error ? error.message : 
+                        typeof error === 'string' ? error : defaultMessage;
+    
+    addTestResult(`❌ ${errorMessage}`, 'error');
+    trackError(error instanceof Error ? error : new Error(errorMessage), {
+      location: 'test-firebase',
+      action: 'handleError'
+    });
+    
+    return errorMessage;
+  };
+
+  // Test Firestore Read
   const testRead = async (): Promise<DocumentData[]> => {
     try {
-      setTestResults(prev => [...prev, {
-        id: Date.now().toString(),
-        message: '🔍 Membaca data dari Firestore...'
-      }]);
+      addTestResult('🔍 Membaca data dari Firestore...');
+      trackEvent('button_click', { action: 'test_read_start' });
       
+      const startTime = Date.now();
       const querySnapshot = await getDocs(collection(db, 'test'));
       const data = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       }));
       
-      setTestResults(prev => [...prev, {
-        id: Date.now().toString(),
-        message: `📖 Data yang dibaca: ${JSON.stringify(data, null, 2)}`
-      }]);
+      const duration = Date.now() - startTime;
+      addTestResult(`📖 Berhasil membaca ${data.length} dokumen (${duration}ms)`, 'success');
+      
+      trackEvent('button_click', {
+        action: 'test_read_success',
+        count: data.length,
+        duration
+      });
       
       return data;
     } catch (error: unknown) {
       const errorMessage = handleError(error, 'Gagal membaca data');
-      const newError = error instanceof Error ? error : new Error(errorMessage);
-      setTestResults(prev => [...prev, {
-        id: Date.now().toString(),
-        message: `❌ ${errorMessage}`
-      }]);
-      throw newError;
+      trackEvent('error_occurred', { 
+        action: 'test_read_error',
+        error: errorMessage 
+      });
+      throw new Error(errorMessage);
     }
   };
 
-  const testWrite = async (): Promise<string> => {
+  // Test Firestore Write
+  const testWrite = async () => {
     try {
-      const testMessage = testData || `Test data dari Next.js ${new Date().toISOString()}`;
-      
-      setTestResults(prev => [...prev, {
-        id: Date.now().toString(),
-        message: '✍️ Menulis data ke Firestore...'
-      }]);
+      addTestResult('✍️ Menulis data ke Firestore...');
+      trackEvent('button_click', { action: 'test_write_start' });
       
       const docRef = await addDoc(collection(db, 'test'), {
-        message: testMessage,
+        message: 'Test data ' + new Date().toISOString(),
         timestamp: serverTimestamp()
       });
       
-      setTestResults(prev => [...prev, {
-        id: Date.now().toString(),
-        message: `✅ Data berhasil disimpan dengan ID: ${docRef.id}`
-      }]);
+      addTestResult(`✅ Data berhasil ditulis dengan ID: ${docRef.id}`, 'success');
+      trackEvent('button_click', { 
+        action: 'test_write_success',
+        docId: docRef.id 
+      });
       
-      return docRef.id;
+      return docRef;
     } catch (error: unknown) {
       const errorMessage = handleError(error, 'Gagal menulis data');
-      const newError = error instanceof Error ? error : new Error(errorMessage);
-      setTestResults(prev => [...prev, {
-        id: Date.now().toString(),
-        message: `❌ ${errorMessage}`
-      }]);
-      throw newError;
+      trackEvent('error_occurred', { 
+        action: 'test_write_error',
+        error: errorMessage 
+      });
+      throw new Error(errorMessage);
     }
   };
 
-  useEffect(() => {
-    const testConnection = async () => {
-      try {
-        setStatus('🔄 Menghubungkan ke Firebase...');
-        await testRead();
-        await testWrite();
-        await testRead();
-        setStatus('✅ Koneksi berhasil!');
-      } catch (error: unknown) {
-        const errorMessage = handleError(error, 'Terjadi kesalahan saat menguji koneksi');
-        console.error('Error:', error);
-        setStatus(`❌ ${errorMessage}`);
-      }
-    };
+  // Simulate a crash
+  const simulateCrash = () => {
+    addTestResult('💥 Simulasi crash dimulai...', 'warning');
+    trackEvent('button_click', { action: 'simulate_crash_clicked' });
+    
+    // This will cause an unhandled exception
+    // @ts-ignore - Intentionally causing an error
+    const willCrash = null.someMethod();
+    console.log(willCrash); // This line will never be reached
+  };
 
-    testConnection();
-  }, []);
+  // Test Analytics
+  const testAnalytics = () => {
+    if (!analytics) {
+      addTestResult('Analytics belum diinisialisasi', 'warning');
+      return;
+    }
+    
+    try {
+      const eventName = 'test_event_' + Math.floor(Math.random() * 1000);
+      logEvent(analytics, eventName, {
+        test_param: 'test_value',
+        timestamp: new Date().toISOString()
+      });
+      
+      addTestResult(`📊 Event analytics terkirim: ${eventName}`, 'success');
+      trackEvent('button_click', { 
+        action: 'test_analytics_event',
+        eventName 
+      });
+    } catch (error) {
+      handleError(error, 'Gagal mengirim event analytics');
+    }
+  };
 
-  const handleTestWrite = async () => {
+  // Run all tests
+  const runAllTests = async () => {
+    setTestResults([]);
     try {
       await testWrite();
       await testRead();
+      testAnalytics();
     } catch (error) {
-      console.error('Test error:', error);
+      console.error('Test failed:', error);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
-      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-2xl">
-        <h1 className="text-2xl font-bold mb-6 text-center">🔥 Firebase Connection Tester</h1>
+    <div className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-bold mb-6">🔥 Firebase Test Page</h1>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+        <button
+          onClick={runAllTests}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+        >
+          🚀 Jalankan Semua Test
+        </button>
         
-        <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-          <h2 className="font-semibold mb-2">Status Koneksi:</h2>
-          <div className="p-3 bg-white rounded border border-gray-200">
-            {status || 'Memeriksa...'}
-          </div>
-        </div>
+        <button
+          onClick={testRead}
+          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+        >
+          📖 Test Baca Data
+        </button>
+        
+        <button
+          onClick={testWrite}
+          className="bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded"
+        >
+          ✍️ Test Tulis Data
+        </button>
+        
+        <button
+          onClick={testAnalytics}
+          className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded"
+        >
+          📊 Test Analytics
+        </button>
+        
+        <button
+          onClick={simulateCrash}
+          className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded col-span-full"
+        >
+          💥 Simulasikan Crash
+        </button>
+      </div>
 
-        <div className="mb-6">
-          <h2 className="font-semibold mb-2">Test Data (opsional):</h2>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={testData}
-              onChange={(e) => setTestData(e.target.value)}
-              placeholder="Ketik pesan test..."
-              className="flex-1 p-2 border rounded"
-              onKeyDown={(e) => e.key === 'Enter' && handleTestWrite()}
-            />
-            <button
-              onClick={handleTestWrite}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
-            >
-              Test Tulis Data
-            </button>
-          </div>
-        </div>
-
-        <div className="border-t pt-4">
-          <h2 className="font-semibold mb-2">Hasil Test:</h2>
-          <div className="space-y-2 max-h-96 overflow-y-auto p-2 bg-gray-50 rounded">
-            {testResults.length === 0 ? (
-              <p className="text-gray-500">Menjalankan test...</p>
-            ) : (
-              testResults.map((result) => (
-                <div 
+      <div className="mt-6">
+        <h2 className="text-xl font-semibold mb-3">Hasil Test:</h2>
+        <div className="bg-gray-100 p-4 rounded-md max-h-96 overflow-y-auto">
+          {testResults.length === 0 ? (
+            <p className="text-gray-500">Belum ada hasil test. Klik tombol di atas untuk memulai.</p>
+          ) : (
+            <ul className="space-y-2">
+              {testResults.map((result) => (
+                <li 
                   key={result.id} 
-                  className={`p-2 rounded border text-sm font-mono ${
-                    result.message.startsWith('❌') 
-                      ? 'bg-red-50 border-red-200 text-red-700' 
-                      : 'bg-white border-gray-200'
+                  className={`p-2 rounded ${
+                    result.type === 'error' ? 'bg-red-100 text-red-800' :
+                    result.type === 'success' ? 'bg-green-100 text-green-800' :
+                    result.type === 'warning' ? 'bg-yellow-100 text-yellow-800' :
+                    'bg-white'
                   }`}
                 >
                   {result.message}
-                </div>
-              ))
-            )}
-          </div>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>
