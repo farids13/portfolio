@@ -30,8 +30,6 @@ const BANK_ACCOUNTS = [
 const DigitalWallet: React.FC<DigitalWalletProps> = ({ scrollY, start, end }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [showToast, setShowToast] = useState(false);
-  const SCROLL_START = start ?? 60;
-  const SCROLL_END = end ?? 70;
 
   const getProgress = () => {
     if (scrollY < start) return 0;

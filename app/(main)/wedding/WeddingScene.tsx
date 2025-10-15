@@ -346,19 +346,27 @@ export default function CubeScene() {
             }}
           />
         )}
+        {scrollYPercent >= 56 && scrollYPercent <= 71 && (
         <DigitalWallet scrollY={Number(scrollYPercent.toFixed(0))} start={57} end={70} />
+        )}
+        {scrollYPercent >= 72 && scrollYPercent <= 80 && (
         <RSVPSection scrollY={Number(scrollYPercent.toFixed(0))} start={70} end={80} />
+        )}
+        {scrollYPercent >= 81 && scrollYPercent <= 90 && (
         <CommentsSection
           scrollY={Number(scrollYPercent.toFixed(0))}
           start={80}
           end={90}
           stay={87}
         />
+        )}
+        {scrollYPercent >= 91 && scrollYPercent <= 100 && (
         <ThankYouSection
           scrollY={Number(scrollYPercent.toFixed(0))}
           start={90}
           end={100}
         />
+        )}
       </div>
 
       <div className="fixed inset-0">

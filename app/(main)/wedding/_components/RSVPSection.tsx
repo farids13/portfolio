@@ -1,6 +1,9 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { saveRSVP } from '../_utils/rsvpStorage';
+import Logger from '@/app/(main)/_utils/logger';
 
 interface RSVPSectionProps {
   scrollY: number;
@@ -17,6 +20,15 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ scrollY, start, end }) => {
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [name, setName] = useState('');
   const [guestCount, setGuestCount] = useState(1);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    // Set initial name from URL parameter if available
+    const guestName = searchParams.get('to');
+    if (guestName) {
+      setName(guestName);
+    }
+  }, [searchParams]);
   
   const getProgress = (startOffset = 0, reverse = false) => {
     const start = SCROLL_START + startOffset;
@@ -40,59 +52,80 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ scrollY, start, end }) => {
     return 1;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectedOption && name.trim()) {
-      console.log('RSVP submitted:', { name, guestCount, status: selectedOption });
-      setIsSubmitted(true);
+    if (!selectedOption || !name.trim()) return;
+    
+    try {
+      const result = await saveRSVP({
+        name: name.trim(),
+        guestCount,
+        status: selectedOption,
+      });
+      
+      if (result.success) {
+        Logger.info('RSVP berhasil disimpan', { name, status: selectedOption });
+        setIsSubmitted(true);
+      } else {
+        Logger.error('Gagal menyimpan RSVP', result.error);
+      }
+    } catch (error) {
+      Logger.error('Error saat menyimpan RSVP', error);
     }
   };
 
   const transform = {
-    opacity: getFadeOutOpacity(),
-    backdropFilter: `blur(${getFadeOutOpacity() * 10}px)`,
-    WebkitBackdropFilter: `blur(${getFadeOutOpacity() * 10}px)`,
-    contentTransform: {
-      translateY: 50 * (1 - getProgress()),
-      scale: 0.9 + (0.1 * getProgress())
-    }
+    opacity: getFadeOutOpacity()
   };
 
   const rsvpOptions = [
-    { id: 'coming', label: 'Hadir', emoji: '✅' },
-    { id: 'not-coming', label: 'Tidak Bisa Hadir', emoji: '❌' },
-    { id: 'maybe', label: 'Masih Ragu', emoji: '❓' },
+    { 
+      id: 'hadir', 
+      label: 'Hadir', 
+      emoji: '✓',
+      selectedBg: 'bg-green-100',
+      selectedBorder: 'border-green-400',
+      selectedText: 'text-green-800'
+    },
+    { 
+      id: 'tidak-hadir', 
+      label: 'Tidak Hadir', 
+      emoji: '✕',
+      selectedBg: 'bg-red-100',
+      selectedBorder: 'border-red-400',
+      selectedText: 'text-red-800'
+    },
+    { 
+      id: 'belum-tau', 
+      label: 'Belum Tahu', 
+      emoji: '?',
+      selectedBg: 'bg-amber-100',
+      selectedBorder: 'border-amber-400',
+      selectedText: 'text-amber-800'
+    },
   ];
 
   if (isSubmitted) {
     return (
       <div 
-        className="fixed inset-0 z-[100] flex items-center justify-center p-5 pb-25"
+        className="fixed inset-0 z-[100] flex items-center justify-center p-5 pb-25 duration-300 transition-all pointer-events-none"
         style={{
           opacity: transform.opacity,
-          backdropFilter: transform.backdropFilter,
-          WebkitBackdropFilter: transform.WebkitBackdropFilter,
-          transition: `opacity ${ANIMATION_DURATION}ms, backdrop-filter ${ANIMATION_DURATION}ms, -webkit-backdrop-filter ${ANIMATION_DURATION}ms`
+          transition: `opacity ${ANIMATION_DURATION}ms`
         }}
       >
         <div
           className="relative w-full max-w-md transform ease-out"
-          style={{
-            transform: `translateY(${transform.contentTransform.translateY}px) scale(${transform.contentTransform.scale})`,
-            transition: `transform ${ANIMATION_DURATION}ms`
-          }}
         >
-          <div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-white/60 to-white/30 backdrop-blur-xl border-3 border-white/30 shadow-3xl overflow-hidden'>
-            <div className='absolute inset-0 opacity-100'>
-              <div className='absolute inset-0 bg-gradient-to-br from-emerald-50/30 via-white/20 to-green-100/30 animate-gradient-xy'></div>
-              <div className='absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent via-transparent to-emerald-200/10 mix-blend-overlay'></div>
-            </div>
+          {/* Card dengan efek kertas elegan */}
+          <div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-white/90 to-amber-50/80 backdrop-blur-sm shadow-lg overflow-hidden border border-amber-100/50'>
+            <div className='absolute inset-0 bg-[linear-gradient(0deg,transparent_24%,rgba(180,83,9,0.05)_25%,rgba(180,83,9,0.05)_26%,transparent_27%,transparent_74%,rgba(180,83,9,0.05)_75%,rgba(180,83,9,0.05)_76%,transparent_77%,transparent),linear-gradient(90deg,transparent_24%,rgba(180,83,9,0.05)_25%,rgba(180,83,9,0.05)_26%,transparent_27%,transparent_74%,rgba(180,83,9,0.05)_75%,rgba(180,83,9,0.05)_76%,transparent_77%,transparent)] bg-[length:30px_30px] opacity-20'></div>
           </div>
           
           <div className="relative z-10 p-8 text-center">
-            <div className="text-6xl mb-4">🎉</div>
-            <h3 className="text-2xl font-bold text-emerald-900 font-serif mb-2">Terima Kasih!</h3>
-            <p className="text-emerald-800/80 mb-6">Konfirmasi kehadiran Anda telah kami terima.</p>
+            <div className="text-6xl mb-6">🎉</div>
+            <h3 className="text-2xl font-bold text-amber-900 mb-3">Terima Kasih!</h3>
+            <p className="text-amber-800/90 mb-8">Konfirmasi kehadiran Anda telah kami terima.</p>
             <button 
               onClick={() => {
                 setIsSubmitted(false);
@@ -100,9 +133,9 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ scrollY, start, end }) => {
                 setName('');
                 setGuestCount(1);
               }}
-              className="px-6 py-2 bg-emerald-500 text-white rounded-full hover:bg-emerald-600 transition-colors text-sm font-medium"
+              className="px-6 py-2.5 bg-amber-600 text-white rounded-full hover:bg-amber-700 transition-colors text-sm font-medium shadow-md hover:shadow-amber-200/50 pointer-events-auto"
             >
-              Kembali
+              Kembali ke Form
             </button>
           </div>
         </div>
@@ -112,101 +145,112 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ scrollY, start, end }) => {
 
   return (
     <div 
-      className="fixed inset-0 z-[100] flex items-center justify-center p-5 pb-25"
+      className="fixed inset-0 z-[100] flex items-center justify-center px-8"
       style={{
         pointerEvents: 'none',
         opacity: transform.opacity,
-        backdropFilter: transform.backdropFilter,
-        WebkitBackdropFilter: transform.WebkitBackdropFilter,
-        transition: `opacity ${ANIMATION_DURATION}ms, backdrop-filter ${ANIMATION_DURATION}ms, -webkit-backdrop-filter ${ANIMATION_DURATION}ms`
+        transition: `opacity ${ANIMATION_DURATION}ms`
       }}
     >
-      <div
-        className="relative w-full max-w-md transform ease-out"
-        style={{
-          transform: `translateY(${transform.contentTransform.translateY}px) scale(${transform.contentTransform.scale})`,
-          transition: `transform ${ANIMATION_DURATION}ms`
-        }}
-      >
-        <div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-white/60 to-white/30 backdrop-blur-xl border-3 border-white/30 shadow-3xl overflow-hidden'>
-          <div className='absolute inset-0 opacity-100'>
-            <div className='absolute inset-0 bg-gradient-to-br from-emerald-50/30 via-white/20 to-green-100/30 animate-gradient-xy'></div>
-            <div className='absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-transparent via-transparent to-emerald-200/10 mix-blend-overlay'></div>
-          </div>
+      <div className="relative w-full max-w-md transform ease-out">
+        {/* Card dengan efek kertas elegan */}
+        <div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-white/90 to-amber-50/80 backdrop-blur-sm shadow-lg overflow-hidden border border-amber-100/50'>
+          <div className='absolute inset-0 bg-[linear-gradient(0deg,transparent_24%,rgba(180,83,9,0.05)_25%,rgba(180,83,9,0.05)_26%,transparent_27%,transparent_74%,rgba(180,83,9,0.05)_75%,rgba(180,83,9,0.05)_76%,transparent_77%,transparent),linear-gradient(90deg,transparent_24%,rgba(180,83,9,0.05)_25%,rgba(180,83,9,0.05)_26%,transparent_27%,transparent_74%,rgba(180,83,9,0.05)_75%,rgba(180,83,9,0.05)_76%,transparent_77%,transparent)] bg-[length:30px_30px] opacity-20'></div>
         </div>
         
         <div className="relative z-10 p-8">
-          <h3 className="text-2xl font-bold text-center mb-6 text-emerald-900 font-serif">Konfirmasi Kehadiran</h3>
-          <p className="text-sm text-center text-emerald-800/80 mb-6">
-            Mohon konfirmasi kehadiran Anda untuk acara pernikahan kami.
+          {/* Header dengan garis dekoratif */}
+          <div className='text-center mb-8'>
+            <h3 className="text-4xl font-bold text-amber-900 tracking-wider font-allura">Buku Tamu</h3>
+            <div className='h-0.5 w-24 bg-amber-400 mx-auto my-3 rounded-full'></div>
+            <p className="text-xs text-amber-700/80 mt-2 tracking-widest font-sans">KONFIRMASI KEHADIRAN</p>
+          </div>
+          
+          <p className="text-sm text-center text-amber-800/90 mb-8 font-light italic font-sans">
+            "Dengan segala hormat, kami berharap kehadiran Bapak/Ibu/Saudara/i
           </p>
           
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6 pointer-events-auto">
             <div>
-              <label className="block text-sm font-medium text-emerald-800/80 mb-1">Nama Lengkap</label>
+              <label className="block text-sm font-medium text-amber-800/90 mb-1">Nama Lengkap</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg border border-emerald-200 bg-white/50 focus:ring-2 focus:ring-emerald-300 focus:border-emerald-300 outline-none transition"
-                placeholder="Nama Anda"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-300 focus:border-amber-300 text-amber-900 placeholder-amber-300"
+                placeholder="Masukkan nama lengkap"
                 required
               />
             </div>
             
             <div>
-              <label className="block text-sm font-medium text-emerald-800/80 mb-1">Jumlah Tamu</label>
-              <select
-                value={guestCount}
-                onChange={(e) => setGuestCount(Number(e.target.value))}
-                className="w-full px-4 py-2 rounded-lg border border-emerald-200 bg-white/50 focus:ring-2 focus:ring-emerald-300 focus:border-emerald-300 outline-none transition"
-              >
-                {[1, 2, 3, 4, 5, 'Lebih dari 5'].map((num) => (
-                  <option key={num} value={typeof num === 'number' ? num : 6}>
-                    {num} {typeof num === 'number' && num > 1 ? 'orang' : 'orang'}
-                  </option>
-                ))}
-              </select>
+              <label className="block text-sm font-medium text-amber-800/90 mb-1">Jumlah Tamu</label>
+              <div className="relative">
+                <select
+                  value={guestCount}
+                  onChange={(e) => setGuestCount(parseInt(e.target.value))}
+                  className="w-full px-4 py-2 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-300 focus:border-amber-300 text-amber-900 appearance-none"
+                >
+                  {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
+                    <option key={num} value={num}>
+                      {num} {num === 1 ? 'Orang' : 'Orang'}
+                    </option>
+                  ))}
+                </select>
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg className="h-5 w-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
+              </div>
             </div>
             
-            <div>
-              <p className="block text-sm font-medium text-emerald-800/80 mb-3">Konfirmasi Kehadiran</p>
-              <div className="grid gap-3">
-                {rsvpOptions.map((option) => (
-                  <button
-                    key={option.id}
-                    type="button"
-                    onClick={() => setSelectedOption(option.id)}
-                    className={`flex items-center space-x-3 w-full p-4 rounded-xl border-2 transition-all ${
-                      selectedOption === option.id 
-                        ? 'border-emerald-400 bg-emerald-50/50' 
-                        : 'border-emerald-100 hover:border-emerald-200 bg-white/50'
-                    }`}
-                  >
-                    <span className="text-2xl">{option.emoji}</span>
-                    <span className="font-medium text-emerald-900">{option.label}</span>
-                  </button>
-                ))}
+            <div className='pointer-events-auto'>
+              <p className="block text-sm font-medium text-amber-800/90 mb-2">Konfirmasi Kehadiran</p>
+              <div className="grid grid-cols-3 gap-3">
+                {rsvpOptions.map((option) => {
+                  const isSelected = selectedOption === option.label;
+                  return (
+                    <button
+                      key={option.id}
+                      type="button"
+                      onClick={() => setSelectedOption(option.label)}
+                      className={`flex flex-col items-center justify-center p-3 rounded-lg border transition-colors ${
+                        isSelected 
+                          ? `${option.selectedBg} ${option.selectedBorder} ${option.selectedText} font-medium`
+                          : 'border-amber-200 text-amber-700 hover:bg-amber-50'
+                      }`}
+                    >
+                      <span className={`text-xl mb-1 ${isSelected ? 'scale-110' : ''} transition-transform`}>
+                        {option.emoji}
+                      </span>
+                      <span className="text-sm">{option.label}</span>
+                    </button>
+                  );
+                })}
               </div>
             </div>
             
             <button
               type="submit"
-              disabled={!selectedOption || !name.trim()}
-              className={`w-full py-3 px-6 rounded-full font-medium text-white transition-colors ${
-                selectedOption && name.trim() 
-                  ? 'bg-emerald-500 hover:bg-emerald-600' 
-                  : 'bg-emerald-300 cursor-not-allowed'
+              disabled={!selectedOption}
+              className={`w-full py-3 px-4 rounded-lg font-medium text-white transition-colors ${
+                !selectedOption
+                  ? 'bg-amber-200 cursor-not-allowed text-amber-700'
+                  : selectedOption === 'Tidak Hadir'
+                  ? 'bg-red-500 hover:bg-red-600'
+                  : 'bg-amber-500 hover:bg-amber-600'
               }`}
             >
               Konfirmasi
             </button>
           </form>
-          
-          <p className="text-xs text-center mt-6 text-emerald-700/70">
-            Terima kasih atas konfirmasi kehadirannya. Kami tunggu kehadiran Anda!
-          </p>
         </div>
+        
+        <div className='absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 rounded-sm border-amber-400/80' />
+        <div className='absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 rounded-sm border-amber-400/80' />
+        <div className='absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 rounded-sm border-amber-400/80' />
+        <div className='absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 rounded-sm border-amber-400/80' />
       </div>
     </div>
   );
