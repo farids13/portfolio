@@ -13,6 +13,7 @@ import CommentsSection from './_components/CommentsSection';
 import ThankYouSection from './_components/ThankYouSection';
 import EventInformationSection from './_components/EventInformationSection';
 import SaveTheDateSection from './_components/SaveTheDateSection';
+import CommentForm from './_components/CommentForm';
 
 function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: number }) {
   const groupRef = useRef<THREE.Group>(null);
@@ -352,12 +353,18 @@ export default function CubeScene() {
         {scrollYPercent >= 72 && scrollYPercent <= 80 && (
         <RSVPSection scrollY={Number(scrollYPercent.toFixed(0))} start={70} end={80} />
         )}
-        {scrollYPercent >= 81 && scrollYPercent <= 90 && (
-        <CommentsSection
+        {scrollYPercent >= 80 && scrollYPercent <= 85 && (
+        <CommentForm
           scrollY={Number(scrollYPercent.toFixed(0))}
           start={80}
+          end={85}
+        />
+        )}
+        {scrollYPercent >= 85 && scrollYPercent <= 90 && (
+        <CommentsSection
+          scrollY={Number(scrollYPercent.toFixed(0))}
+          start={85}
           end={90}
-          stay={87}
         />
         )}
         {scrollYPercent >= 91 && scrollYPercent <= 100 && (

@@ -183,7 +183,7 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ scrollY, start, end }) => {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-300 focus:border-amber-300 text-amber-900 placeholder-amber-300"
+                className="w-full px-4 py-2 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-300 focus:border-amber-300 text-amber-900 placeholder-amber-600/50"
                 placeholder="Masukkan nama lengkap"
                 required
               />
