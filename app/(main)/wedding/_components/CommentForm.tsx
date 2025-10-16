@@ -3,6 +3,9 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { FaPaperPlane } from 'react-icons/fa';
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { db } from '@/lib/firebase';
+import Logger from '@/app/(main)/_utils/logger';
 
 interface CommentFormProps {
     scrollY: number;
@@ -40,6 +43,15 @@ export default function CommentForm({ scrollY, start, end }: CommentFormProps) {
 
         setIsSubmitting(true);
         try {
+            // Save to Firestore
+            await addDoc(collection(db, 'comments'), {
+                name: name.trim(),
+                message: message.trim(),
+                createdAt: serverTimestamp(),
+                isApproved: false
+            });
+
+            // Reset form and show success
             setName('');
             setMessage('');
             setIsSubmitted(true);
@@ -47,6 +59,9 @@ export default function CommentForm({ scrollY, start, end }: CommentFormProps) {
             setTimeout(() => {
                 setIsSubmitted(false);
             }, 5000);
+        } catch (error) {
+            Logger.error('Gagal menyimpan komentar', error);
+            alert('Gagal mengirim pesan. Silakan coba lagi.');
         } finally {
             setIsSubmitting(false);
         }
@@ -111,15 +126,14 @@ export default function CommentForm({ scrollY, start, end }: CommentFormProps) {
 
     return (
         <div 
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-8"
             style={{
                 opacity: progress < 0.1 ? progress * 10 : progress > 0.9 ? (1 - (progress - 0.9) * 10) : 1,
                 transition: `opacity ${ANIMATION_DURATION}ms`,
                 pointerEvents: 'none' as const,
             }}
         >
-            <div className="relative w-full max-w-md">
-                {/* Paper-like background effect */}
+            <div className="relative w-full max-w-md min-w-[300px]">
                 <div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-white/90 to-amber-50/80 backdrop-blur-sm shadow-lg overflow-hidden border border-amber-100/50'>
                     <div className='absolute inset-0 bg-[linear-gradient(0deg,transparent_24%,rgba(180,83,9,0.05)_25%,rgba(180,83,9,0.05)_26%,transparent_27%,transparent_74%,rgba(180,83,9,0.05)_75%,rgba(180,83,9,0.05)_76%,transparent_77%,transparent),linear-gradient(90deg,transparent_24%,rgba(180,83,9,0.05)_25%,rgba(180,83,9,0.05)_26%,transparent_27%,transparent_74%,rgba(180,83,9,0.05)_75%,rgba(180,83,9,0.05)_76%,transparent_77%,transparent)] bg-[length:30px_30px] opacity-20'></div>
                 </div>
