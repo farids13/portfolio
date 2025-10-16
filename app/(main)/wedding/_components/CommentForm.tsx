@@ -48,7 +48,7 @@ export default function CommentForm({ scrollY, start, end }: CommentFormProps) {
                 name: name.trim(),
                 message: message.trim(),
                 createdAt: serverTimestamp(),
-                isApproved: false
+                isApproved: true
             });
 
             // Reset form and show success
