@@ -367,11 +367,10 @@ export default function CubeScene() {
           end={90}
         />
         )}
-        {scrollYPercent >= 91 && scrollYPercent <= 100 && (
+        {scrollYPercent >= 91 && scrollYPercent <= 101 && (
         <ThankYouSection
           scrollY={Number(scrollYPercent.toFixed(0))}
           start={90}
-          end={100}
         />
         )}
       </div>
