@@ -1,19 +1,19 @@
 'use client';
 
-import { Canvas, useFrame, useLoader, useThree } from '@react-three/fiber';
+import { Canvas, useFrame, useLoader } from '@react-three/fiber';
 import { useRef, useState, useEffect } from 'react';
 import * as THREE from 'three';
-import WelcomeSection from './_components/WelcomeSection';
-import QuranSection from './_components/QuranSection';
-import WeddingEvent from './_components/EventInformationSection';
+
+import CommentForm from './_components/CommentForm';
+import CommentsSection from './_components/CommentsSection';
 import CoupleNames from './_components/CoupleNames';
 import DigitalWallet from './_components/DigitalWallet';
-import RSVPSection from './_components/RSVPSection';
-import CommentsSection from './_components/CommentsSection';
-import ThankYouSection from './_components/ThankYouSection';
 import EventInformationSection from './_components/EventInformationSection';
+import QuranSection from './_components/QuranSection';
+import RSVPSection from './_components/RSVPSection';
 import SaveTheDateSection from './_components/SaveTheDateSection';
-import CommentForm from './_components/CommentForm';
+import ThankYouSection from './_components/ThankYouSection';
+import WelcomeSection from './_components/WelcomeSection';
 
 function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: number }) {
   const groupRef = useRef<THREE.Group>(null);
@@ -21,7 +21,7 @@ function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: nu
   const scrollPercent = scrollY / scrollMax * 100;
 
   useFrame(({ camera }) => {
-    if (!groupRef.current) return;
+    if (!groupRef.current) {return;}
     let valueMoveZ = -(scrollProgress * 8)
     if (scrollPercent <= 28) {
       camera.position.set(0, 0, valueMoveZ);
@@ -33,7 +33,7 @@ function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: nu
       let moveY = (scrollPercent - 28) * moveSpeed * 2;
 
       let limitX = 0.2;
-      let limitY = 0.23;
+      const limitY = 0.23;
       let limitZ = -2.45;
 
       if (scrollPercent > 38) {
@@ -64,9 +64,9 @@ function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: nu
       <OutsideGate x={0} y={0} z={-1.2} />
       <OutsideGate x={0} y={0} z={-0.8} />
       <OutsideGate x={0} y={0} z={-0.4} />
-      <TableFlower x={0} y={-0.2} z={-1} />
-      <TableFlower x={0} y={-0.2} z={-1.4} />
-      <TableFlower x={0} y={-0.2} z={-1.8} />
+      <TableFlower x={0} y={-0.54} z={-1} />
+      <TableFlower x={0} y={-0.54} z={-1.4} />
+      <TableFlower x={0} y={-0.54} z={-1.8} />
       <RedCarpet startZ={-0.3} endZ={-3} />
       <StagePlatform x={0} y={-0.5} z={-3.5} width={3.5} height={0.1} depth={1.5} />
       <Couple x={0} y={0.03} z={-2.8} />
@@ -108,7 +108,6 @@ function StagePlatform({ x, y, z, width, height, depth }: { x: number, y: number
         <primitive object={stageMaterial} attach="material" />
       </mesh>
 
-      {/* Top surface with different color for contrast */}
       <mesh position={[0, height / 2, 0]}>
         <boxGeometry args={[width + 0.2, 0.1, depth + 0.2]} />
         <meshStandardMaterial
@@ -118,7 +117,6 @@ function StagePlatform({ x, y, z, width, height, depth }: { x: number, y: number
         />
       </mesh>
 
-      {/* Decorative borders */}
       <mesh position={[0, height / 2 - 0.05, 0]} rotation={[0, 0, 0]}>
         <boxGeometry args={[width + 0.2, 0.05, depth + 0.2]} />
         <meshStandardMaterial
@@ -128,7 +126,6 @@ function StagePlatform({ x, y, z, width, height, depth }: { x: number, y: number
         />
       </mesh>
 
-      {/* Add some ambient light to brighten the platform */}
       <ambientLight intensity={0.7} />
       <pointLight position={[0, 2, 0]} intensity={1} distance={10} />
     </group>
@@ -224,7 +221,7 @@ function TableFlower({ x, y, z }: { x: number, y: number, z: number }) {
   const offset = 0.42;
 
   return (
-    <group position={[x, -0.54, z]}>
+    <group position={[x, y, z]}>
       <mesh position={[offset, 0, 0]} rotation={[0, 0, 0]}>
         <planeGeometry args={[width, height, 1]} />
         <meshBasicMaterial
