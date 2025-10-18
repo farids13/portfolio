@@ -1,7 +1,7 @@
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+
 import Logger from '@/app/(main)/_utils/logger';
-import { trackError } from '@/lib/errorTracking';
+import { db } from '@/lib/firebase';
 
 type RSVPStatus = 'hadir' | 'tidak-hadir' | 'belum-tau';
 
@@ -9,7 +9,7 @@ interface RSVPData {
   name: string;
   guestCount: number;
   status: RSVPStatus;
-  submittedAt?: any;
+  submittedAt?: unknown;
   ipAddress?: string;
   userAgent?: string;
 }
@@ -19,7 +19,7 @@ const COLLECTION_NAME = 'wedding_rsvps';
 // Get client IP address (client-side only)
 const getClientIP = async (): Promise<string> => {
   try {
-    if (typeof window === 'undefined') return '';
+    if (typeof window === 'undefined') {return '';}
     const response = await fetch('https://api.ipify.org?format=json');
     const data = await response.json();
     return data.ip || '';

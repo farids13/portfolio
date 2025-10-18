@@ -1,5 +1,8 @@
 "use client"
+import Image from 'next/image'
 import React from 'react'
+
+
 import { useI18n } from '@/hooks/useI18n';
 
 export default function LanguageSelector({ className }: { className?: string }) {
@@ -9,7 +12,7 @@ export default function LanguageSelector({ className }: { className?: string }) 
     }
 
     return (
-        <div className={className}>
+        <div className={`${className} min-w-[80px]`}>
             <button
                 onClick={() => changeLocale('en')}
                 className={`px-2 py-1 rounded-md text-sm transition-all duration-200 ${locale === 'en'
@@ -17,7 +20,8 @@ export default function LanguageSelector({ className }: { className?: string }) 
                     : "text-gray-300 hover:text-white hover:bg-primary/20"
                     }`}
             >
-                🇺🇸 EN
+                <Image src="/images/us-flag.png" alt="EN" width={20} height={20} />
+                <span>EN</span>
             </button>
             <button
                 onClick={() => changeLocale('id')}
@@ -26,7 +30,8 @@ export default function LanguageSelector({ className }: { className?: string }) 
                     : "text-gray-300 hover:text-white hover:bg-primary/20"
                     }`}
             >
-                🇮🇩 ID
+                <Image src="/images/indo-flag.png" alt="ID" width={20} height={20} />
+                <span>ID</span>
             </button>
         </div>
     )

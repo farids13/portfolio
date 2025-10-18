@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { NextRequest } from "next/server";
 import { v4 as uuidv4 } from "uuid";
+
+import type { NextRequest } from "next/server";
 
 // Paths that should be excluded from middleware processing
 const publicPaths = [
@@ -35,15 +36,13 @@ export function middleware(request: NextRequest): NextResponse {
       sameSite: "lax",
       path: "/"
     });
-    console.log("New device ID generated:", randomUUID);
   }
 
   return response;
 }
 
-// Configure which paths the middleware should run on
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|images/).*)',
+    '/((?!_next(?:/static|/image)|favicon\\.ico|sitemap\\.xml|robots\\.txt|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico|txt|css|js|map)$).*)',
   ],
 };

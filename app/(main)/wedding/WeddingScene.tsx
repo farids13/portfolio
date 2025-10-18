@@ -52,8 +52,6 @@ function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: nu
       camera.position.set(limitX > 0 ? -moveX : -limitX + (moveX * 0.5), moveY, valueMoveZ);
       camera.lookAt(camera.position.x, camera.position.y, -8);
     }
-
-    // console.log(scrollProgress, camera.position);
   });
 
   return (
@@ -328,7 +326,7 @@ export default function CubeScene() {
             end={50}
             name="Asri Dilla Wahyuni"
             parents="Putri dari "
-            dad="Bapak Maryono"
+            dad="Bapak Mariyono"
             mom="Ibu Masfuah"
             position={{
               top: 'top-28 xs:top-29 md:top-30 lg:top-31',
