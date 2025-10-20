@@ -41,7 +41,7 @@ const EventCard: React.FC<EventCardProps> = ({
         </div>
 
         <div className="flex flex-col items-center mb-4 pt-2 text-amber-800">
-            <h3 className="text-xl font-sans tracking-[3px] uppercase font-bold text-amber-800 mb-2">{title}</h3>
+            <h3 className="text-xl font-allura tracking-[3px] uppercase font-bold text-amber-800 mb-2">{title}</h3>
             <div className="flex items-center gap-5 justify-center w-full rounded-lg relative overflow-hidden">
                 <div className="w-1/3 max-w-[100px] h-1/2 border-t-2 border-b-2 p-1 border-amber-300/80">
                     <h2 className="text-center text-md sm:text-lg uppercase tracking-wide lg:text-xl">{day}</h2>

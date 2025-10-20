@@ -287,19 +287,19 @@ export default function CubeScene() {
         {scrollYPercent >= 0 && scrollYPercent <= 6 && (
           <WelcomeSection scrollY={Number(scrollYPercent.toFixed(0))} start={0} end={5} />
         )}
-        {scrollYPercent >= 4 && scrollYPercent <= 13 && (
-          <QuranSection scrollY={Number(scrollYPercent.toFixed(0))} start={5} end={12} />
+        {scrollYPercent >= 4 && scrollYPercent <= 12 && (
+          <QuranSection scrollY={Number(scrollYPercent.toFixed(0))} start={5} end={10} />
         )}
-        {scrollYPercent >= 12 && scrollYPercent <= 29 && (
-          <>
-            <SaveTheDateSection scrollY={Number(scrollYPercent.toFixed(0))} start={13} end={19} />
-            <EventInformationSection scrollY={Number(scrollYPercent.toFixed(0))} start={19} end={27} />
-          </>
+        {scrollYPercent >= 12 && scrollYPercent <= 20 && (
+            <SaveTheDateSection scrollY={Number(scrollYPercent.toFixed(0))} start={11} end={19} />
         )}
-        {scrollYPercent >= 29 && scrollYPercent <= 41 && (
+        {scrollYPercent >= 20 && scrollYPercent <= 30 && (
+          <EventInformationSection scrollY={Number(scrollYPercent.toFixed(0))} start={20} end={29} />
+        )}
+        {scrollYPercent >= 31 && scrollYPercent <= 41 && (
           <CoupleNames
             scrollY={Number(scrollYPercent.toFixed(0))}
-            start={30}
+            start={32}
             end={40}
             name="Farid Satria"
             parents="Putra dari "
@@ -342,7 +342,7 @@ export default function CubeScene() {
             }}
           />
         )}
-        {scrollYPercent >= 56 && scrollYPercent <= 71 && (
+        {scrollYPercent >= 54 && scrollYPercent <= 71 && (
         <DigitalWallet scrollY={Number(scrollYPercent.toFixed(0))} start={57} end={70} />
         )}
         {scrollYPercent >= 72 && scrollYPercent <= 80 && (
