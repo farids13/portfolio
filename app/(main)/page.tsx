@@ -1,18 +1,23 @@
 "use client";
-import ExperienceCard from "@/components/main/ExperienceCard";
 import Image from "next/image";
-import CarouselProject from "@/components/main/CarouselProjectCard";
-import Button from "@/components/ui/Button";
-import ContactForm from "@/components/main/ContactForm";
-import Footer from "@/components/main/Footer";
-import skillsData from "@/data/skills.json";
-import additionalSkillsData from "@/data/additional-skills.json";
-import SkillGridCarousel from "@/components/main/SkillGridCarousel";
-import { ReactElement, useState } from "react";
-import DownloadCVButton from "@/components/main/DownloadCVButton";
-import AdditionalSkills from "@/app/(main)/_components/AdditionalSkills";
-import ProjectSlide from "@/components/main/ProjectSlide";
+import { useState } from "react";
+
 import Header from "./_components/Header";
+
+import type { ReactElement} from "react";
+
+
+import AdditionalSkills from "@/app/(main)/_components/AdditionalSkills";
+import CarouselProject from "@/components/main/CarouselProjectCard";
+import ContactForm from "@/components/main/ContactForm";
+import DownloadCVButton from "@/components/main/DownloadCVButton";
+import ExperienceCard from "@/components/main/ExperienceCard";
+import Footer from "@/components/main/Footer";
+import ProjectSlide from "@/components/main/ProjectSlide";
+import SkillGridCarousel from "@/components/main/SkillGridCarousel";
+import Button from "@/components/ui/Button";
+import additionalSkillsData from "@/data/additional-skills.json";
+import skillsData from "@/data/skills.json";
 import { useI18n } from "@/hooks/useI18n";
 
 export default function Home(): ReactElement {
