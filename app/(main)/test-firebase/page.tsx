@@ -1,10 +1,16 @@
 'use client';
 
+import { logEvent } from 'firebase/analytics';
+import { collection, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
 import { useEffect, useState } from 'react';
-import { db } from '@/lib/firebase';
-import { collection, getDocs, addDoc, serverTimestamp, DocumentData } from 'firebase/firestore';
-import { getAnalytics, logEvent } from 'firebase/analytics';
+
+import type { Analytics} from 'firebase/analytics';
+import type { DocumentData } from 'firebase/firestore';
+
 import { trackError, trackEvent } from '@/lib/errorTracking';
+import { db } from '@/lib/firebase';
+
+
 
 interface TestResult {
   id: string;
@@ -13,10 +19,8 @@ interface TestResult {
 }
 
 export default function TestFirebase() {
-  const [status, setStatus] = useState('Menguji koneksi...');
-  const [testData, setTestData] = useState('');
   const [testResults, setTestResults] = useState<TestResult[]>([]);
-  const [analytics, setAnalytics] = useState<any>(null);
+  const [analytics, setAnalytics] = useState<unknown>(null);
 
   // Initialize analytics
   useEffect(() => {
@@ -121,7 +125,7 @@ export default function TestFirebase() {
     // This will cause an unhandled exception
     // @ts-ignore - Intentionally causing an error
     const willCrash = null.someMethod();
-    console.log(willCrash); // This line will never be reached
+    console.error(willCrash); // This line will never be reached
   };
 
   // Test Analytics
@@ -133,7 +137,7 @@ export default function TestFirebase() {
     
     try {
       const eventName = 'test_event_' + Math.floor(Math.random() * 1000);
-      logEvent(analytics, eventName, {
+      logEvent(analytics as unknown as Analytics, eventName, {
         test_param: 'test_value',
         timestamp: new Date().toISOString()
       });

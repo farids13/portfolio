@@ -1,7 +1,10 @@
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
-import { Locale, getMessage, getCurrentLocale, setLocaleInCookie } from '../lib/i18n';
+
+import { getMessage, getCurrentLocale, setLocaleInCookie } from '../lib/i18n';
+
+import type { Locale} from '../lib/i18n';
 
 export function useI18n() {
   const [currentLocale, setCurrentLocale] = useState<Locale>('en');

@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import React, { useState, useEffect } from 'react';
 import { HiOutlineDocumentDuplicate, HiCheckCircle } from 'react-icons/hi2';
 
 interface DigitalWalletProps {
@@ -32,8 +32,8 @@ const DigitalWallet: React.FC<DigitalWalletProps> = ({ scrollY, start, end }) =>
   const [showToast, setShowToast] = useState(false);
 
   const getProgress = () => {
-    if (scrollY < start) return 0;
-    if (scrollY > end) return 1;
+    if (scrollY < start) {return 0;}
+    if (scrollY > end) {return 1;}
     return (scrollY - start) / (end - start);
   };
 
@@ -50,7 +50,7 @@ const DigitalWallet: React.FC<DigitalWalletProps> = ({ scrollY, start, end }) =>
     setIsVisible(isActive);
   }, [isActive]);
 
-  if (!isVisible) return null;
+  if (!isVisible) {return null;}
 
   const opacity = progress < 0.1 ? progress * 10 : progress > 0.9 ? (1 - (progress - 0.9) * 10) : 1;
 

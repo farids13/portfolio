@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
 import Image from 'next/image';
+import React from 'react';
 
 const styles = `
   @keyframes pulse {
@@ -75,14 +75,14 @@ export default function CoupleNames({
     const SCROLL_END = end ?? 10;
 
     const getProgress = () => {
-        if (scrollY < SCROLL_START) return 0;
-        if (scrollY > SCROLL_END) return 1;
+        if (scrollY < SCROLL_START) {return 0;}
+        if (scrollY > SCROLL_END) {return 1;}
         return (scrollY - SCROLL_START) / (SCROLL_END - SCROLL_START);
     };
 
     const getFadeInOutOpacity = () => {
-        if (scrollY <= SCROLL_START) return 0;
-        if (scrollY >= SCROLL_END) return 0;
+        if (scrollY <= SCROLL_START) {return 0;}
+        if (scrollY >= SCROLL_END) {return 0;}
 
         const progress = (scrollY - SCROLL_START) / (SCROLL_END - SCROLL_START);
         const smoothStep = (t: number) => t * t * (3 - 2 * t);
@@ -112,7 +112,7 @@ export default function CoupleNames({
         willChange: 'opacity, transform'
     };
 
-    if (opacity <= 0) return null;
+    if (opacity <= 0) {return null;}
 
     // Build position classes
     const positionClasses = [

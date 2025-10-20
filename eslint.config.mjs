@@ -8,8 +8,8 @@ import unusedImports from 'eslint-plugin-unused-imports';
 
 export default [
   {
-    files: ['**/*.{ts,tsx,js,jsx}'],
-    ignores: ['node_modules', '.next', 'out', 'dist', 'build'],
+    files: ['**/*.{ts,tsx}'],
+    ignores: ['node_modules', '.next/**', 'out/**', 'dist/**', 'build/**'],
     languageOptions: {
       parser: parserTs,
       parserOptions: {

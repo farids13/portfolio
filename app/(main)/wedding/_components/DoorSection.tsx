@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import React, { useState } from 'react';
 
 interface DoorSectionProps {
   onOpenComplete: () => void;
@@ -7,7 +7,6 @@ interface DoorSectionProps {
 
 export default function DoorSection({ onOpenComplete }: DoorSectionProps) {
   const [isDoorOpening, setIsDoorOpening] = useState(false);
-  const [buttonOpacity, setButtonOpacity] = useState(1);
   const [isScaleAnimating, setIsScaleAnimating] = useState(false);
 
   const scaleClasses = isScaleAnimating
@@ -23,7 +22,6 @@ export default function DoorSection({ onOpenComplete }: DoorSectionProps) {
     : '';
 
   const handleOpenInvitation = () => {
-    setButtonOpacity(0);
     setTimeout(() => {
       setIsDoorOpening(true);
     }, 100);

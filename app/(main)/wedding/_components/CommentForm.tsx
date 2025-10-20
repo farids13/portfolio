@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
-import { FaPaperPlane } from 'react-icons/fa';
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import { useSearchParams } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
+import { FaPaperPlane } from 'react-icons/fa';
+
 import Logger from '@/app/(main)/_utils/logger';
+import { db } from '@/lib/firebase';
 
 interface CommentFormProps {
     scrollY: number;
@@ -24,8 +25,8 @@ export default function CommentForm({ scrollY, start, end }: CommentFormProps) {
     }, [searchParams]);
 
     const getProgress = () => {
-        if (scrollY < start) return 0;
-        if (scrollY > end) return 1;
+        if (scrollY < start) {return 0;}
+        if (scrollY > end) {return 1;}
         return (scrollY - start) / (end - start);
     };
 
@@ -39,7 +40,7 @@ export default function CommentForm({ scrollY, start, end }: CommentFormProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!name.trim() || !message.trim()) return;
+        if (!name.trim() || !message.trim()) {return;}
 
         setIsSubmitting(true);
         try {

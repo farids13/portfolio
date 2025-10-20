@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useRef, useState } from "react";
+
 import SkillCard from "@/components/ui/SkillCard";
-import ExperienceCard from "@/components/main/ExperienceCard";
 
 interface Skill {
   id: number;
@@ -22,7 +22,7 @@ const SkillGridCarousel: React.FC<SkillGridCarouselProps> = ({ skills }) => {
 
   const checkScroll = () => {
     const grid = gridRef.current;
-    if (!grid) return;
+    if (!grid) {return;}
     setShowLeft(grid.scrollLeft > 0);
     setShowRight(grid.scrollLeft + grid.clientWidth < grid.scrollWidth - 1);
   };
@@ -64,7 +64,7 @@ const SkillGridCarousel: React.FC<SkillGridCarouselProps> = ({ skills }) => {
         <div className="flex flex-col gap-3 sm:gap-2 min-h-[280px]">
           {rowSkills.map((row, rowIdx) => (
             <div key={rowIdx} className="flex gap-3 sm:gap-2">
-              {row.map((skill, colIdx) => (
+              {row.map((skill) => (
                 <SkillCard
                   key={skill.id}
                   image={skill.image}

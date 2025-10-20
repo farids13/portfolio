@@ -1,5 +1,6 @@
 "use client";
 import dynamic from 'next/dynamic';
+
 import styles from './wedding.module.css';
 
 const WeddingScene = dynamic(

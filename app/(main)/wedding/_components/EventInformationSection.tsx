@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaCalendarAlt, FaClock, FaMapMarkerAlt, FaHeart, FaRing, FaGlassCheers, FaMapMarkedAlt, FaCalendarPlus } from 'react-icons/fa';
+import { FaMapMarkerAlt, FaGlassCheers, FaMapMarkedAlt, FaCalendarPlus } from 'react-icons/fa';
 import { MdHandshake } from 'react-icons/md';
 
 interface EventInformationProps {
@@ -90,12 +90,12 @@ const EventCard: React.FC<EventCardProps> = ({
 );
 
 const EventInformationSection: React.FC<EventInformationProps> = ({ scrollY, start, end }) => {
-    let SCROLL_START = start ?? 20;
-    let SCROLL_END = end ?? 40;
+    const SCROLL_START = start ?? 20;
+    const SCROLL_END = end ?? 40;
     const ANIMATION_DURATION = 300;
     const getProgress = () => {
-        if (scrollY < SCROLL_START) return 0;
-        if (scrollY > SCROLL_END) return 1;
+        if (scrollY < SCROLL_START) {return 0;}
+        if (scrollY > SCROLL_END) {return 1;}
         return (scrollY - SCROLL_START) / (SCROLL_END - SCROLL_START);
     };
 

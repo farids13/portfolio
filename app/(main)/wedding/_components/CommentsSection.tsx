@@ -1,15 +1,17 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
-import { FaRegHeart, FaHeart, FaRegCommentDots, FaChevronUp } from 'react-icons/fa';
 import { collection, query, orderBy, onSnapshot, doc, updateDoc } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import React, { useState, useEffect } from 'react';
+import { FaRegHeart, FaHeart, FaChevronUp } from 'react-icons/fa';
+
 import Logger from '@/app/(main)/_utils/logger';
+import { db } from '@/lib/firebase';
 
 interface Comment {
   id: string;
   name: string;
   message: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   createdAt: any;
   isApproved: boolean;
   likes: number;
@@ -58,7 +60,7 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
       try {
         setLoading(true);
 
-        console.log('Setting up Firestore listener...');
+        Logger.info('Setting up Firestore listener...');
 
         const commentsRef = collection(db, 'comments');
 
@@ -67,12 +69,12 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
         const unsubscribe = onSnapshot(
           q,
           (querySnapshot) => {
-            if (!isMounted) return;
-            console.log('Snapshot received. Number of docs:', querySnapshot.size);
+            if (!isMounted) {return;}
+            Logger.info('Snapshot received. Number of docs:', querySnapshot.size);
 
             try {
               if (querySnapshot.empty) {
-                console.log('No documents found in the comments collection');
+                Logger.info('No documents found in the comments collection');
                 setComments([]);
                 return;
               }
@@ -118,7 +120,7 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
           },
           (error) => {
             Logger.error('Error fetching comments:', error);
-            if (isMounted) setLoading(false);
+            if (isMounted) {setLoading(false);}
           }
         );
 
@@ -130,7 +132,7 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
       } catch (error) {
         console.error('Error setting up Firestore listener:', error);
         Logger.error('Error setting up Firestore listener:', error);
-        if (isMounted) setLoading(false);
+        if (isMounted) {setLoading(false);}
       }
     };
 
@@ -142,12 +144,13 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
   }, [isInitialLoad]);
 
   useEffect(() => {
-    console.log('Comments updated:', comments);
+    Logger.info('Comments updated:', comments);
   }, [comments]);
   useEffect(() => {
-    console.log('Loading state changed:', loading);
+    Logger.info('Loading state changed:', loading);
   }, [loading]);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const formatDate = (timestamp: any) => {
     const date = timestamp?.toDate ? timestamp.toDate() : new Date(timestamp);
 
@@ -159,28 +162,28 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
       hour12: false
     });
 
-    if (diffInSeconds < 60) return (
+    if (diffInSeconds < 60) {return (
       <span className="flex items-center gap-1">
         <span className="w-2 h-2 rounded-full bg-green-400"></span>
         <span>Baru saja • {timeStr}</span>
       </span>
-    );
+    );}
 
-    if (diffInSeconds < 3600) return (
+    if (diffInSeconds < 3600) {return (
       <span>{Math.floor(diffInSeconds / 60)} menit lalu • {timeStr}</span>
-    );
+    );}
 
-    if (diffInSeconds < 86400) return (
+    if (diffInSeconds < 86400) {return (
       <span>{Math.floor(diffInSeconds / 3600)} jam lalu • {timeStr}</span>
-    );
+    );}
 
     const isToday = now.toDateString() === date.toDateString();
     const yesterday = new Date(now);
     yesterday.setDate(yesterday.getDate() - 1);
     const isYesterday = yesterday.toDateString() === date.toDateString();
 
-    if (isToday) return <span>Hari ini • {timeStr}</span>;
-    if (isYesterday) return <span>Kemarin • {timeStr}</span>;
+    if (isToday) {return <span>Hari ini • {timeStr}</span>;}
+    if (isYesterday) {return <span>Kemarin • {timeStr}</span>;}
 
     return (
       <span>
@@ -193,17 +196,14 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
   };
 
   const getProgress = () => {
-    if (scrollY < start) return 0;
-    if (scrollY > end) return 1;
+    if (scrollY < start) {return 0;}
+    if (scrollY > end) {return 1;}
     return (scrollY - start) / (end - start);
   };
 
   const progress = getProgress();
   const ANIMATION_DURATION = 500;
 
-  const currentPage = useMemo(() => {
-    return progress < 0.1 ? 0 : progress > 0.9 ? 1 : Math.floor(progress * 2);
-  }, [progress]);
 
   if (loading) {
     return (

@@ -10,17 +10,17 @@ const ANIMATION_DURATION = 500;
 
 export default function QuranSection({ scrollY, start, end }: QuranSectionProps) {
   const getProgress = () => {
-    if (scrollY < start) return 0;
-    if (scrollY > end) return 1;
+    if (scrollY < start) {return 0;}
+    if (scrollY > end) {return 1;}
     return (scrollY - start) / (end - start);
   };
-  let SCROLL_START = start ?? 10;
-  let SCROLL_END = end ?? 20;
+  const SCROLL_START = start ?? 10;
+  const SCROLL_END = end ?? 20;
 
   const progress = getProgress();
   const isVisible = scrollY >= SCROLL_START && scrollY <= SCROLL_END;
 
-  if (!isVisible && progress === 0) return null;
+  if (!isVisible && progress === 0) {return null;}
 
   return (
     <div

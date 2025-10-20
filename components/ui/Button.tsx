@@ -1,7 +1,9 @@
 "use client";
 
 import clsx from "clsx";
-import React, { ReactElement } from "react";
+import React from "react";
+
+import type { ReactElement } from "react";
 
 export type ButtonProps = {
   children: React.ReactNode;

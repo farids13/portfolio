@@ -1,8 +1,8 @@
 // components/HoverCarousel.tsx
 'use client';
-import React, { useState, useRef } from 'react';
-import Image from 'next/image';
 import clsx from 'clsx';
+import Image from 'next/image';
+import React, { useState, useRef } from 'react';
 
 const items = [
 
@@ -40,7 +40,7 @@ export default function HoverCarousel() {
   const [hoveredIndex, setHoveredIndex] = useState<number>(0);
 
   const startDrag = (e: React.MouseEvent | React.TouchEvent) => {
-    if (!containerRef.current) return;
+    if (!containerRef.current) {return;}
     setIsDragging(true);
     const pageX = 'touches' in e ? e.touches[0].pageX : e.pageX;
     setStartX(pageX - containerRef.current.offsetLeft);
@@ -48,7 +48,7 @@ export default function HoverCarousel() {
   };
 
   const dragMove = (e: React.MouseEvent | React.TouchEvent) => {
-    if (!isDragging || !containerRef.current) return;
+    if (!isDragging || !containerRef.current) {return;}
     e.preventDefault();
     const pageX = 'touches' in e ? e.touches[0].pageX : e.pageX;
     const x = pageX - containerRef.current.offsetLeft;

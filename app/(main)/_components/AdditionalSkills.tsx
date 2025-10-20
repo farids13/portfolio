@@ -1,9 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 import Image from 'next/image';
-import SkillCard from '@/components/ui/SkillCard';
-import Slider from 'react-slick';
-import type { Settings } from 'react-slick';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import Slider from 'react-slick';
+
+import type { Settings } from 'react-slick';
+
+import SkillCard from '@/components/ui/SkillCard';
 import { useI18n } from '@/hooks/useI18n';
 
 export type SkillItem = {
@@ -24,21 +27,21 @@ export default function AdditionalSkills({ items }: AdditionalSkillsProps) {
   const {t} = useI18n();
   const triggerShow = () => {
     setShowArrows(true);
-    if (hideTimer.current) clearTimeout(hideTimer.current);
+    if (hideTimer.current) {clearTimeout(hideTimer.current);}
     hideTimer.current = setTimeout(() => setShowArrows(false), 3000);
   };
 
   const handleWheel: React.WheelEventHandler<HTMLDivElement> = (e) => {
     const now = Date.now();
-    if (now - lastWheelAt.current < 200) return;
+    if (now - lastWheelAt.current < 200) {return;}
     const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-    if (Math.abs(delta) < 5) return;
-    if (delta > 0) sliderRef.current?.slickNext();
-    else sliderRef.current?.slickPrev();
+    if (Math.abs(delta) < 5) {return;}
+    if (delta > 0) {sliderRef.current?.slickNext();}
+    else {sliderRef.current?.slickPrev();}
     lastWheelAt.current = now;
     triggerShow();
   };
-  useEffect(() => () => { if (hideTimer.current) clearTimeout(hideTimer.current); }, []);
+  useEffect(() => () => { if (hideTimer.current) {clearTimeout(hideTimer.current);} }, []);
 
   // Custom arrow component
   const Arrow = ({ onClick, direction, disabled }: { onClick?: () => void; direction: 'prev' | 'next'; disabled?: boolean }) => (

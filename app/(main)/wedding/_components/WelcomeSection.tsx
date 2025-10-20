@@ -12,8 +12,8 @@ const ANIMATION_DURATION = 300;
 
 export default function WelcomeSection({ scrollY, start, end }: WelcomeSectionProps) {
 
-  let SCROLL_START = start ?? 0;
-  let SCROLL_END = end ?? 10;
+  const SCROLL_START = start ?? 0;
+  const SCROLL_END = end ?? 10;
 
   const searchParams = useSearchParams();
   const guestName = searchParams.get('to') || 'Tamu Undangan';
@@ -29,8 +29,8 @@ export default function WelcomeSection({ scrollY, start, end }: WelcomeSectionPr
     const start = SCROLL_START + startOffset;
     const end = SCROLL_END + startOffset;
 
-    if (scrollY <= start) return 1;
-    if (scrollY >= end) return 0;
+    if (scrollY <= start) {return 1;}
+    if (scrollY >= end) {return 0;}
 
     return 1 - ((scrollY - start) / (end - start));
   };

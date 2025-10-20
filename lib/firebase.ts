@@ -1,8 +1,12 @@
-import { initializeApp, getApps, FirebaseApp } from 'firebase/app';
-import { getFirestore, Firestore } from 'firebase/firestore';
 import { getAnalytics, isSupported as isAnalyticsSupported } from 'firebase/analytics';
-import { getPerformance } from 'firebase/performance';
+import { initializeApp, getApps } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check';
+import { getFirestore } from 'firebase/firestore';
+import { getPerformance } from 'firebase/performance';
+
+import type { FirebaseApp } from 'firebase/app';
+import type { Firestore } from 'firebase/firestore';
+
 
 declare global {
   interface Window {
@@ -13,7 +17,7 @@ declare global {
 // Add gtag to Window interface
 declare global {
   interface Window {
-    gtag?: (...args: any[]) => void;
+    gtag?: (...args: unknown[]) => void;
   }
 }
 
@@ -29,10 +33,10 @@ export const firebaseConfig = {
 
 let firebaseApp: FirebaseApp;
 let db: Firestore;
-let analytics: any;
+let analytics: unknown;
 
 const initializeServices = async () => {
-  if (typeof window === 'undefined') return;
+  if (typeof window === 'undefined') {return;}
 
   if (!getApps().length) {
     firebaseApp = initializeApp(firebaseConfig);
@@ -78,7 +82,7 @@ if (typeof window !== 'undefined') {
 export { firebaseApp, db, analytics };
 
 export const initializeFirebase = async () => {
-  if (typeof window === 'undefined') return { firebaseApp, db };
+  if (typeof window === 'undefined') {return { firebaseApp, db };}
   
   await initializeServices();
   return { firebaseApp, db };

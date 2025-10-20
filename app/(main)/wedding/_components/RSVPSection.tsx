@@ -1,8 +1,10 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
+
 import { saveRSVP } from '../_utils/rsvpService';
+
 import Logger from '@/app/(main)/_utils/logger';
 
 interface RSVPSectionProps {
@@ -23,38 +25,31 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ scrollY, start, end }) => {
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    // Set initial name from URL parameter if available
     const guestName = searchParams.get('to');
     if (guestName) {
       setName(guestName);
     }
   }, [searchParams]);
   
-  const getProgress = (startOffset = 0, reverse = false) => {
-    const start = SCROLL_START + startOffset;
-    const end = SCROLL_END + startOffset;
-    const progress = Math.min(Math.max((scrollY - start) / (end - start), 0), 1);
-    return reverse ? 1 - progress : progress;
-  };
 
   const getFadeOutOpacity = (startOffset = 0) => {
     const start = SCROLL_START + startOffset;
     const end = SCROLL_END + startOffset;
 
-    if (scrollY <= start) return 0;
-    if (scrollY >= end) return 0;
+    if (scrollY <= start) {return 0;}
+    if (scrollY >= end) {return 0;}
     
     const progress = (scrollY - start) / (end - start);
     const smoothStep = (t: number) => t * t * (3 - 2 * t);
     
-    if (progress <= 0.2) return smoothStep(progress / 0.2);
-    if (progress >= 0.8) return smoothStep((1 - progress) / 0.2);
+    if (progress <= 0.2) {return smoothStep(progress / 0.2);}
+    if (progress >= 0.8) {return smoothStep((1 - progress) / 0.2);}
     return 1;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedOption || !name.trim()) return;
+    if (!selectedOption || !name.trim()) {return;}
     
     // Ensure the selectedOption is a valid RSVPStatus
     const status = selectedOption as 'hadir' | 'tidak-hadir' | 'belum-tau';

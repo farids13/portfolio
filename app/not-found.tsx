@@ -1,6 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
 import Starfield from "@/components/main/StartField";
 
 export default function NotFound() {
@@ -11,7 +12,7 @@ export default function NotFound() {
     setMounted(true);
   }, []);
 
-  if (!mounted) return null;
+  if (!mounted) {return null;}
 
   return (
     <div className="min-h-screen bg-base relative overflow-hidden flex flex-col">

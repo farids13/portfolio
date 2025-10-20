@@ -14,8 +14,8 @@ export default function ThankYouSection({ scrollY, start }: ThankYouSectionProps
   const getFadeInOpacity = (startOffset = 0) => {
     const startPos = SCROLL_START + startOffset;
 
-    if (scrollY <= startPos) return 0;
-    if (scrollY >= startPos + FADE_IN_DURATION) return 1;
+    if (scrollY <= startPos) {return 0;}
+    if (scrollY >= startPos + FADE_IN_DURATION) {return 1;}
 
     const progress = (scrollY - startPos) / FADE_IN_DURATION;
 

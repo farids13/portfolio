@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { useState, useEffect } from 'react';
 
 type Project = {
   title: string;
@@ -45,18 +45,18 @@ export default function ProjectSlide() {
     );
   };
 
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? projects.length - 1 : prevIndex - 1
-    );
-  };
+  // const prevSlide = () => {
+  //   setCurrentIndex((prevIndex) =>
+  //     prevIndex === 0 ? projects.length - 1 : prevIndex - 1
+  //   );
+  // };
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
   };
 
   useEffect(() => {
-    if (!isActive) return;
+    if (!isActive) {return;}
     
     const timer = setInterval(() => {
       nextSlide();

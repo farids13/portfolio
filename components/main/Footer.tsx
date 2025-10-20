@@ -2,7 +2,9 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
+
 import Starfield from "./StartField";
+
 import { useI18n } from "@/hooks/useI18n";
 
 export default function Footer() {

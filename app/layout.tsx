@@ -1,6 +1,8 @@
-import type { Metadata } from "next";
 import { Allura, Dosis, Geist } from "next/font/google";
 import { Amiri } from "next/font/google";
+
+import type { Metadata } from "next";
+
 import "../style/globals.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";

@@ -1,5 +1,4 @@
 import React from 'react';
-import { FaCalendar, FaCalendarPlus } from 'react-icons/fa';
 
 interface SaveTheDateProps {
     scrollY: number;
@@ -11,15 +10,15 @@ const SaveTheDateSection: React.FC<SaveTheDateProps> = ({ scrollY, start, end })
     const ANIMATION_DURATION = 500;
 
     const getProgress = () => {
-        if (scrollY < start) return 0;
-        if (scrollY > end) return 1;
+        if (scrollY < start) {return 0;}
+        if (scrollY > end) {return 1;}
         return (scrollY - start) / (end - start);
     };
 
     const progress = getProgress();
     const isVisible = scrollY >= start && scrollY <= end;
 
-    if (!isVisible && progress === 0) return null;
+    if (!isVisible && progress === 0) {return null;}
 
     return (
         <div
