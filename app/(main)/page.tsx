@@ -47,7 +47,7 @@ export default function Home(): ReactElement {
               <div className="relative w-full h-full flex items-end">
                 <div className="relative w-full h-full">
                   <Image
-                    src="/images/hero.png"
+                    src="/images/hero.webp"
                     alt="hero"
                     fill
                     priority
@@ -64,10 +64,10 @@ export default function Home(): ReactElement {
           <div className="w-full bg-[#0a1022] py-10 flex justify-center">
             <div className="absolute top-1/3 -right-50 sm:-right-45 lg:-right-25 w-[500px] h-[300px] -rotate-20 hover:rotate-0 hover:transition-transform duration-300 ease-in-out rounded-xl overflow-hidden flex items-center justify-center">
               <div className="absolute w-[120px] h-[120px] right-3/7 top-1/6 bg-white to-transparent rounded-full opacity-15 z-1 blur-xl" />
-              <Image className="w-[80px] h-[130px] relative object-cover rounded-xl z-2 opacity-70 sm:opacity-100 hover:opacity-100 hover:transition-transform duration-300 ease-in-out hover:w-[150px] hover:h-[300px]" src="/images/whoami-2.jpg" alt="who am i ismaya" width={300} height={300} />
+              <Image className="w-[80px] h-[130px] relative object-cover rounded-xl z-2 opacity-70 sm:opacity-100 hover:opacity-100 hover:transition-transform duration-300 ease-in-out hover:w-[150px] hover:h-[300px]" src="/images/whoami-2.webp" alt="who am i ismaya" width={300} height={300} />
             </div>
             <div className="absolute bottom-50 -left-50 sm:-left-40 lg:-left-25 w-[500px] rotate-12 hover:rotate-0 hover:transition-transform duration-300 ease-in-out rounded-xl overflow-hidden flex items-center justify-center">
-              <Image className="w-[120px] h-[200px] relative object-cover rounded-xl z-2 opacity-70 hover:opacity-100 sm:opacity-100 hover:transition-transform duration-300 ease-in-out hover:w-[150px] hover:h-[300px]" src="/images/whoami-1.jpg" alt="who am i alibaba" width={600} height={600} />
+              <Image className="w-[120px] h-[200px] relative object-cover rounded-xl z-2 opacity-70 hover:opacity-100 sm:opacity-100 hover:transition-transform duration-300 ease-in-out hover:w-[150px] hover:h-[300px]" src="/images/whoami-1.webp" alt="who am i alibaba" width={600} height={600} />
             </div>
             <div className="flex flex-col gap-6 mt-30 justify-center items-center max-w-[50%] mx-auto">
               <h1 className="text-7xl text-primary font-bold text-center font-dosis">

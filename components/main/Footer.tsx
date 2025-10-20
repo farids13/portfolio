@@ -15,7 +15,7 @@ export default function Footer() {
       <Starfield count={50} />
       <div className="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-8">
         <div className="flex items-center space-x-4 md:space-x-6">
-          <Image src="/images/logo.png" alt="Farid Satria Logo" width={72} height={72} className="border-lime-200"/>
+          <Image src="/images/logo.webp" alt="Farid Satria Logo" width={72} height={72} className="border-lime-200"/>
           <div>
             <h1 className="text-2xl font-extrabold text-lime-300"> Farid Satria</h1>
             <p className="text-gray-400 text-sm max-w-xs">

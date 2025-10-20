@@ -20,7 +20,7 @@ export default function LanguageSelector({ className }: { className?: string }) 
                     : "text-gray-300 hover:text-white hover:bg-primary/20"
                     }`}
             >
-                <Image src="/images/us-flag.png" alt="EN" width={20} height={20} />
+                <Image src="/images/us-flag.webp" alt="EN" width={20} height={20} />
                 <span>EN</span>
             </button>
             <button
@@ -30,7 +30,7 @@ export default function LanguageSelector({ className }: { className?: string }) 
                     : "text-gray-300 hover:text-white hover:bg-primary/20"
                     }`}
             >
-                <Image src="/images/indo-flag.png" alt="ID" width={20} height={20} />
+                <Image src="/images/indo-flag.webp" alt="ID" width={20} height={20} />
                 <span>ID</span>
             </button>
         </div>

@@ -2,37 +2,37 @@
   "skills": [
     {
       "id": 1,
-      "image": "/images/my-skills/java.png",
+      "image": "/images/my-skills/java.webp",
       "alt": "Java"
     },
     {
       "id": 2,
-      "image": "/images/my-skills/quarkus.png",
+      "image": "/images/my-skills/quarkus.webp",
       "alt": "Quarkus"
     },
     {
       "id": 3,
-      "image": "/images/my-skills/spring.png",
+      "image": "/images/my-skills/spring.webp",
       "alt": "Spring Boot"
     },
     {
       "id": 4,
-      "image": "/images/my-skills/nextjs.png",
+      "image": "/images/my-skills/nextjs.webp",
       "alt": "Next.js"
     },
     {
       "id": 5,
-      "image": "/images/my-skills/flutter.png",
+      "image": "/images/my-skills/flutter.webp",
       "alt": "Flutter"
     },
     {
       "id": 6,
-      "image": "/images/my-skills/logo-html.png",
+      "image": "/images/my-skills/logo-html.webp",
       "alt": "html5"
     },
     {
       "id": 7,
-      "image": "/images/my-skills/css.png",
+      "image": "/images/my-skills/css.webp",
       "alt": "CSS"
     },
     {

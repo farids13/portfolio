@@ -14,14 +14,14 @@ const BANK_ACCOUNTS = [
   {
     id: 1,
     bankName: 'Bank Jago',
-    logo: '/images/wedding/frame/logo/jago.png',
+    logo: '/images/wedding/frame/logo/jago.webp',
     accountNumber: '508983399942',
     accountName: 'A.n Farid Satria'
   },
   {
     id: 2,
     bankName: 'Sea Bank',
-    logo: '/images/wedding/frame/logo/sea-bank.png',
+    logo: '/images/wedding/frame/logo/sea-bank.webp',
     accountNumber: '901478480258',
     accountName: 'A.n Asri Dilla Wahyuni'
   }

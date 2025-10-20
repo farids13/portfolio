@@ -31,7 +31,7 @@ export default function Header() {
 
   return (
     <header className="flex w-full sm:justify-between items-center px-4 xs:px-6 sm:px-10 md:px-12 lg:px-15 py-4 xs:py-6 sm:py-8 md:py-10 font-bold xs:text-lg sm:text-xl bg-base relative">
-      <Image src="/images/logo.png" alt="logo" width={60} height={60} className="w-10 h-10 xs:w-12 xs:h-12 sm:w-14 sm:h-14 md:w-16 md:h-16" />
+      <Image src="/images/logo.webp" alt="logo" width={60} height={60} className="w-10 h-10 xs:w-12 xs:h-12 sm:w-14 sm:h-14 md:w-16 md:h-16" />
 
       <div className="hidden sm:flex justify-center pl-10 pr-5 w-full items-center sm:gap-6 md:gap-8 lg:gap-12 xl:gap-20">
         <a href="#who-am-i" className="hover:text-primary transition-colors text-sm sm:text-white md:text-lg">{t('ABOUT')}</a>

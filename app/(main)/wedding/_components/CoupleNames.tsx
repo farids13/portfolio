@@ -141,7 +141,7 @@ export default function CoupleNames({
 
                     </div>
                     <Image
-                        src="/images/wedding/frame/cloud.png"
+                        src="/images/wedding/frame/cloud.webp"
                         alt="cloud"
                         fill
                         className="object-fill z-0"

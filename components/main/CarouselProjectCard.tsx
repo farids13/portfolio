@@ -8,27 +8,27 @@ const items = [
 
   {
     title: 'Ano POS Mobile Apps',
-    image: '/images/job-4.png',
+    image: '/images/job-4.webp',
   },
   {
     title: 'Mercubuana Website Accounting',
-    image: '/images/job-5.png',
+    image: '/images/job-5.webp',
   },
   {
     title: 'Platform Notulensia',
-    image: '/images/job-3.png',
+    image: '/images/job-3.webp',
   },
   {
     title: 'BackEnd Ismaya+ Apps',
-    image: '/images/job-2.png',
+    image: '/images/job-2.webp',
   },
   {
     title: 'Excel Macro Kasir IR Cell',
-    image: '/images/job-1.1.png',
+    image: '/images/job-1.1.webp',
   },
   {
     title: 'Web Kasir IR Cell',
-    image: '/images/job-1.jpeg',
+    image: '/images/job-1.webp',
   },
 ];
 

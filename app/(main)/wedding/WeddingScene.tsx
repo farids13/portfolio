@@ -131,7 +131,7 @@ function StagePlatform({ x, y, z, width, height, depth }: { x: number, y: number
 }
 
 function Stage({ x, y, z }: { x: number, y: number, z: number }) {
-  const texture = useLoader(THREE.TextureLoader, '/images/wedding/frame/vector-stage.png');
+  const texture = useLoader(THREE.TextureLoader, '/images/wedding/frame/vector-stage.webp');
 
   const aspectRatio = texture.image ? texture.image.width / texture.image.height : 1;
   const width = 3;
@@ -151,7 +151,7 @@ function Stage({ x, y, z }: { x: number, y: number, z: number }) {
   );
 }
 function Sofa({ x, y, z }: { x: number, y: number, z: number }) {
-  const texture = useLoader(THREE.TextureLoader, '/images/wedding/frame/sofa.png');
+  const texture = useLoader(THREE.TextureLoader, '/images/wedding/frame/sofa.webp');
 
   const aspectRatio = texture.image ? texture.image.width / texture.image.height : 1;
   const width = 0.7;
@@ -172,7 +172,7 @@ function Sofa({ x, y, z }: { x: number, y: number, z: number }) {
 }
 
 function Couple({ x, y, z }: { x: number, y: number, z: number }) {
-  const texture = useLoader(THREE.TextureLoader, '/images/wedding/couple_image.png');
+  const texture = useLoader(THREE.TextureLoader, '/images/wedding/couple_image.webp');
 
   const aspectRatio = texture.image ? texture.image.width / texture.image.height : 1;
   const width = 0.7;
@@ -193,7 +193,7 @@ function Couple({ x, y, z }: { x: number, y: number, z: number }) {
 }
 
 function OutsideGate({ x, y, z }: { x: number, y: number, z: number }) {
-  const texture = useLoader(THREE.TextureLoader, '/images/wedding/frame/outside-door.png');
+  const texture = useLoader(THREE.TextureLoader, '/images/wedding/frame/outside-door.webp');
 
   const aspectRatio = texture.image ? texture.image.width / texture.image.height : 1;
   const width = 2;
@@ -211,7 +211,7 @@ function OutsideGate({ x, y, z }: { x: number, y: number, z: number }) {
 }
 
 function TableFlower({ x, y, z }: { x: number, y: number, z: number }) {
-  const texture = useLoader(THREE.TextureLoader, '/images/wedding/frame/table-flower.png');
+  const texture = useLoader(THREE.TextureLoader, '/images/wedding/frame/table-flower.webp');
 
   const aspectRatio = texture.image ? texture.image.width / texture.image.height : 1;
   const width = 0.3;

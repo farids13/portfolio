@@ -1,15 +1,15 @@
 {
   "items": [
-    { "id": 1, "image": "/images/my-skills/postgres.png", "alt": "PostgreSQL" },
-    { "id": 2, "image": "/images/my-skills/supabase.png", "alt": "Supabase" },
-    { "id": 3, "image": "/images/my-skills/react.png", "alt": "React" },
-    { "id": 3, "image": "/images/my-skills/powersync.png", "alt": "PowerSync" },
-    { "id": 4, "image": "/images/my-skills/prime-react.png", "alt": "PrimeReact" },
-    { "id": 5, "image": "/images/my-skills/docker.png", "alt": "Docker" },
-    { "id": 6, "image": "/images/my-skills/nodejs.png", "alt": "Node.js" },
-    { "id": 7, "image": "/images/my-skills/kafka.jpeg", "alt": "Kafka" },
-    { "id": 8, "image": "/images/my-skills/linux.png", "alt": "Linux" },
-    { "id": 9, "image": "/images/my-skills/macos.png", "alt": "macOS" },
+    { "id": 1, "image": "/images/my-skills/postgres.webp", "alt": "PostgreSQL" },
+    { "id": 2, "image": "/images/my-skills/supabase.webp", "alt": "Supabase" },
+    { "id": 3, "image": "/images/my-skills/react.webp", "alt": "React" },
+    { "id": 3, "image": "/images/my-skills/powersync.webp", "alt": "PowerSync" },
+    { "id": 4, "image": "/images/my-skills/prime-react.webp", "alt": "PrimeReact" },
+    { "id": 5, "image": "/images/my-skills/docker.webp", "alt": "Docker" },
+    { "id": 6, "image": "/images/my-skills/nodejs.webp", "alt": "Node.js" },
+    { "id": 7, "image": "/images/my-skills/kafka.webp", "alt": "Kafka" },
+    { "id": 8, "image": "/images/my-skills/linux.webp", "alt": "Linux" },
+    { "id": 9, "image": "/images/my-skills/macos.webp", "alt": "macOS" },
     { "id": 10, "image": "/images/my-skills/ollama.webp", "alt": "Ollama" }
   ]
 }

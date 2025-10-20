@@ -38,7 +38,7 @@ export default function DoorSection({ onOpenComplete }: DoorSectionProps) {
     <div className={`w-full h-[100vh] bg-white flex items-center justify-center ${scaleClasses}`}>
       <div className='absolute flex w-[800px] h-[700px] border border-red-500'>
         <Image
-          src="/images/wedding/frame/outside-door.png"
+          src="/images/wedding/frame/outside-door.webp"
           alt="Background"
           fill
           className="object-cover scale-92 z-3"
@@ -46,7 +46,7 @@ export default function DoorSection({ onOpenComplete }: DoorSectionProps) {
         />
         <div className='absolute -bottom-0 -left-10 z-4 w-[500px] h-[500px]'>
           <Image
-            src="/images/wedding/frame/gueses.png"
+            src="/images/wedding/frame/gueses.webp"
             alt="Gueses"
             fill
             className="object-cover"
@@ -55,7 +55,7 @@ export default function DoorSection({ onOpenComplete }: DoorSectionProps) {
         </div>
         <div className='absolute -bottom-0 -right-10 z-4 w-[500px] h-[500px]'>
           <Image
-            src="/images/wedding/frame/gueses.png"
+            src="/images/wedding/frame/gueses.webp"
             alt="Gueses"
             fill
             className="object-cover scale-x-[-1]"
@@ -65,7 +65,7 @@ export default function DoorSection({ onOpenComplete }: DoorSectionProps) {
         <div className='flex w-full h-full'>
           <div className={`absolute left-42 top-29 h-[550px] w-[300px] ${leftDoorClasses}`}>
             <Image
-              src="/images/wedding/frame/door.png"
+              src="/images/wedding/frame/door.webp"
               alt="Left Door"
               fill
               className="object-contain scale-120 z-2"
@@ -73,7 +73,7 @@ export default function DoorSection({ onOpenComplete }: DoorSectionProps) {
           </div>
           <div className={`absolute right-42 top-29 h-[550px] w-[300px] ${rightDoorClasses}`}>
             <Image
-              src="/images/wedding/frame/door.png"
+              src="/images/wedding/frame/door.webp"
               alt="Right Door"
               fill
               className="object-contain scale-x-[-1.2] scale-120 z-2"
