@@ -37,7 +37,7 @@ export default function ThankYouSection({ scrollY, start }: ThankYouSectionProps
         transition: `opacity ${ANIMATION_DURATION}ms`
       }}
     >
-      <div className='absolute top-35 transform transition-all'>
+      <div className='absolute top-[15vw] transform transition-all'>
         <h3 className='text-5xl sm:text-6xl md:text-7xl min-w-[250px] tracking-[6px] text-center bg-gradient-to-r from-white/60 via-amber-50/60 to-white/60 rounded-2xl p-2 shadow-lg text-amber-800/90 font-allura'>Terima Kasih</h3>
       </div>
       <div
