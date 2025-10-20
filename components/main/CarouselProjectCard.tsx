@@ -96,6 +96,7 @@ export default function HoverCarousel() {
             src={item.image}
             alt={item.title}
             fill
+            sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover transition-all duration-300"
           />
           <div className="absolute inset-0 flex items-end">

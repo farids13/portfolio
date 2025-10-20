@@ -13,8 +13,10 @@ interface Star {
 
 const Starfield: React.FC<{ count?: number }> = ({ count = 100 }) => {
   const [stars, setStars] = useState<Star[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
     const newStars: Star[] = Array.from({ length: count }, (_, i) => ({
       id: i,
       top: Math.random() * 100,
@@ -25,6 +27,10 @@ const Starfield: React.FC<{ count?: number }> = ({ count = 100 }) => {
     }));
     setStars(newStars);
   }, [count]);
+
+  if (!isMounted) {
+    return <div className="starfield" />;
+  }
 
   return (
     <div className="starfield">

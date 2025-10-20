@@ -39,8 +39,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="id">
-      <body className={`${dosis.variable} ${geistSans.variable} ${allura.variable} ${amiri.variable} antialiased`}>
+    <html lang="en" suppressHydrationWarning>
+      <body className={`${dosis.variable} ${geistSans.variable} ${allura.variable} ${amiri.variable} antialiased`} suppressHydrationWarning>
         <Starfield count={50} />
         {children}
       </body>

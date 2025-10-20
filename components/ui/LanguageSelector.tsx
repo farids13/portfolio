@@ -7,8 +7,26 @@ import { useI18n } from '@/hooks/useI18n';
 
 export default function LanguageSelector({ className }: { className?: string }) {
     const { locale, changeLocale, mounted } = useI18n();
+
     if (!mounted) {
-        return <div className={`${className} w-16 h-8`}></div>;
+        return (
+            <div className={`${className} min-w-[80px]`}>
+                <button
+                    disabled
+                    className="px-2 py-1 rounded-md text-sm transition-all duration-200 text-gray-300"
+                >
+                    <Image src="/images/us-flag.webp" alt="EN" width={20} height={20} />
+                    <span>EN</span>
+                </button>
+                <button
+                    disabled
+                    className="px-2 py-1 rounded-md text-sm transition-all duration-200 text-gray-300"
+                >
+                    <Image src="/images/indo-flag.webp" alt="ID" width={20} height={20} />
+                    <span>ID</span>
+                </button>
+            </div>
+        );
     }
 
     return (

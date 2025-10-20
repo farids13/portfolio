@@ -9,7 +9,7 @@ import { useI18n } from '@/hooks/useI18n';
 export default function Header() {
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const { t } = useI18n();
+  const { t, mounted } = useI18n();
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -34,16 +34,26 @@ export default function Header() {
       <Image src="/images/logo.webp" alt="logo" width={60} height={60} className="w-10 h-10 xs:w-12 xs:h-12 sm:w-14 sm:h-14 md:w-16 md:h-16" />
 
       <div className="hidden sm:flex justify-center pl-10 pr-5 w-full items-center sm:gap-6 md:gap-8 lg:gap-12 xl:gap-20">
-        <a href="#who-am-i" className="hover:text-primary transition-colors text-sm sm:text-white md:text-lg">{t('ABOUT')}</a>
-        <a href="#skills" className="hover:text-primary transition-colors text-sm sm:text-white md:text-lg">{t('SKILLS')}</a>
-        <a href="#projects" className="hover:text-primary transition-colors text-sm sm:text-white md:text-lg">{t('PROJECTS')}</a>
+        {mounted ? (
+          <>
+            <a href="#who-am-i" className="hover:text-primary transition-colors text-sm sm:text-white md:text-lg">{t('ABOUT')}</a>
+            <a href="#skills" className="hover:text-primary transition-colors text-sm sm:text-white md:text-lg">{t('SKILLS')}</a>
+            <a href="#projects" className="hover:text-primary transition-colors text-sm sm:text-white md:text-lg">{t('PROJECTS')}</a>
+          </>
+        ) : (
+          <>
+            <span className="text-sm sm:text-white md:text-lg opacity-0">About</span>
+            <span className="text-sm sm:text-white md:text-lg opacity-0">Skills</span>
+            <span className="text-sm sm:text-white md:text-lg opacity-0">Projects</span>
+          </>
+        )}
         <LanguageSelector className="hidden sm:block"/>
       </div>
 
       <div className="sm:hidden relative h-10 w-10 ml-auto">
         <button
           onClick={() => setShowMobileMenu(!showMobileMenu)}
-          className="h-full w-full text-white hover:text-primary flex items-center justify-center"
+          className="relative h-full w-full text-white hover:text-primary flex items-center justify-center"
         >
           <Image
             src="/svg/hamburger-button.svg"
@@ -60,27 +70,31 @@ export default function Header() {
           <div ref={mobileMenuRef} className="absolute top-full right-0 mt-2 w-48 bg-base border border-gray-600 rounded-lg shadow-lg z-50">
             <div className="py-2 flex flex-col gap-2 items-center justify-center">
               <LanguageSelector className="block"/>
-              <a
-                href="#who-am-i"
-                onClick={() => setShowMobileMenu(false)}
-                className="block px-4 py-3 text-white hover:bg-primary/20 hover:text-primary transition-colors text-sm"
-              >
-                {t('ABOUT')}
-              </a>
-              <a
-                href="#skills"
-                onClick={() => setShowMobileMenu(false)}
-                className="block px-4 py-3 text-white hover:bg-primary/20 hover:text-primary transition-colors text-sm"
-              >
-                {t('SKILLS')}
-              </a>
-              <a
-                href="#projects"
-                onClick={() => setShowMobileMenu(false)}
-                className="block px-4 py-3 text-white hover:bg-primary/20 hover:text-primary transition-colors text-sm"
-              >
-                {t('PROJECTS')}
-              </a>
+              {mounted && (
+                <>
+                  <a
+                    href="#who-am-i"
+                    onClick={() => setShowMobileMenu(false)}
+                    className="block px-4 py-3 text-white hover:bg-primary/20 hover:text-primary transition-colors text-sm"
+                  >
+                    {t('ABOUT')}
+                  </a>
+                  <a
+                    href="#skills"
+                    onClick={() => setShowMobileMenu(false)}
+                    className="block px-4 py-3 text-white hover:bg-primary/20 hover:text-primary transition-colors text-sm"
+                  >
+                    {t('SKILLS')}
+                  </a>
+                  <a
+                    href="#projects"
+                    onClick={() => setShowMobileMenu(false)}
+                    className="block px-4 py-3 text-white hover:bg-primary/20 hover:text-primary transition-colors text-sm"
+                  >
+                    {t('PROJECTS')}
+                  </a>
+                </>
+              )}
             </div>
           </div>
         )}

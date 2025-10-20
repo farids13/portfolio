@@ -44,6 +44,7 @@ export default function SkillCard({
           width={width}
           height={height}
           className="object-contain z-10"
+          style={{ width: "auto", height: "auto" }}
         />
       )}
       <p className="text-white font-bold text-2xl text-center relative font-dosis max-h-0 opacity-0 group-hover:max-h-10 group-hover:opacity-100 overflow-hidden transition-all duration-500 ease-in-out" style={{fontFamily: 'var(--font-dosis)'}}>{alt}</p>
