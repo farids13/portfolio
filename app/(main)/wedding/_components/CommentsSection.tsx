@@ -207,8 +207,8 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
 
   if (loading) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center">
-        <div className="text-amber-800">Memuat ucapan...</div>
+      <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+        <div className="text-amber-800 animate-pulse bg-white/20 rounded-2xl p-2">Memuat ucapan...</div>
       </div>
     );
   }

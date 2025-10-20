@@ -37,26 +37,23 @@ export default function ThankYouSection({ scrollY, start }: ThankYouSectionProps
         transition: `opacity ${ANIMATION_DURATION}ms`
       }}
     >
-      <div className='transform transition-all'>
-        <h3 className='text-5xl sm:text-6xl md:text-7xl min-w-[250px]  text-center bg-gradient-to-r from-white/60 via-amber-50/60 to-white/60 rounded-2xl p-2 shadow-lg text-amber-800/90 font-allura'>Terima Kasih</h3>
+      <div className='absolute top-35 transform transition-all'>
+        <h3 className='text-5xl sm:text-6xl md:text-7xl min-w-[250px] tracking-[6px] text-center bg-gradient-to-r from-white/60 via-amber-50/60 to-white/60 rounded-2xl p-2 shadow-lg text-amber-800/90 font-allura'>Terima Kasih</h3>
       </div>
-
-      <div className=' w-full h-[25vh] mt-10 lg:mt-15 z-10' />
-
       <div
         className='transform transition-all shadow bg-gradient-to-r from-white/80 via-amber-50/95 to-white/80 rounded-2xl  text-amber-800 items-center justify-center p-4 inline-flex flex-col'
       >
-        <p className='text-[12px] leading-relaxed text-center min-w-[300px] max-w-md'>
+        <p className='text-[12px] md:text-[14px] lg:text-[16px] leading-relaxed text-center min-w-[300px] max-w-2xl'>
           Atas kehadiran dan doa restunya, kami mengucapkan terima kasih yang sebesar-besarnya.
           Semoga Allah SWT membalas segala kebaikan Bapak/Ibu sekalian dengan yang lebih baik.
         </p>
-        <p className='text-[10px] font-medium italic mt-2'>
+        <p className='text-[10px] md:text-[12px] lg:text-[14px] font-medium italic mt-2'>
           Wassalamu'alaikum Warahmatullahi Wabarakatuh
         </p>
-        <p className='text-3xl font-medium mt-2 font-allura text-amber-800'>
+        <p className='text-3xl md:text-4xl lg:text-5xl font-medium mt-2 font-allura text-amber-800'>
           Farid & Dilla
         </p>
-        <p className='text-[10px]'>
+        <p className='text-[10px] md:text-[12px] lg:text-[14px]'>
           Beserta Keluarga
         </p>
       </div>
