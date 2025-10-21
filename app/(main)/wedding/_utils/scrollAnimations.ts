@@ -30,6 +30,16 @@ export interface ScrollAnimationConfig {
   fadeInSpeed?: number;
   /** Fade out speed multiplier (1 = normal, 2 = 2x faster) */
   fadeOutSpeed?: number;
+  /** Fade in buffer (how much after start to start fading in) */
+  fadeInBuffer?: number;
+  /** Fade out buffer (how much before end to start fading out) */
+  fadeOutBuffer?: number;
+  /** Container translateY distance (default: 50) */
+  containerTranslateY?: number;
+  /** Container base scale (default: 0.9) */
+  containerBaseScale?: number;
+  /** Container target scale (default: 1.0) */
+  containerTargetScale?: number;
 }
 
 /**
@@ -83,7 +93,12 @@ export function useScrollAnimations({
   animationDuration = 500,
   fadeType = FadeType.FADE_OUT,
   fadeInSpeed = 1,
-  fadeOutSpeed = 1
+  fadeOutSpeed = 1,
+  fadeInBuffer = 2,
+  fadeOutBuffer = 2,
+  containerTranslateY = 25,
+  containerBaseScale = 0.9,
+  containerTargetScale = 1.0
 }: ScrollAnimationConfig): ScrollAnimationUtils {
 
   /**
@@ -127,8 +142,8 @@ export function useScrollAnimations({
     const sectionStart = start + startOffset;
     const sectionEnd = end + startOffset;
 
-    // If before section starts, opacity = 0
-    if (scrollY < sectionStart) {
+    // If before section starts (with buffer), opacity = 0
+    if (scrollY < (sectionStart + fadeInBuffer)) {
       return 0;
     }
 
@@ -138,7 +153,8 @@ export function useScrollAnimations({
     }
 
     // During the section, fade in from 0 to 1 with speed control
-    const rawProgress = (scrollY - sectionStart) / (sectionEnd - sectionStart);
+    const fadeInStartPoint = sectionStart + fadeInBuffer;
+    const rawProgress = (scrollY - fadeInStartPoint) / (sectionEnd - fadeInStartPoint);
 
     // Apply speed multiplier for faster animation
     const speedProgress = Math.min(rawProgress * fadeInSpeed, 1);
@@ -205,21 +221,24 @@ export function useScrollAnimations({
         case 'both':
           const currentSectionStart = start + startOffset;
           const currentSectionEnd = end + startOffset;
+          const sectionDuration = currentSectionEnd - currentSectionStart;
 
           // If before section starts, opacity = 0
           if (scrollY < currentSectionStart) {
             opacity = 0;
           }
-          // If after section ends, opacity = 0 (fade out)
-          else if (scrollY > currentSectionEnd) {
-            const fadeOutProgress = Math.min((scrollY - currentSectionEnd) / (currentSectionEnd - currentSectionStart), 1);
+          // If after section ends (with buffer), fade out from 1 to 0
+          else if (scrollY > (currentSectionEnd - fadeOutBuffer)) {
+            // Calculate fade out progress from adjusted end point
+            const fadeOutEndPoint = currentSectionEnd - fadeOutBuffer;
+            const fadeOutProgress = Math.min((scrollY - fadeOutEndPoint) / (currentSectionEnd - fadeOutEndPoint), 1);
             const speedOutProgress = Math.min(fadeOutProgress * fadeOutSpeed, 1);
             const easedOutProgress = speedOutProgress * speedOutProgress * (3 - 2 * speedOutProgress);
             opacity = 1 - easedOutProgress;
           }
           // During the section, fade in from 0 to 1
           else {
-            const fadeInProgress = (scrollY - currentSectionStart) / (currentSectionEnd - currentSectionStart);
+            const fadeInProgress = (scrollY - currentSectionStart) / sectionDuration;
             const speedInProgress = Math.min(fadeInProgress * fadeInSpeed, 1);
             const easedInProgress = speedInProgress * speedInProgress * (3 - 2 * speedInProgress);
             opacity = easedInProgress;
@@ -243,8 +262,8 @@ export function useScrollAnimations({
         transition: `opacity ${animationDuration}ms ease-out, backdrop-filter ${animationDuration}ms ease-out`
       };
     },
-    createContainerStyles: (translateY = 50, baseScale = 0.9, targetScale = 1.0) => ({
-      transform: `translateY(${getTranslateY(translateY)}px) scale(${getScale(baseScale, targetScale)})`,
+    createContainerStyles: (translateY?: number, baseScale?: number, targetScale?: number) => ({
+      transform: `translateY(${getTranslateY(translateY ?? containerTranslateY)}px) scale(${getScale(baseScale ?? containerBaseScale, targetScale ?? containerTargetScale)})`,
       transition: `transform ${animationDuration}ms ease-out`
     }),
     createFadeStyles: (type: FadeType = FadeType.FADE_OUT) => {
@@ -255,10 +274,34 @@ export function useScrollAnimations({
             transition: `opacity ${animationDuration}ms ease-out`
           };
         case FadeType.BOTH:
-          const fadeInOpacity = getFadeInOpacity();
-          const fadeOutOpacity = getFadeOutOpacity();
+          const currentSectionStart = start;
+          const currentSectionEnd = end;
+          const sectionDuration = currentSectionEnd - currentSectionStart;
+
+          let opacity: number;
+
+          // If before section starts, opacity = 0
+          if (scrollY < currentSectionStart) {
+            opacity = 0;
+          }
+          // If after section ends (with buffer), fade out from 1 to 0
+          else if (scrollY > (currentSectionEnd - fadeOutBuffer)) {
+            const fadeOutEndPoint = currentSectionEnd - fadeOutBuffer;
+            const fadeOutProgress = Math.min((scrollY - fadeOutEndPoint) / (currentSectionEnd - fadeOutEndPoint), 1);
+            const speedOutProgress = Math.min(fadeOutProgress * fadeOutSpeed, 1);
+            const easedOutProgress = speedOutProgress * speedOutProgress * (3 - 2 * speedOutProgress);
+            opacity = 1 - easedOutProgress;
+          }
+          // During the section, fade in from 0 to 1
+          else {
+            const fadeInProgress = (scrollY - currentSectionStart) / sectionDuration;
+            const speedInProgress = Math.min(fadeInProgress * fadeInSpeed, 1);
+            const easedInProgress = speedInProgress * speedInProgress * (3 - 2 * speedInProgress);
+            opacity = easedInProgress;
+          }
+
           return {
-            opacity: Math.max(fadeInOpacity, fadeOutOpacity),
+            opacity,
             transition: `opacity ${animationDuration}ms ease-out`
           };
         case FadeType.FADE_OUT:

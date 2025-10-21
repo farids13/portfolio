@@ -1,6 +1,8 @@
 import React from 'react';
 import { FaHeart } from 'react-icons/fa';
 
+import { FadeType, useScrollAnimations } from '../_utils/scrollAnimations';
+
 interface SaveTheDateProps {
     scrollY: number;
     start: number;
@@ -8,30 +10,25 @@ interface SaveTheDateProps {
 }
 
 const SaveTheDateSection: React.FC<SaveTheDateProps> = ({ scrollY, start, end }) => {
-    const ANIMATION_DURATION = 500;
-
-    const getProgress = () => {
-        if (scrollY < start) {return 0;}
-        if (scrollY > end) {return 1;}
-        return (scrollY - start) / (end - start);
-    };
-
-    const progress = getProgress();
-    const isVisible = scrollY >= start && scrollY <= end;
-
-    if (!isVisible && progress === 0) {return null;}
-
+    const {
+        createBackdropStyles,
+        createContainerStyles
+    } = useScrollAnimations({
+        scrollY,
+        start: start,
+        end: end,
+        fadeType: FadeType.BOTH,
+        fadeInSpeed: 5,
+        fadeOutSpeed: 5,
+        fadeOutBuffer: 2,
+    });
     return (
         <div
             id='save-the-date-section'
             className="fixed inset-0 z-52 flex items-center justify-center p-4 pointer-events-none bg-white/10 backdrop-blur-sm"
-            style={{
-                opacity: progress < 0.1 ? progress * 10 : progress > 0.9 ? (1 - (progress - 0.9) * 10) : 1,
-                transition: `opacity ${ANIMATION_DURATION}ms, transform ${ANIMATION_DURATION}ms`,
-                pointerEvents: 'none' as const,
-            }}
+            style={createBackdropStyles()}
         >
-            <div className="relative w-full max-w-3xl min-w-[350px] p-8">
+            <div className="relative w-full max-w-3xl min-w-[350px] p-8" style={createContainerStyles()}>
                 <div className="relative bg-white/70 backdrop-blur-md rounded-2xl p-8 md:p-10 text-center shadow-xl border border-amber-100">
                     <div className="absolute inset-0 rounded-2xl overflow-hidden opacity-30">
                         <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-white/20 to-amber-100/30"></div>
@@ -43,7 +40,7 @@ const SaveTheDateSection: React.FC<SaveTheDateProps> = ({ scrollY, start, end })
                             <h6 className='text-2xl ml-2'>The</h6>
                             <h2 className=''>Date</h2>
                         </div>
-                        
+
 
                         {/* Calendar */}
                         <div className=" rounded-lg p-4 max-w-xs mx-auto">
