@@ -4,6 +4,8 @@ import { collection, query, orderBy, onSnapshot, doc, updateDoc } from 'firebase
 import React, { useState, useEffect } from 'react';
 import { FaRegHeart, FaHeart, FaChevronUp } from 'react-icons/fa';
 
+import { useScrollAnimations, FadeType } from '../_utils/scrollAnimations';
+
 import Logger from '@/app/(main)/_utils/logger';
 import { db } from '@/lib/firebase';
 
@@ -28,8 +30,16 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
   const [isInitialLoad, setIsInitialLoad] = useState(true);
-
   const [likedComments, setLikedComments] = useState<Set<string>>(new Set());
+  const { createBackdropStyles, createContainerStyles } = useScrollAnimations({
+    scrollY,
+    start: start,
+    end: end,
+    fadeType: FadeType.BOTH,
+    fadeInSpeed: 5,
+    fadeOutSpeed: 5,
+    fadeOutBuffer: 2,
+  });
 
   const handleLike = async (commentId: string, currentLikes: number) => {
     if (likedComments.has(commentId)) {
@@ -69,7 +79,7 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
         const unsubscribe = onSnapshot(
           q,
           (querySnapshot) => {
-            if (!isMounted) {return;}
+            if (!isMounted) { return; }
             Logger.info('Snapshot received. Number of docs:', querySnapshot.size);
 
             try {
@@ -120,7 +130,7 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
           },
           (error) => {
             Logger.error('Error fetching comments:', error);
-            if (isMounted) {setLoading(false);}
+            if (isMounted) { setLoading(false); }
           }
         );
 
@@ -132,7 +142,7 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
       } catch (error) {
         console.error('Error setting up Firestore listener:', error);
         Logger.error('Error setting up Firestore listener:', error);
-        if (isMounted) {setLoading(false);}
+        if (isMounted) { setLoading(false); }
       }
     };
 
@@ -162,28 +172,34 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
       hour12: false
     });
 
-    if (diffInSeconds < 60) {return (
-      <span className="flex items-center gap-1">
-        <span className="w-2 h-2 rounded-full bg-green-400"></span>
-        <span>Baru saja • {timeStr}</span>
-      </span>
-    );}
+    if (diffInSeconds < 60) {
+      return (
+        <span className="flex items-center gap-1">
+          <span className="w-2 h-2 rounded-full bg-green-400"></span>
+          <span>Baru saja • {timeStr}</span>
+        </span>
+      );
+    }
 
-    if (diffInSeconds < 3600) {return (
-      <span>{Math.floor(diffInSeconds / 60)} menit lalu • {timeStr}</span>
-    );}
+    if (diffInSeconds < 3600) {
+      return (
+        <span>{Math.floor(diffInSeconds / 60)} menit lalu • {timeStr}</span>
+      );
+    }
 
-    if (diffInSeconds < 86400) {return (
-      <span>{Math.floor(diffInSeconds / 3600)} jam lalu • {timeStr}</span>
-    );}
+    if (diffInSeconds < 86400) {
+      return (
+        <span>{Math.floor(diffInSeconds / 3600)} jam lalu • {timeStr}</span>
+      );
+    }
 
     const isToday = now.toDateString() === date.toDateString();
     const yesterday = new Date(now);
     yesterday.setDate(yesterday.getDate() - 1);
     const isYesterday = yesterday.toDateString() === date.toDateString();
 
-    if (isToday) {return <span>Hari ini • {timeStr}</span>;}
-    if (isYesterday) {return <span>Kemarin • {timeStr}</span>;}
+    if (isToday) { return <span>Hari ini • {timeStr}</span>; }
+    if (isYesterday) { return <span>Kemarin • {timeStr}</span>; }
 
     return (
       <span>
@@ -195,16 +211,6 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
     );
   };
 
-  const getProgress = () => {
-    if (scrollY < start) {return 0;}
-    if (scrollY > end) {return 1;}
-    return (scrollY - start) / (end - start);
-  };
-
-  const progress = getProgress();
-  const ANIMATION_DURATION = 500;
-
-
   if (loading) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
@@ -215,7 +221,7 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
 
   if (comments.length === 0) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
+      <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none" style={createContainerStyles()}>
         <div className="relative w-full max-w-md">
           <div className="relative z-10 p-8">
             <div className='text-center mb-8'>
@@ -248,14 +254,10 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-8"
-      style={{
-        opacity: progress < 0.1 ? progress * 10 : progress > 0.9 ? (1 - (progress - 0.9) * 10) : 1,
-        transition: `opacity ${ANIMATION_DURATION}ms`,
-        pointerEvents: 'none' as const,
-      }}
+      className="fixed inset-0 z-50 flex items-center justify-center p-8 bg-white/10 backdrop-blur-sm pointer-events-none"
+      style={createBackdropStyles()}
     >
-      <div className="relative w-full max-w-lg min-w-[300px] inset-0 rounded-2xl bg-gradient-to-tl from-white/90 to-amber-50/40 backdrop-blur-sm shadow-xl border-2 border-amber-200/10">
+      <div className="relative w-full max-w-lg min-w-[300px] inset-0 rounded-2xl bg-gradient-to-tl from-white/90 to-amber-50/40 backdrop-blur-sm shadow-xl border-2 border-amber-200/10" style={createContainerStyles()}>
         <div className="relative z-10 p-4">
           <div className='text-center mb-6'>
             <h3 className="text-4xl font-bold text-amber-900 tracking-wider font-allura">Ucapan & Doa</h3>

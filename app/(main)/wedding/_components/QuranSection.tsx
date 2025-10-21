@@ -20,10 +20,7 @@ export default function QuranSection({ scrollY, start, end }: QuranSectionProps)
     fadeInSpeed: 5, 
     fadeOutSpeed: 5,
     fadeInBuffer: 1,  
-    fadeOutBuffer: 1,
-    containerTranslateY: 30,    // Custom translateY
-    containerBaseScale: 0.8,    // Custom base scale
-    containerTargetScale: 1.1   // Custom target scale
+    fadeOutBuffer: 1    
   });
   return (
     <div

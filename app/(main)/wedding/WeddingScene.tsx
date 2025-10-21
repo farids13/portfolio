@@ -343,7 +343,7 @@ export default function CubeScene() {
         {scrollYPercent >= 54 && scrollYPercent <= 71 && (
           <DigitalWallet scrollY={Number(scrollYPercent.toFixed(0))} start={57} end={70} />
         )}
-        {scrollYPercent >= 72 && scrollYPercent <= 80 && (
+        {scrollYPercent >= 69 && scrollYPercent <= 80 && (
           <RSVPSection scrollY={Number(scrollYPercent.toFixed(0))} start={70} end={80} />
         )}
         {scrollYPercent >= 79 && scrollYPercent <= 89 && (
@@ -353,7 +353,7 @@ export default function CubeScene() {
             end={88}
           />
         )}
-        {scrollYPercent >= 82 && scrollYPercent <= 96 && (
+        {scrollYPercent >= 89 && scrollYPercent <= 96 && (
           <CommentsSection
             scrollY={Number(scrollYPercent.toFixed(0))}
             start={89}
