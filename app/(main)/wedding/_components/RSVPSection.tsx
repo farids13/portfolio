@@ -146,7 +146,7 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ scrollY, start, end }) => {
 
   return (
     <div 
-      className="fixed inset-0 z-[100] flex items-center justify-center px-8"
+      className="fixed inset-0 z-[100] flex items-center justify-center px-8 font-sans"
       style={{
         pointerEvents: 'none',
         opacity: transform.opacity,
@@ -162,23 +162,18 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ scrollY, start, end }) => {
         <div className="relative z-10 p-8">
           {/* Header dengan garis dekoratif */}
           <div className='text-center mb-8'>
-            <h3 className="text-4xl font-bold text-amber-900 tracking-wider font-allura">Buku Tamu</h3>
-            <div className='h-0.5 w-24 bg-amber-400 mx-auto my-3 rounded-full'></div>
+            <h3 className="text-4xl font-bold text-amber-900 tracking-[5px] font-allura">RSVP</h3>
+             <div className='h-px w-48 mb-2 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto my-4' />
             <p className="text-xs text-amber-700/80 mt-2 tracking-widest font-sans">KONFIRMASI KEHADIRAN</p>
           </div>
-          
-          <p className="text-sm text-center text-amber-800/90 mb-8 font-light italic font-sans">
-            "Dengan segala hormat, kami berharap kehadiran Bapak/Ibu/Saudara/i
-          </p>
-          
-          <form onSubmit={handleSubmit} className="space-y-6 pointer-events-auto">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-amber-800/90 mb-1">Nama Lengkap</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-2 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-300 focus:border-amber-300 text-amber-900 placeholder-amber-600/50"
+                className="pointer-events-auto w-full px-4 py-2 rounded-lg border bg-white/90 border-amber-200 focus:ring-2 focus:ring-amber-300 focus:border-amber-300 text-amber-900 placeholder-amber-600/50"
                 placeholder="Masukkan nama lengkap"
                 required
               />
@@ -190,7 +185,7 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ scrollY, start, end }) => {
                 <select
                   value={guestCount}
                   onChange={(e) => setGuestCount(parseInt(e.target.value))}
-                  className="w-full px-4 py-2 rounded-lg border border-amber-200 focus:ring-2 focus:ring-amber-300 focus:border-amber-300 text-amber-900 appearance-none"
+                  className="pointer-events-auto w-full px-4 py-2 rounded-lg border bg-white/90 border-amber-200 focus:ring-2 focus:ring-amber-300 focus:border-amber-300 text-amber-900 appearance-none"
                 >
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((num) => (
                     <option key={num} value={num}>
@@ -216,13 +211,13 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ scrollY, start, end }) => {
                       key={option.id}
                       type="button"
                       onClick={() => setSelectedOption(option.label)}
-                      className={`flex flex-col items-center justify-center p-3 rounded-lg border transition-colors ${
+                      className={`flex flex-col items-center justify-center p-2 rounded-lg border transition-colors ${
                         isSelected 
-                          ? `${option.selectedBg} ${option.selectedBorder} ${option.selectedText} font-medium`
+                          ? `${option.selectedBg} ${option.selectedBorder} ${option.selectedText}`
                           : 'border-amber-200 text-amber-700 hover:bg-amber-50'
                       }`}
                     >
-                      <span className={`text-xl mb-1 ${isSelected ? 'scale-110' : ''} transition-transform`}>
+                      <span className={`text-xl mb-1 ${isSelected ? 'scale-110' : ''} `}>
                         {option.emoji}
                       </span>
                       <span className="text-sm">{option.label}</span>
@@ -237,21 +232,16 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ scrollY, start, end }) => {
               disabled={!selectedOption}
               className={`w-full py-3 px-4 rounded-lg font-medium text-white transition-colors ${
                 !selectedOption
-                  ? 'bg-amber-200 cursor-not-allowed text-amber-700'
+                  ? 'bg-amber-200/80 cursor-not-allowed text-amber-700/80'
                   : selectedOption === 'Tidak Hadir'
-                  ? 'bg-red-500 hover:bg-red-600'
-                  : 'bg-amber-500 hover:bg-amber-600'
+                  ? 'bg-red-500/80 hover:bg-red-600'
+                  : 'bg-amber-500/80 hover:bg-amber-600'
               }`}
             >
               Konfirmasi
             </button>
           </form>
         </div>
-        
-        <div className='absolute top-4 left-4 w-8 h-8 border-t-2 border-l-2 rounded-sm border-amber-400/80' />
-        <div className='absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 rounded-sm border-amber-400/80' />
-        <div className='absolute bottom-4 left-4 w-8 h-8 border-b-2 border-l-2 rounded-sm border-amber-400/80' />
-        <div className='absolute bottom-4 right-4 w-8 h-8 border-b-2 border-r-2 rounded-sm border-amber-400/80' />
       </div>
     </div>
   );

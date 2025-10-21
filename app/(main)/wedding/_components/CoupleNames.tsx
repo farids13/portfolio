@@ -136,7 +136,7 @@ export default function CoupleNames({
                         </h2>
                         <p className={`${textSize.parents} text-base/60 font-sans text-center px-2`}>
                             {parents} {dad} {` & `}
-                            <p>{mom}</p>
+                            <span>{mom}</span>
                         </p>
 
                     </div>

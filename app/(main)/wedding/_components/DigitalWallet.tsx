@@ -54,38 +54,44 @@ const DigitalWallet: React.FC<DigitalWalletProps> = ({ scrollY, start, end }) =>
 
   const opacity = progress < 0.1 ? progress * 10 : progress > 0.9 ? (1 - (progress - 0.9) * 10) : 1;
 
+  const toastNotification = showToast && (
+    <div className="fixed inset-0 flex items-center justify-center z-[9999] pointer-events-none">
+      <div className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2 animate-fade-in-out">
+        <HiCheckCircle className="h-6 w-6 text-white" />
+        <span>Nomor rekening berhasil disalin!</span>
+      </div>
+    </div>
+  );
+
+  const animationStyles = (
+    <style jsx global>{`
+      @keyframes fadeInOut {
+        0% { opacity: 0; transform: translateY(-20px); }
+        10% { opacity: 1; transform: translateY(0); }
+        90% { opacity: 1; transform: translateY(0); }
+        100% { opacity: 0; transform: translateY(-20px); }
+      }
+      .animate-fade-in-out {
+        animation: fadeInOut 2s ease-in-out forwards;
+      }
+    `}</style>
+  );
+
   return (
     <>
-      {showToast && (
-        <div className="fixed inset-0 flex items-center justify-center z-[9999] pointer-events-none">
-          <div className="bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2 animate-fade-in-out">
-            <HiCheckCircle className="h-6 w-6 text-white" />
-            <span>Nomor rekening berhasil disalin!</span>
-          </div>
-        </div>
-      )}
-      <style jsx global>{`
-        @keyframes fadeInOut {
-          0% { opacity: 0; transform: translateY(-20px); }
-          10% { opacity: 1; transform: translateY(0); }
-          90% { opacity: 1; transform: translateY(0); }
-          100% { opacity: 0; transform: translateY(-20px); }
-        }
-        .animate-fade-in-out {
-          animation: fadeInOut 2s ease-in-out forwards;
-        }
-      `}</style>
+      {toastNotification}
+      {animationStyles}
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none transition-opacity duration-300 bg-white/10 backdrop-blur-[1px]"
+        className="fixed inset-0 z-50 flex items-center justify-center p-10 pointer-events-none transition-opacity duration-300 bg-white/10 backdrop-blur-[1px]"
         style={{ opacity }}
       >
         <div className="relative w-full max-w-md min-w-[300px]">
-          <div className="relative bg-gradient-to-br from-amber-50 to-amber-100 rounded-2xl border-2 border-amber-200 shadow-2xl overflow-hidden hover:shadow-xl transition-shadow duration-300">
-            <div className="absolute top-0 left-0 w-full h-3 bg-gradient-to-t from-amber-400 to-amber-600"/>
+          <div className="relative bg-gradient-to-br from-amber-50/90 to-white/80 rounded-2xl border-2 border-amber-200/50 shadow-2xl overflow-hidden hover:shadow-xl transition-shadow duration-300">
+            <div className="absolute top-0 left-0 w-full h-3 bg-gradient-to-t from-amber-100/90 to-amber-200/90"/>
 
             <div className="relative z-10 p-6 md:p-8">
               <div className="text-center mb-6">
-                <h3 className="text-4xl md:text-5xl font-bold text-amber-900 font-allura mb-3">
+                <h3 className="text-4xl md:text-5xl font-bold text-amber-900/90 font-widest font-allura mb-3">
                   Amplop Digital
                 </h3>
                 <div className='h-0.5 w-48 mb-2 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto my-4' />
@@ -112,20 +118,20 @@ const DigitalWallet: React.FC<DigitalWalletProps> = ({ scrollY, start, end }) =>
                         </p>
                         <button
                           onClick={() => copyToClipboard(bank.accountNumber)}
-                          className="p-1 text-amber-600 pointer-events-auto shadow-black transition-color border rounded-lg"
+                          className="p-1 text-amber-600 pointer-events-auto shadow-xl transition-color border rounded-lg"
                           title="Salin nomor rekening"
                         >
                           <HiOutlineDocumentDuplicate className="h-5 w-5" />
                         </button>
                       </div>
-                      <p className="text-md text-amber-700 mt-1 text-center">{bank.accountName}</p>
+                      <p className="text-md text-amber-700 mt-2 text-center font-sans">{bank.accountName}</p>
                     </div>
                   ))}
                 </div>
               </div>
 
               <div className="text-center">
-                <p className="text-xs text-amber-700/80 italic p-6">
+                <p className="text-xs text-amber-700/80 italic p-2">
                   "Terima kasih atas doa dan restunya. Semoga Allah membalas kebaikan Anda dengan berlipat ganda."
                 </p>
               </div>

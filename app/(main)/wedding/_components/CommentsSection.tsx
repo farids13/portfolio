@@ -215,7 +215,7 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
 
   if (comments.length === 0) {
     return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-5 pointer-events-none">
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-10 pointer-events-none">
         <div className="relative w-full max-w-md">
           <div className="relative z-10 p-8">
             <div className='text-center mb-8'>
@@ -248,14 +248,14 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-5"
+      className="fixed inset-0 z-50 flex items-center justify-center p-15"
       style={{
         opacity: progress < 0.1 ? progress * 10 : progress > 0.9 ? (1 - (progress - 0.9) * 10) : 1,
         transition: `opacity ${ANIMATION_DURATION}ms`,
         pointerEvents: 'none' as const,
       }}
     >
-      <div className="relative w-full max-w-lg inset-0 rounded-2xl bg-gradient-to-tl from-white/90 to-amber-50/40 backdrop-blur-sm shadow-xl border-2 border-amber-200/10">
+      <div className="relative w-full max-w-lg min-w-[300px] inset-0 rounded-2xl bg-gradient-to-tl from-white/90 to-amber-50/40 backdrop-blur-sm shadow-xl border-2 border-amber-200/10">
         <div className="relative z-10 p-8">
           <div className='text-center mb-6'>
             <h3 className="text-4xl font-bold text-amber-900 tracking-wider font-allura">Ucapan & Doa</h3>
