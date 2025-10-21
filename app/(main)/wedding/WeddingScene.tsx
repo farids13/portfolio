@@ -9,6 +9,7 @@ import CommentsSection from './_components/CommentsSection';
 import CoupleNames from './_components/CoupleNames';
 import DigitalWallet from './_components/DigitalWallet';
 import EventInformationSection from './_components/EventInformationSection';
+import MusicPlayer from './_components/MusicPlayer';
 import QuranSection from './_components/QuranSection';
 import RSVPSection from './_components/RSVPSection';
 import SaveTheDateSection from './_components/SaveTheDateSection';
@@ -18,16 +19,17 @@ import WelcomeSection from './_components/WelcomeSection';
 function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: number }) {
   const groupRef = useRef<THREE.Group>(null);
   const scrollProgress = scrollMax > 0 ? Math.min(scrollY / scrollMax, 1) : 0;
-  const scrollPercent = scrollY / scrollMax * 100;
+  const scrollPercent = scrollMax > 0 ? (scrollY / scrollMax * 100) : 0;
+
 
   useFrame(({ camera }) => {
     if (!groupRef.current) { return; }
     let valueMoveZ = -(scrollProgress * 8)
-    if (scrollPercent <= 28) {
+    if (scrollPercent <= 28 && !isNaN(scrollPercent)) {
       camera.position.set(0, 0, valueMoveZ);
       camera.lookAt(0, 0, -8);
     }
-    if (scrollPercent >= 28) {
+    if (scrollPercent >= 28 && !isNaN(scrollPercent)) {
       const moveSpeed = 0.05;
       let moveX = (scrollPercent - 28) * moveSpeed;
       let moveY = (scrollPercent - 28) * moveSpeed * 2;
@@ -36,11 +38,11 @@ function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: nu
       const limitY = 0.23;
       let limitZ = -2.45;
 
-      if (scrollPercent > 38) {
+      if (scrollPercent > 38 && !isNaN(scrollPercent)) {
         const transition = Math.min((scrollPercent - 38) * 0.2, 1);
         limitX = 0.175 - (transition * 0.3);
       }
-      if (scrollPercent > 50) {
+      if (scrollPercent > 50 && !isNaN(scrollPercent)) {
         limitX = (limitX + (scrollPercent - 50) * 0.05) <= 0.01 ? (limitX + (scrollPercent - 50) * 0.05) : 0.01;
         limitZ = (limitZ + (scrollPercent - 50) * 0.05) <= -2.1 ? (limitZ + (scrollPercent - 50) * 0.05) : -2.1;
       }
@@ -238,7 +240,12 @@ function TableFlower({ x, y, z }: { x: number, y: number, z: number }) {
   );
 }
 
-export default function CubeScene() {
+interface WeddingSceneProps {
+  loadingComplete?: boolean;
+  userInteracted?: boolean;
+}
+
+export default function WeddingScene({ loadingComplete = false, userInteracted = false }: WeddingSceneProps) {
   const [scrollY, setScrollY] = useState(0);
   const [scrollYPercent, setScrollYPercent] = useState(0);
   const [scrollMax, setScrollMax] = useState(1);
@@ -252,7 +259,14 @@ export default function CubeScene() {
         const currentScroll = Math.max(0, Math.min(scrollTop, maxScroll));
 
         setScrollY(currentScroll);
-        setScrollYPercent((currentScroll / maxScroll) * 100);
+        
+        // Cegah pembagian oleh nol untuk menghindari NaN
+        if (maxScroll > 0) {
+          setScrollYPercent((currentScroll / maxScroll) * 100);
+        } else {
+          setScrollYPercent(0);
+        }
+        
         setScrollMax(maxScroll);
       }
     };
@@ -271,10 +285,11 @@ export default function CubeScene() {
         container.removeEventListener('scroll', handleScroll);
       }
     };
-  }, []);
+  }, [loadingComplete, userInteracted]);
 
   return (
     <div ref={containerRef} className="w-full h-screen overflow-y-auto bg-white">
+      <MusicPlayer loadingComplete={loadingComplete} userInteracted={userInteracted} /> 
       <div className='relative z-1 h-[400vh] w-full'></div>
       <div className='h-full w-full relative z-1'>
         <div className='fixed top-2 left-2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-lg pointer-events-none'>
