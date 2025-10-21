@@ -134,7 +134,7 @@ export default function CoupleNames({
                         <h2 className={`${textSize.name} font-allura text-amber-700/80 text-center px-4`}>
                             {name}
                         </h2>
-                        <p className={`${textSize.parents} text-base/60 font-sans text-center px-2`}>
+                        <p className={`${textSize.parents} text-base/60 font-sans text-center px-2 flex flex-col`}>
                             {parents} {dad} {` & `}
                             <span>{mom}</span>
                         </p>

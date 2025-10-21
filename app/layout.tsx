@@ -41,7 +41,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${dosis.variable} ${geistSans.variable} ${allura.variable} ${amiri.variable} antialiased`} suppressHydrationWarning>
-        <Starfield count={50} />
         {children}
       </body>
     </html>

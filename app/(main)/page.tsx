@@ -4,7 +4,7 @@ import { useState } from "react";
 
 import Header from "./_components/Header";
 
-import type { ReactElement} from "react";
+import type { ReactElement } from "react";
 
 
 import AdditionalSkills from "@/app/(main)/_components/AdditionalSkills";
@@ -15,6 +15,7 @@ import ExperienceCard from "@/components/main/ExperienceCard";
 import Footer from "@/components/main/Footer";
 import ProjectSlide from "@/components/main/ProjectSlide";
 import SkillGridCarousel from "@/components/main/SkillGridCarousel";
+import Starfield from "@/components/main/StartField";
 import Button from "@/components/ui/Button";
 import additionalSkillsData from "@/data/additional-skills.json";
 import skillsData from "@/data/skills.json";
@@ -26,6 +27,7 @@ export default function Home(): ReactElement {
 
   return (
     <div className="relative overflow-x-hidden">
+      <Starfield count={50} />
       <Header />
 
       {/* ================== This Main Page ==================== */}
@@ -88,7 +90,7 @@ export default function Home(): ReactElement {
         <section id="skills" className="relative">
           <div className="w-full bg-[#0a1022] py-10 flex justify-center min-h-[500px]">
             <div className="flex flex-col gap-6 mt-20 justify-center items-center max-w-[95%] mx-auto px-4 sm:max-w-[90%] sm:px-2 h-full">
-            <div className="absolute w-[120px] h-[120px] top-20 bg-white to-transparent rounded-full opacity-15 z-1 blur-xl" />
+              <div className="absolute w-[120px] h-[120px] top-20 bg-white to-transparent rounded-full opacity-15 z-1 blur-xl" />
               <h1 className="text-5xl sm:text-7xl lg:text-8xl text-primary font-bold text-center font-dosis">{t("MY SKILLS")}</h1>
               <div className="flex flex-col gap-6 w-full items-center justify-center lg:flex-row sm:gap-2 sm:items-stretch sm:justify-center flex-1 min-h-[400px]">
                 <SkillGridCarousel skills={skillsData.skills} />
@@ -104,7 +106,7 @@ export default function Home(): ReactElement {
 
         <section id="projects" className="relative">
           <div className="w-full bg-[#0a1022] py-10 flex flex-col lg:flex-row justify-center gap-5 p-20 lg:p-0">
-          <div className="absolute w-[120px] h-[120px] top-20 bg-white to-transparent rounded-full opacity-15 z-1 blur-xl" />
+            <div className="absolute w-[120px] h-[120px] top-20 bg-white to-transparent rounded-full opacity-15 z-1 blur-xl" />
             <div className="max-w-200px px-15 min-h-[200px] max-h-[500px] flex flex-col items-center justify-center relative">
               <h2 className="text-4xl lg:text-6xl min-w-[350px] lg:min-w-[450px] max-w-[550px] text-primary font-bold justify-center text-center lg:text-left">
                 {t("projectsTitle")}

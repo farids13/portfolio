@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaHeart } from 'react-icons/fa';
 
 interface SaveTheDateProps {
     scrollY: number;
@@ -30,7 +31,7 @@ const SaveTheDateSection: React.FC<SaveTheDateProps> = ({ scrollY, start, end })
                 pointerEvents: 'none' as const,
             }}
         >
-            <div className="relative w-full max-w-3xl transition-all ease-out duration-300 p-8">
+            <div className="relative w-full max-w-3xl min-w-[350px] p-8">
                 <div className="relative bg-white/70 backdrop-blur-md rounded-2xl p-8 md:p-10 text-center shadow-xl border border-amber-100">
                     <div className="absolute inset-0 rounded-2xl overflow-hidden opacity-30">
                         <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-white/20 to-amber-100/30"></div>
@@ -45,7 +46,7 @@ const SaveTheDateSection: React.FC<SaveTheDateProps> = ({ scrollY, start, end })
                         
 
                         {/* Calendar */}
-                        <div className="bg-white/80 backdrop-blur-sm rounded-lg p-4 mb-6 max-w-xs mx-auto">
+                        <div className=" rounded-lg p-4 max-w-xs mx-auto">
                             <div className="text-center font-bold text-xl text-amber-800 mb-3">Desember</div>
                             <div className="grid grid-cols-7 gap-1 text-center text-sm">
                                 {['M', 'S', 'S', 'R', 'K', 'J', 'S'].map((day, index) => (
@@ -67,7 +68,9 @@ const SaveTheDateSection: React.FC<SaveTheDateProps> = ({ scrollY, start, end })
                                         >
                                             {date}
                                             {isEventDay && (
-                                                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-amber-400 rounded-full"></div>
+                                                <div className="absolute top-0 right-0">
+                                                    <FaHeart className="text-amber-500/80 text-[10px]" />
+                                                </div>
                                             )}
                                         </div>
                                     );

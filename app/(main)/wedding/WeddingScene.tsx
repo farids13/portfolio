@@ -21,7 +21,7 @@ function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: nu
   const scrollPercent = scrollY / scrollMax * 100;
 
   useFrame(({ camera }) => {
-    if (!groupRef.current) {return;}
+    if (!groupRef.current) { return; }
     let valueMoveZ = -(scrollProgress * 8)
     if (scrollPercent <= 28) {
       camera.position.set(0, 0, valueMoveZ);
@@ -56,7 +56,7 @@ function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: nu
 
   return (
     <group ref={groupRef}>
-      <OutsideGate x={0} y={0} z={-2.} />
+      <OutsideGate x={0} y={0} z={-2.3} />
       <OutsideGate x={0} y={0} z={-2} />
       <OutsideGate x={0} y={0} z={-1.6} />
       <OutsideGate x={0} y={0} z={-1.2} />
@@ -291,7 +291,7 @@ export default function CubeScene() {
           <QuranSection scrollY={Number(scrollYPercent.toFixed(0))} start={5} end={10} />
         )}
         {scrollYPercent >= 12 && scrollYPercent <= 20 && (
-            <SaveTheDateSection scrollY={Number(scrollYPercent.toFixed(0))} start={11} end={19} />
+          <SaveTheDateSection scrollY={Number(scrollYPercent.toFixed(0))} start={11} end={19} />
         )}
         {scrollYPercent >= 20 && scrollYPercent <= 30 && (
           <EventInformationSection scrollY={Number(scrollYPercent.toFixed(0))} start={20} end={29} />
@@ -343,30 +343,30 @@ export default function CubeScene() {
           />
         )}
         {scrollYPercent >= 54 && scrollYPercent <= 71 && (
-        <DigitalWallet scrollY={Number(scrollYPercent.toFixed(0))} start={57} end={70} />
+          <DigitalWallet scrollY={Number(scrollYPercent.toFixed(0))} start={57} end={70} />
         )}
         {scrollYPercent >= 72 && scrollYPercent <= 80 && (
-        <RSVPSection scrollY={Number(scrollYPercent.toFixed(0))} start={70} end={80} />
+          <RSVPSection scrollY={Number(scrollYPercent.toFixed(0))} start={70} end={80} />
         )}
-        {scrollYPercent >= 80 && scrollYPercent <= 85 && (
-        <CommentForm
-          scrollY={Number(scrollYPercent.toFixed(0))}
-          start={80}
-          end={85}
-        />
+        {scrollYPercent >= 79 && scrollYPercent <= 89 && (
+          <CommentForm
+            scrollY={Number(scrollYPercent.toFixed(0))}
+            start={80}
+            end={88}
+          />
         )}
-        {scrollYPercent >= 85 && scrollYPercent <= 90 && (
-        <CommentsSection
-          scrollY={Number(scrollYPercent.toFixed(0))}
-          start={85}
-          end={90}
-        />
+        {scrollYPercent >= 82 && scrollYPercent <= 96 && (
+          <CommentsSection
+            scrollY={Number(scrollYPercent.toFixed(0))}
+            start={89}
+            end={95}
+          />
         )}
-        {scrollYPercent >= 91 && scrollYPercent <= 101 && (
-        <ThankYouSection
-          scrollY={Number(scrollYPercent.toFixed(0))}
-          start={90}
-        />
+        {scrollYPercent >= 94 && scrollYPercent <= 101 && (
+          <ThankYouSection
+            scrollY={Number(scrollYPercent.toFixed(0))}
+            start={95}
+          />
         )}
       </div>
 

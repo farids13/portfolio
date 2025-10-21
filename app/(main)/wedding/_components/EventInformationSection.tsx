@@ -2,6 +2,8 @@ import React from 'react';
 import { FaMapMarkerAlt, FaGlassCheers, FaMapMarkedAlt, FaCalendarPlus } from 'react-icons/fa';
 import { MdHandshake } from 'react-icons/md';
 
+import { buildGoogleCalendarUrl } from '../_utils/googleCalendar';
+
 interface EventInformationProps {
     scrollY: number;
     start: number;
@@ -11,6 +13,7 @@ interface EventInformationProps {
 interface EventCardProps {
     id: string;
     title: string;
+    coupleNames: string;
     date: string;
     day: string;
     month: string;
@@ -25,6 +28,7 @@ interface EventCardProps {
 const EventCard: React.FC<EventCardProps> = ({
     id,
     title,
+    coupleNames,
     date,
     day,
     month,
@@ -76,7 +80,16 @@ const EventCard: React.FC<EventCardProps> = ({
                     Buka di Maps
                 </a>
                 <a
-                    href={`https://www.google.com/calendar/render?action=TEMPLATE&text=Pernikahan%20${encodeURIComponent(title)}&dates=${year}${month.padStart(2, '0')}${date.padStart(2, '0')}T${time.split(':')[0]}${time.split(':')[1]}00/${year}${month.padStart(2, '0')}${date.padStart(2, '0')}T${(parseInt(time.split(':')[0]) + 2).toString().padStart(2, '0')}${time.split(':')[1]}00&details=${encodeURIComponent(`Acara: ${title}%0ALokasi: ${location} - ${address}`)}&location=${encodeURIComponent(`${location}, ${address}`)}`}
+                    href={buildGoogleCalendarUrl({
+                        title,
+                        coupleNames,
+                        year,
+                        month,
+                        date,
+                        time,
+                        location,
+                        address
+                    })}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="pointer-events-auto inline-flex items-center justify-center w-1/2 max-w-[200px] px-4 py-2 border-2 border-amber-300 text-amber-700 rounded-md shadow-lg shadow-black/10 text-[10px] sm:text-[12px] md:text-[14px] lg:text-[16px] font-medium hover:bg-amber-50 transition-colors"
@@ -94,8 +107,8 @@ const EventInformationSection: React.FC<EventInformationProps> = ({ scrollY, sta
     const SCROLL_END = end ?? 40;
     const ANIMATION_DURATION = 300;
     const getProgress = () => {
-        if (scrollY < SCROLL_START) {return 0;}
-        if (scrollY > SCROLL_END) {return 1;}
+        if (scrollY < SCROLL_START) { return 0; }
+        if (scrollY > SCROLL_END) { return 1; }
         return (scrollY - SCROLL_START) / (SCROLL_END - SCROLL_START);
     };
 
@@ -104,8 +117,11 @@ const EventInformationSection: React.FC<EventInformationProps> = ({ scrollY, sta
     const containerStyle = {
         opacity: progress < 0.1 ? progress * 10 : progress > 0.9 ? (1 - (progress - 0.9) * 10) : 1,
         transition: `opacity ${ANIMATION_DURATION}ms, transform ${ANIMATION_DURATION}ms`,
-        pointerEvents:  'none' as const,
+        pointerEvents: 'none' as const,
     };
+
+    
+
 
     return (
         <div id='event-information-section' className="fixed inset-0 z-50 flex items-center justify-center bg-white/10 backdrop-blur-sm"
@@ -116,6 +132,7 @@ const EventInformationSection: React.FC<EventInformationProps> = ({ scrollY, sta
                     <EventCard
                         id="event-1"
                         title="Akad"
+                        coupleNames="Farid & Dilla"
                         date="06"
                         day="Sabtu"
                         month="Desember"
@@ -130,6 +147,7 @@ const EventInformationSection: React.FC<EventInformationProps> = ({ scrollY, sta
                     <EventCard
                         id="event-2"
                         title="Resepsi"
+                        coupleNames="Farid & Dilla"
                         date="14"
                         day="Minggu"
                         month="Desember"
