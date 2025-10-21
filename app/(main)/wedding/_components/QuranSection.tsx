@@ -1,38 +1,34 @@
 import React from 'react';
 
+import { useScrollAnimations, FadeType } from '../_utils/scrollAnimations';
+
 interface QuranSectionProps {
   scrollY: number;
   start: number;
   end: number;
 }
 
-const ANIMATION_DURATION = 500;
-
 export default function QuranSection({ scrollY, start, end }: QuranSectionProps) {
-  const getProgress = () => {
-    if (scrollY < start) {return 0;}
-    if (scrollY > end) {return 1;}
-    return (scrollY - start) / (end - start);
-  };
-  const SCROLL_START = start ?? 10;
-  const SCROLL_END = end ?? 20;
-
-  const progress = getProgress();
-  const isVisible = scrollY >= SCROLL_START && scrollY <= SCROLL_END;
-
-  if (!isVisible && progress === 0) {return null;}
-
+  const {
+    createBackdropStyles,
+    createContainerStyles
+  } = useScrollAnimations({
+    scrollY,
+    start: start,
+    end: end,
+    fadeType: FadeType.BOTH,
+    fadeInSpeed: 5, 
+    fadeOutSpeed: 5 
+  });
   return (
     <div
       id='quran-section'
       className="fixed inset-0 z-53 flex items-center justify-center p-15 pointer-events-none bg-white/10 backdrop-blur-sm"
-      style={{
-        opacity: progress < 0.1 ? progress * 10 : progress > 0.9 ? (1 - (progress - 0.9) * 10) : 1,
-        transition: `opacity ${ANIMATION_DURATION}ms, transform ${ANIMATION_DURATION}ms`,
-        pointerEvents: 'none' as const,
-      }}
+      style={createBackdropStyles()}
     >
-      <div className="relative w-full max-w-2xl min-w-[300px] transition-all ease-out duration-300" style={{ transform: `translateY(${(2 - progress) * 20}px)`, }}>
+      <div className="relative w-full max-w-2xl min-w-[300px] transition-all ease-out duration-300"
+        style={createContainerStyles()}
+      >
         <div className="relative bg-white/60 backdrop-blur-lg rounded-2xl p-8 md:p-12 text-center space-y-6 shadow-2xl border border-white/30">
           <div className="absolute inset-0 rounded-2xl overflow-hidden opacity-10">
             <div className="absolute inset-0 bg-gradient-to-br from-amber-50/30 via-white/20 to-amber-100/30"></div>

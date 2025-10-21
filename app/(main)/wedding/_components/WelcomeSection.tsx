@@ -1,68 +1,42 @@
 import { useSearchParams } from 'next/navigation';
 import React from 'react';
 
+import { useScrollAnimations } from '../_utils/scrollAnimations';
+
 interface WelcomeSectionProps {
   scrollY: number;
   start: number;
   end: number;
 }
 
-const ANIMATION_DURATION = 300;
 
 
 export default function WelcomeSection({ scrollY, start, end }: WelcomeSectionProps) {
 
-  const SCROLL_START = start ?? 0;
-  const SCROLL_END = end ?? 10;
-
   const searchParams = useSearchParams();
   const guestName = searchParams.get('to') || 'Tamu Undangan';
 
-  const getProgress = (startOffset = 0, reverse = false) => {
-    const start = SCROLL_START + startOffset;
-    const end = SCROLL_END + startOffset;
-    const progress = Math.min(Math.max((scrollY - start) / (end - start), 0), 1);
-    return reverse ? 1 - progress : progress;
-  };
+  const SCROLL_START = start ?? 0;
+  const SCROLL_END = end ?? 10;
 
-  const getFadeOutOpacity = (startOffset = 0) => {
-    const start = SCROLL_START + startOffset;
-    const end = SCROLL_END + startOffset;
+  const {
+    createBackdropStyles,
+    createContainerStyles
+  } = useScrollAnimations({
+    scrollY,
+    start: SCROLL_START,
+    end: SCROLL_END,
+  });
 
-    if (scrollY <= start) {return 1;}
-    if (scrollY >= end) {return 0;}
-
-    return 1 - ((scrollY - start) / (end - start));
-  };
-
-  const transform = {
-    opacity: getFadeOutOpacity(),
-    backdropFilter: `blur(${getFadeOutOpacity() * 10}px)`,
-    WebkitBackdropFilter: `blur(${getFadeOutOpacity() * 10}px)`,
-
-    contentTransform: {
-      translateY: 50 * (1 - getProgress()),
-      scale: 0.9 + (0.1 * getProgress())
-    },
-
-  };
   return (
     <div
       id='welcome-section'
       className={`fixed inset-0 z-52 flex items-center justify-center p-5 pb-25 pointer-events-none`}
-      style={{
-        opacity: transform.opacity,
-        backdropFilter: transform.backdropFilter,
-        WebkitBackdropFilter: transform.WebkitBackdropFilter,
-        transition: `opacity ${ANIMATION_DURATION}ms, backdrop-filter ${ANIMATION_DURATION}ms, -webkit-backdrop-filter ${ANIMATION_DURATION}ms`
-      }}
+      style={createBackdropStyles()}
     >
       <div
         className={`relative w-full max-w-2xl transform ease-out`}
-        style={{
-          transform: `translateY(${transform.contentTransform.translateY}px) scale(${transform.contentTransform.scale})`,
-          transition: `transform ${ANIMATION_DURATION}ms`
-        }}
+        style={createContainerStyles(50, 0.9, 1.0)}
       >
         <div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-white/60 to-white/30 backdrop-blur-xl border-3 border-white/30 shadow-3xl overflow-hidden'>
           <div className='absolute inset-0 opacity-100'>

@@ -287,14 +287,14 @@ export default function CubeScene() {
         {scrollYPercent >= 0 && scrollYPercent <= 6 && (
           <WelcomeSection scrollY={Number(scrollYPercent.toFixed(0))} start={0} end={5} />
         )}
-        {scrollYPercent >= 4 && scrollYPercent <= 12 && (
-          <QuranSection scrollY={Number(scrollYPercent.toFixed(0))} start={5} end={10} />
+        {scrollYPercent >= 5 && scrollYPercent <= 15 && (
+          <QuranSection scrollY={Number(scrollYPercent.toFixed(0))} start={6} end={14} />
         )}
-        {scrollYPercent >= 12 && scrollYPercent <= 20 && (
-          <SaveTheDateSection scrollY={Number(scrollYPercent.toFixed(0))} start={11} end={19} />
+        {scrollYPercent >= 15 && scrollYPercent <= 22 && (
+          <SaveTheDateSection scrollY={Number(scrollYPercent.toFixed(0))} start={15} end={22} />
         )}
-        {scrollYPercent >= 20 && scrollYPercent <= 30 && (
-          <EventInformationSection scrollY={Number(scrollYPercent.toFixed(0))} start={20} end={29} />
+        {scrollYPercent >= 22 && scrollYPercent <= 30 && (
+          <EventInformationSection scrollY={Number(scrollYPercent.toFixed(0))} start={22} end={30} />
         )}
         {scrollYPercent >= 31 && scrollYPercent <= 41 && (
           <CoupleNames
