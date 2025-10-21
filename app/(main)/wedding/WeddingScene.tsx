@@ -56,13 +56,11 @@ function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: nu
 
   return (
     <group ref={groupRef}>
-      <OutsideGate x={0} y={0} z={-2.3} />
       <OutsideGate x={0} y={0} z={-2} />
       <OutsideGate x={0} y={0} z={-1.6} />
       <OutsideGate x={0} y={0} z={-1.2} />
       <OutsideGate x={0} y={0} z={-0.8} />
       <OutsideGate x={0} y={0} z={-0.4} />
-      <TableFlower x={0} y={-0.54} z={-1} />
       <TableFlower x={0} y={-0.54} z={-1.4} />
       <TableFlower x={0} y={-0.54} z={-1.8} />
       <RedCarpet startZ={-0.3} endZ={-3} />

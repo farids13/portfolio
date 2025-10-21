@@ -97,8 +97,8 @@ export function useScrollAnimations({
   fadeInBuffer = 2,
   fadeOutBuffer = 2,
   containerTranslateY = 25,
-  containerBaseScale = 0.9,
-  containerTargetScale = 1.0
+  containerBaseScale = 1,
+  containerTargetScale = 1.1
 }: ScrollAnimationConfig): ScrollAnimationUtils {
 
   /**

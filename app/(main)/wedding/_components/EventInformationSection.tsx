@@ -3,6 +3,7 @@ import { FaMapMarkerAlt, FaGlassCheers, FaMapMarkedAlt, FaCalendarPlus } from 'r
 import { MdHandshake } from 'react-icons/md';
 
 import { buildGoogleCalendarUrl } from '../_utils/googleCalendar';
+import { useScrollAnimations, FadeType } from '../_utils/scrollAnimations';
 
 interface EventInformationProps {
     scrollY: number;
@@ -103,31 +104,23 @@ const EventCard: React.FC<EventCardProps> = ({
 );
 
 const EventInformationSection: React.FC<EventInformationProps> = ({ scrollY, start, end }) => {
-    const SCROLL_START = start ?? 20;
-    const SCROLL_END = end ?? 40;
-    const ANIMATION_DURATION = 300;
-    const getProgress = () => {
-        if (scrollY < SCROLL_START) { return 0; }
-        if (scrollY > SCROLL_END) { return 1; }
-        return (scrollY - SCROLL_START) / (SCROLL_END - SCROLL_START);
-    };
-
-    const progress = getProgress();
-
-    const containerStyle = {
-        opacity: progress < 0.1 ? progress * 10 : progress > 0.9 ? (1 - (progress - 0.9) * 10) : 1,
-        transition: `opacity ${ANIMATION_DURATION}ms, transform ${ANIMATION_DURATION}ms`,
-        pointerEvents: 'none' as const,
-    };
-
-    
-
-
+    const {
+        createBackdropStyles,
+        createContainerStyles
+    } = useScrollAnimations({
+        scrollY,
+        start: start,
+        end: end,
+        fadeType: FadeType.BOTH,
+        fadeInSpeed: 5,
+        fadeOutSpeed: 5,
+        fadeOutBuffer: 2,
+    });
     return (
-        <div id='event-information-section' className="fixed inset-0 z-50 flex items-center justify-center bg-white/10 backdrop-blur-sm"
-            style={containerStyle}
+        <div id='event-information-section' className="fixed inset-0 z-50 flex items-center justify-center bg-white/10 backdrop-blur-sm pointer-events-none"
+            style={createBackdropStyles()}
         >
-            <div className="relative w-full max-w-4xl px-4 ">
+            <div className="relative w-full max-w-4xl px-4 " style={createContainerStyles()}>
                 <div className="relative z-10 gap-8 flex flex-col items-center ">
                     <EventCard
                         id="event-1"
