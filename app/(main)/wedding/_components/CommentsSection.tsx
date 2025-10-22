@@ -211,14 +211,6 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
     );
   };
 
-  if (loading) {
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none">
-        <div className="text-amber-800 animate-pulse bg-white/20 rounded-2xl p-2">Memuat ucapan...</div>
-      </div>
-    );
-  }
-
   if (comments.length === 0) {
     return (
       <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none" style={createContainerStyles()}>
@@ -265,34 +257,21 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
             <p className="text-xs text-amber-700/80 mt-2 tracking-widest font-sans">UCAPAN TAMU</p>
           </div>
 
-          <div className="space-y-4 max-h-[60vh] overflow-y-auto pr-2 -mr-2 comments-container pointer-events-auto">
-            {renderComments()}
+          <div className="space-y-4 flex flex-col items-start justify-center max-h-[60vh] overflow-y-auto pr-2 -mr-2 comments-container pointer-events-auto">
+            {loading ? loadingComments() : comments.map(renderComment)}
           </div>
         </div>
       </div>
     </div>
   );
 
-  function renderComments() {
-    if (loading) {
-      return (
-        <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500 mx-auto"></div>
-          <p className="text-sm text-amber-600 mt-2">Memuat komentar...</p>
-        </div>
-      );
-    }
 
-    if (comments.length === 0) {
-      return (
-        <p className="text-center text-amber-700/70 py-8">
-          Belum ada komentar. Jadilah yang pertama mengucapkan!
-        </p>
-      );
-    }
-
-    return comments.map(renderComment);
+  function loadingComments() {
+    return (
+      <div className="flex items-center justify-center animate-spin h-10 w-10 border-4 border-amber-300/60 rounded-full border-t-transparent animate-spin-slow"/>
+    );
   }
+
 
   function getInitials(name: string): string {
     return name

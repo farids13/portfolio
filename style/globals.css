@@ -41,11 +41,6 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), "Dosis", "Allura", Arial, Helvetica, sans-serif;
-  /* Prevent address bar issues */
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
 }
 
 #root {
@@ -58,7 +53,6 @@ body {
 /* Mobile Safari specific fixes */
 @supports (-webkit-touch-callout: none) {
   body {
-    /* Fix for iOS Safari address bar */
     height: -webkit-fill-available;
   }
 }
@@ -66,13 +60,11 @@ body {
 /* Chrome Android specific fixes */
 @media screen and (max-width: 768px) {
   body {
-    /* Prevent address bar from showing on scroll up */
     height: 100vh;
-    height: 100dvh; /* Dynamic viewport height */
+    height: 100dvh;
   }
 
   html {
-    /* Trigger address bar hiding */
     height: 100%;
     overflow: hidden;
   }
@@ -80,20 +72,20 @@ body {
 
 /* Utility: hide scrollbar cross-browser */
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 .no-scrollbar::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
 }
 
 /* Hide scrollbar for react-slick list */
 .slick-list {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
 }
 .slick-list::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Opera */
+  display: none;
 }
 
 /* Tooltip styles for skill images */
