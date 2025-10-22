@@ -1,7 +1,7 @@
 import { useSearchParams } from 'next/navigation';
 import React from 'react';
 
-import { useScrollAnimations } from '../_utils/scrollAnimations';
+import { FadeType, useScrollAnimations } from '../_utils/scrollAnimations';
 
 interface WelcomeSectionProps {
   scrollY: number;
@@ -16,27 +16,34 @@ export default function WelcomeSection({ scrollY, start, end }: WelcomeSectionPr
   const searchParams = useSearchParams();
   const guestName = searchParams.get('to') || 'Tamu Undangan';
 
-  const SCROLL_START = start ?? 0;
-  const SCROLL_END = end ?? 10;
 
   const {
     createBackdropStyles,
     createContainerStyles
   } = useScrollAnimations({
     scrollY,
-    start: SCROLL_START,
-    end: SCROLL_END,
+    start: start,
+    end: end,
+    fadeType: FadeType.FADE_OUT,
+    fadeInSpeed: 5,
+    fadeOutSpeed: 5,
+    fadeInBuffer: 1,
+    fadeOutBuffer: 1,
+    containerTranslateY: 25,
+    containerBaseScale: 1,
+    containerTargetScale: 1.1,
+
   });
 
   return (
     <div
       id='welcome-section'
-      className={`fixed inset-0 z-52 flex items-center justify-center p-5 pb-25 pointer-events-none`}
+      className={`fixed inset-0 z-100 flex items-center justify-center p-5 pb-10 pointer-events-none`}
       style={createBackdropStyles()}
     >
       <div
         className={`relative w-full max-w-2xl transform ease-out`}
-        style={createContainerStyles(50, 0.9, 1.0)}
+        style={createContainerStyles(25, 0.9, 1.1)}
       >
         <div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-white/60 to-white/30 backdrop-blur-xl border-3 border-white/30 shadow-3xl overflow-hidden'>
           <div className='absolute inset-0 opacity-100'>
@@ -56,11 +63,11 @@ export default function WelcomeSection({ scrollY, start, end }: WelcomeSectionPr
           </div>
           <div className='h-px w-48 bg-gradient-to-r from-transparent via-amber-300 to-transparent mx-auto my-4'/>
           <h3 className='text-md md:text-lg font-serif text-gray-700/90'>14 Desember 2025</h3>
-          <div className='mt-8 pt-6 border-t border-2 rounded-2xl bg-white/50 border-amber-100/50 transform transition-all'>
+          <div className='mt-8 pt-6 border-t border-2 rounded-2xl bg-white/80 shadow-sm shadow-amber-100/50 border-amber-100/50'>
             <p className='text-sm text-gray-800 mb-1'>Kepada Yth.</p>
             <p className='text-sm font-light text-gray-700/90 mb-4'>Bapak/Ibu/Saudara/i</p>
             <div className='relative inline-block group'>
-              <p className='text-xl mb-10 font-family-sans font-light text-amber-800/90 px-6 py-2 '>
+              <p className='text-xl mb-10 font-family-sans font-light text-amber-800 px-6 py-2 '>
                 {guestName}
               </p>
               <div className='absolute inset-0 rounded-full border-2 bg-gradient-to-r from-transparent via-white/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none'></div>

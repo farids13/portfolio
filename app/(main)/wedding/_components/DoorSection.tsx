@@ -264,6 +264,7 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
               src="/images/wedding/frame/door.webp"
               alt="Left Door"
               fill
+              sizes="300px"
               className="object-contain scale-120 z-2"
             />
           </div>
@@ -272,6 +273,7 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
               src="/images/wedding/frame/door.webp"
               alt="Right Door"
               fill
+              sizes="300px"
               className="object-contain scale-x-[-1.2] scale-120 z-2"
             />
           </div>

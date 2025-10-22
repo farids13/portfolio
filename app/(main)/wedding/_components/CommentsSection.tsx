@@ -69,9 +69,6 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
     const fetchComments = async () => {
       try {
         setLoading(true);
-
-        Logger.info('Setting up Firestore listener...');
-
         const commentsRef = collection(db, 'comments');
 
         const q = query(commentsRef, orderBy('createdAt', 'desc'));
@@ -211,38 +208,25 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
     );
   };
 
-  if (comments.length === 0) {
-    return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center pointer-events-none" style={createContainerStyles()}>
-        <div className="relative w-full max-w-md">
-          <div className="relative z-10 p-8">
-            <div className='text-center mb-8'>
-              <h3 className="text-4xl font-bold text-amber-900 tracking-wider font-allura">Ucapan & Doa</h3>
-              <div className='h-px w-48 mb-2 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto my-4' />
-              <p className="text-xs text-amber-700/80 mt-2 tracking-widest font-sans">UCAPAN TAMU</p>
-            </div>
 
-            <div className="p-8 bg-white/70 rounded-xl border-2 border-amber-100 shadow-lg text-center transform hover:scale-[1.02] transition-all duration-300">
-              <div className="animate-bounce-slow text-6xl mb-6">
-                😊
-              </div>
-
-              <h4 className="text-xl font-medium text-amber-900 mb-2">Belum Ada Ucapan</h4>
-              <p className="text-amber-800 mb-6">🎉 Jadilah yang pertama mengirimkan ucapan dan doa untuk kami! 🙏✨</p>
-
-              <div className="animate-bounce flex flex-col items-center space-y-2">
-                <span className="text-xs text-amber-600/70">👆 Scroll ke atas untuk mengisi form</span>
-                <FaChevronUp
-                  className="text-amber-600 animate-pulse"
-                  size={20}
-                />
-              </div>
-            </div>
-          </div>
-        </div>
+  const renderNoCommentsMessage = () => (
+    <div className="p-3 pointer-events-none bg-white/70 rounded-xl border-2 border-amber-100 shadow-lg text-center transform hover:scale-[1.02] transition-all duration-300">
+      <div className="animate-bounce-slow text-6xl mb-6">
+        😊
       </div>
-    );
-  }
+
+      <h4 className="text-xl font-medium text-amber-900 mb-2">Belum Ada Ucapan</h4>
+      <p className="text-amber-800 mb-6">Jadilah yang pertama mengirimkan ucapan dan doa untuk kami! 🙏✨</p>
+
+      <div className="animate-bounce flex flex-col items-center space-y-2">
+        <span className="text-xs text-amber-600/70">👆 Scroll ke atas untuk mengisi form</span>
+        <FaChevronUp
+          className="text-amber-600 animate-pulse"
+          size={20}
+        />
+      </div>
+    </div>
+  );
 
   return (
     <div
@@ -257,8 +241,8 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
             <p className="text-xs text-amber-700/80 mt-2 tracking-widest font-sans">UCAPAN TAMU</p>
           </div>
 
-          <div className="space-y-4 flex flex-col items-start justify-center max-h-[60vh] overflow-y-auto pr-2 -mr-2 comments-container pointer-events-auto">
-            {loading ? loadingComments() : comments.map(renderComment)}
+          <div className="space-y-4 flex flex-col max-h-[60vh] overflow-y-auto pr-2 -mr-2 comments-container pointer-events-auto">
+            {loading ? loadingComments() : (comments.length === 0 ? renderNoCommentsMessage() : comments.map(renderComment))}
           </div>
         </div>
       </div>
@@ -268,7 +252,7 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
 
   function loadingComments() {
     return (
-      <div className="flex items-center justify-center animate-spin h-10 w-10 border-4 border-amber-300/60 rounded-full border-t-transparent animate-spin-slow"/>
+      <div className="flex items-center justify-center animate-spin h-10 w-10 border-4 border-amber-300/60 rounded-full border-t-transparent animate-spin-slow" />
     );
   }
 

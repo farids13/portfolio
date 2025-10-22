@@ -267,11 +267,7 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
         }
         
         setScrollMax(maxScroll);
-
-        // Trigger mobile address bar hiding
-        // Hide address bar when scrolled down more than 100px
         if (currentScroll > 100 && window.innerHeight < 800) {
-          // Only trigger on mobile devices
           setTimeout(() => {
             window.scrollTo(0, 1);
             window.scrollTo(0, 0);
@@ -299,18 +295,18 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
   return (
     <div ref={containerRef} className="w-full h-screen overflow-y-auto bg-white">
       <MusicPlayer playMusicNow={playMusicNow} onMusicStarted={onMusicStarted} /> 
-      <div className='relative z-1 h-[400vh] w-full'></div>
+      <div className='relative z-1 h-[300vh] w-full'></div>
       <div className='h-full w-full relative z-1'>
         <div className='fixed top-2 left-2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-lg pointer-events-none'>
           Scroll Position: {`${scrollYPercent.toFixed(0)}%/${scrollY.toFixed(0)}`}
         </div>
       </div>
       <div>
-        {scrollYPercent >= 0 && scrollYPercent <= 6 && (
+        {scrollYPercent >= 0 && scrollYPercent <= 5 && (
           <WelcomeSection scrollY={Number(scrollYPercent.toFixed(0))} start={0} end={5} />
         )}
         {scrollYPercent >= 5 && scrollYPercent <= 15 && (
-          <QuranSection scrollY={Number(scrollYPercent.toFixed(0))} start={6} end={14} />
+          <QuranSection scrollY={Number(scrollYPercent.toFixed(0))} start={5} end={15} />
         )}
         {scrollYPercent >= 15 && scrollYPercent <= 22 && (
           <SaveTheDateSection scrollY={Number(scrollYPercent.toFixed(0))} start={15} end={22} />
@@ -370,17 +366,17 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
         {scrollYPercent >= 69 && scrollYPercent <= 80 && (
           <RSVPSection scrollY={Number(scrollYPercent.toFixed(0))} start={70} end={80} />
         )}
-        {scrollYPercent >= 79 && scrollYPercent <= 89 && (
+        {scrollYPercent >= 79 && scrollYPercent <= 88 && (
           <CommentForm
             scrollY={Number(scrollYPercent.toFixed(0))}
             start={80}
             end={88}
           />
         )}
-        {scrollYPercent >= 89 && scrollYPercent <= 96 && (
+        {scrollYPercent >= 88 && scrollYPercent <= 96 && (
           <CommentsSection
             scrollY={Number(scrollYPercent.toFixed(0))}
-            start={89}
+            start={88}
             end={95}
           />
         )}

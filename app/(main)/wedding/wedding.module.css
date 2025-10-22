@@ -1,6 +1,10 @@
 .weddingScroll {
   scrollbar-width: thin;
   scrollbar-color: rgba(156, 73, 21, 0.404) transparent;
+  scrollbar-gutter: stable;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
 }
 
 .weddingScroll::-webkit-scrollbar {
@@ -10,30 +14,51 @@
 
 .weddingScroll::-webkit-scrollbar-track {
   background: transparent;
-  margin: 10px 0; 
+  margin: 10px 0;
 }
 
 .weddingScroll::-webkit-scrollbar-thumb {
-  background: rgba(156, 73, 21, 0.404); 
+  background: rgba(156, 73, 21, 0.404);
   border-radius: 4px;
   border: 2px solid transparent;
-  background-clip: padding-box; 
+  background-clip: padding-box;
   transition: background-color 0.2s ease;
 }
 
 .weddingScroll::-webkit-scrollbar-thumb:vertical {
-  min-height: 40px; 
+  min-height: 40px;
 }
 .weddingScroll::-webkit-scrollbar-thumb:horizontal {
-  min-width: 40px; 
+  min-width: 40px;
 }
 
 .weddingScroll::-webkit-scrollbar-thumb:hover {
-  background: rgba(124, 45, 18, 0.7); 
+  background: rgba(124, 45, 18, 0.7);
 }
 
-.weddingScroll {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(156, 73, 21, 0.404) transparent;
-  scrollbar-gutter: stable; 
+@media screen and (max-width: 768px) {
+  .weddingScroll {
+    /* Prevent address bar from showing on scroll up */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height */
+    overflow-y: auto;
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  html {
+    /* Trigger address bar hiding */
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
 }
+
