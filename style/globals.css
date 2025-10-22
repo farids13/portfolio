@@ -43,33 +43,6 @@ body {
   font-family: var(--font-geist-sans), "Dosis", "Allura", Arial, Helvetica, sans-serif;
 }
 
-#root {
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Mobile Safari specific fixes */
-@supports (-webkit-touch-callout: none) {
-  body {
-    height: -webkit-fill-available;
-  }
-}
-
-/* Chrome Android specific fixes */
-@media screen and (max-width: 768px) {
-  body {
-    height: 100vh;
-    height: 100dvh;
-  }
-
-  html {
-    height: 100%;
-    overflow: hidden;
-  }
-}
-
 /* Utility: hide scrollbar cross-browser */
 .no-scrollbar {
   -ms-overflow-style: none;
