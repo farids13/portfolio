@@ -35,7 +35,7 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
   const [showButton, setShowButton] = useState(true);
   const playSoundEffect = (soundFile: string) => {
     const audio = new Audio(`/effect/${soundFile}`);
-    audio.volume = 0.3; // Set volume to 30% untuk tidak terlalu keras
+    audio.volume = 0.8;
     audio.play().catch(error => {
       console.warn(`Could not play sound effect ${soundFile}:`, error);
     });
@@ -132,12 +132,9 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
     };
 
     const loadAllAssets = async () => {
-      // Load assets sequentially untuk tracking yang lebih akurat
       for (const asset of ASSETS_TO_LOAD) {
         await loadAsset(asset);
       }
-
-      // Jika loading selesai, tunjukkan tombol Open Invitation
       if (loadedCount >= ASSETS_TO_LOAD.length && isMounted) {
         setIsLoading(false);
         setTimeout(() => {
@@ -168,14 +165,13 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
     onPlayMusic?.();
     setShowButton(false);
     
-    // Play initial sound effect
-    playSoundEffect('woosh.mp3');
-    
     setTimeout(() => {
       setIsDoorOpening(true);
-      // Play door opening sound
       playSoundEffect('door-open.mp3');
     }, 200);
+    setTimeout(() => {
+      playSoundEffect('woosh.mp3');
+    }, 1500);
     setTimeout(() => {
       setIsScaleAnimating(true);
     }, 2000);
@@ -184,41 +180,37 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
     }, 5000);
   };
 
-  // Single loading button with progress overlay
   const renderLoadingButton = () => (
-    <div className="absolute z-5 mt-40 w-[300px]">
+    <div className="absolute z-5 mt-40 w-[300px] transition-all duration-300">
       <button
+        id='open-invitation-button'
         disabled={progress < 100}
         onClick={progress >= 100 ? handleOpenInvitation : undefined}
         className={`relative w-full h-[50px] rounded-full font-bold text-lg text-white shadow-lg hover:shadow-xl transform transition-all duration-300 border-2 overflow-hidden group ${
           progress >= 100
-            ? 'bg-gradient-to-r from-yellow-400 to-yellow-600 border-yellow-300 hover:border-yellow-200 hover:scale-105 cursor-pointer'
-            : 'bg-gradient-to-r from-amber-400 to-amber-600 border-amber-300 cursor-not-allowed'
+            ? 'bg-gradient-to-r from-amber-200/90 to-amber-300/90 border-amber-300 hover:border-amber-200 hover:scale-105 cursor-pointer'
+            : 'bg-gradient-to-r from-amber-100/90 to-amber-300/90 border-amber-300 cursor-not-allowed'
         }`}
       >
-        {/* Progress bar overlay during loading */}
         {progress < 100 && (
           <div className="absolute inset-0 bg-amber-100 rounded-full overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-amber-400 to-amber-600 rounded-full transition-all duration-500 ease-out"
+              className="h-full bg-gradient-to-r from-amber-200/90 to-amber-300/90 rounded-full transition-all duration-500 ease-out"
               style={{ width: `${progress}%` }}
             />
           </div>
         )}
 
-        {/* Button text */}
         <span className={`relative z-10 drop-shadow-md ${progress < 100 ? 'animate-pulse text-amber-800 text-sm' : 'animate-pulse text-white'}`}>
           {progress >= 100 ? 'Buka Undangan' : `Loading... ${downloadedKB} KB / ${TOTAL_SIZE_KB} KB`}
         </span>
 
-        {/* Progress percentage during loading */}
         {isLoading && (
           <div className="absolute top-1/2 right-3 text-xs font-medium text-amber-800 z-20">
             <span className="text-[6px]">{currentAsset}</span> <span className="text-[6px]">{loadedAssets}/{ASSETS_TO_LOAD.length}</span>
           </div>
         )}
 
-        {/* Hover effects for completed state */}
         {progress >= 100 && (
           <>
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transform -skew-x-12 group-hover:animate-ping"></div>
@@ -230,8 +222,17 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
   );
 
   return (
-    <div className={`w-full h-[100vh] bg-white flex items-center justify-center ${scaleClasses}`}>
-      <div className='absolute flex w-[800px] h-[700px]'>
+    <div className={`w-full h-[100vh] bg-white flex items-center justify-center overflow-hidden ${scaleClasses}`} style={{ overflow: 'hidden' }}>
+      <div className='absolute flex w-[800px] h-[700px] overflow-hidden' style={{ overflow: 'hidden' }}>
+        <style jsx global>{`
+          html, body {
+            overflow: hidden !important;
+            margin: 0 !important;
+            padding: 0 !important;
+            height: 100% !important;
+            width: 100% !important;
+          }
+        `}</style>
         <Image
           src="/images/wedding/frame/outside-door.webp"
           alt="Background"
@@ -277,7 +278,6 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
         </div>
       </div>
 
-      {/* Single loading button */}
       {showButton && renderLoadingButton()}
     </div>
   );

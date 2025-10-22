@@ -13,23 +13,20 @@ const WeddingScene = dynamic(
 export default function Wedding() {
   const [showDoor, setShowDoor] = useState(true);
   const [showScene, setShowScene] = useState(false);
-  const [loadingComplete, setLoadingComplete] = useState(false);
-  const [userInteracted, setUserInteracted] = useState(false);
   const [playMusicNow, setPlayMusicNow] = useState(false);
 
   const handlePlayMusic = () => {
-    setUserInteracted(true);
     setPlayMusicNow(true);
+  };
+
+  const handleMusicStarted = () => {
+    setPlayMusicNow(false);
   };
 
   const handleDoorComplete = () => {
     setShowDoor(false);
     setTimeout(() => {
       setShowScene(true);
-      // Signal ke MusicPlayer bahwa loading complete dan ready untuk autoplay
-      setTimeout(() => {
-        setLoadingComplete(true);
-      }, 500); // Delay untuk memastikan MusicPlayer sudah mount
     }, 200);
   };
 
@@ -45,9 +42,8 @@ export default function Wedding() {
         }}
       >
         <WeddingScene 
-          loadingComplete={loadingComplete}
-          userInteracted={userInteracted}
           playMusicNow={playMusicNow}
+          onMusicStarted={handleMusicStarted}
         />
       </div>
       <style jsx>{`

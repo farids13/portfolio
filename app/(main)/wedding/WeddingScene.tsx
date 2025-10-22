@@ -241,12 +241,11 @@ function TableFlower({ x, y, z }: { x: number, y: number, z: number }) {
 }
 
 interface WeddingSceneProps {
-  loadingComplete?: boolean;
-  userInteracted?: boolean;
   playMusicNow?: boolean;
+  onMusicStarted?: () => void;
 }
 
-export default function WeddingScene({ loadingComplete = false, userInteracted = false, playMusicNow = false }: WeddingSceneProps) {
+export default function WeddingScene({ playMusicNow = false, onMusicStarted }: WeddingSceneProps) {
   const [scrollY, setScrollY] = useState(0);
   const [scrollYPercent, setScrollYPercent] = useState(0);
   const [scrollMax, setScrollMax] = useState(1);
@@ -261,7 +260,6 @@ export default function WeddingScene({ loadingComplete = false, userInteracted =
 
         setScrollY(currentScroll);
         
-        // Cegah pembagian oleh nol untuk menghindari NaN
         if (maxScroll > 0) {
           setScrollYPercent((currentScroll / maxScroll) * 100);
         } else {
@@ -286,11 +284,11 @@ export default function WeddingScene({ loadingComplete = false, userInteracted =
         container.removeEventListener('scroll', handleScroll);
       }
     };
-  }, [loadingComplete, userInteracted]);
+  }, []);
 
   return (
     <div ref={containerRef} className="w-full h-screen overflow-y-auto bg-white">
-      <MusicPlayer loadingComplete={loadingComplete} userInteracted={userInteracted} playMusicNow={playMusicNow} /> 
+      <MusicPlayer playMusicNow={playMusicNow} onMusicStarted={onMusicStarted} /> 
       <div className='relative z-1 h-[400vh] w-full'></div>
       <div className='h-full w-full relative z-1'>
         <div className='fixed top-2 left-2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-lg pointer-events-none'>

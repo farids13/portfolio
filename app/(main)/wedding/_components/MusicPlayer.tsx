@@ -3,23 +3,21 @@ import { IoMdMusicalNote } from 'react-icons/io';
 
 interface MusicPlayerProps {
   className?: string;
-  loadingComplete?: boolean;
-  userInteracted?: boolean;
   playMusicNow?: boolean;
+  onMusicStarted?: () => void;
 }
 
 export default function MusicPlayer({
   className = "",
-  loadingComplete = false,
-  userInteracted: userInteractedProp = false,
-  playMusicNow = false
+  playMusicNow = false,
+  onMusicStarted
 }: MusicPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [playlist, setPlaylist] = useState<string[]>([]);
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const autoplayAttemptedRef = useRef(false);
+  const hasUserRequestedPlay = useRef(false);
   // Initialize playlist dan preload audio
   useEffect(() => {
     const musicFiles = [
@@ -52,81 +50,22 @@ export default function MusicPlayer({
     return () => audio.removeEventListener('canplaythrough', handleCanPlay);
   }, []);
 
-  // Autoplay saat loading complete DAN user sudah interact di LoadingScreen
-  useEffect(() => {
-    if (!loadingComplete || !userInteractedProp || autoplayAttemptedRef.current || isLoading) {
-      return;
-    }
-
-    if (audioRef.current && playlist.length > 0) {
-      autoplayAttemptedRef.current = true;
-      
-      // Delay untuk memastikan audio ready
-      setTimeout(() => {
-        if (audioRef.current) {
-          audioRef.current.play()
-            .then(() => {
-              setIsPlaying(true);
-            })
-            .catch((error) => {
-              console.warn('⚠️ Autoplay prevented by browser:', error.message);
-              console.warn('💡 Click anywhere to start music manually');
-              setIsPlaying(false);
-            });
-        }
-      }, 200);
-    }
-  }, [loadingComplete, userInteractedProp, isLoading, playlist.length]);
-
   // Play music ketika tombol diklik
   useEffect(() => {
-    if (playMusicNow && audioRef.current && !isLoading && playlist.length > 0 && !isPlaying) {
+    if (playMusicNow && !hasUserRequestedPlay.current && audioRef.current && !isLoading && playlist.length > 0) {
+      hasUserRequestedPlay.current = true;
+
       audioRef.current.play()
         .then(() => {
           setIsPlaying(true);
-          console.log('🎵 Music started via button click!');
+          onMusicStarted?.();
         })
         .catch((error) => {
-          console.warn('⚠️ Could not play music:', error.message);
+          console.warn('Could not play music:', error.message);
+          hasUserRequestedPlay.current = false; // Reset jika gagal
         });
     }
-  }, [playMusicNow, isLoading, playlist.length, isPlaying]);
-
-  // Fallback: autoplay dengan user interaction jika loadingComplete gagal
-  useEffect(() => {
-    if (userInteractedProp || autoplayAttemptedRef.current) {
-      return;
-    }
-
-    const attemptAutoplay = () => {
-      if (audioRef.current && !isLoading && playlist.length > 0 && !autoplayAttemptedRef.current) {
-        autoplayAttemptedRef.current = true;
-        
-        setTimeout(() => {
-          audioRef.current?.play()
-            .then(() => {
-              setIsPlaying(true);
-            })
-            .catch((error) => {
-              console.warn('⚠️ Autoplay prevented by browser:', error.message);
-              setIsPlaying(false);
-            });
-        }, 100);
-      }
-    };
-
-    // Listen untuk user interaction pertama sebagai fallback
-    const events = ['click', 'touchstart', 'keydown', 'scroll', 'mousemove'];
-    events.forEach(event => {
-      document.addEventListener(event, attemptAutoplay, { once: true, passive: true });
-    });
-
-    return () => {
-      events.forEach(event => {
-        document.removeEventListener(event, attemptAutoplay);
-      });
-    };
-  }, [isLoading, playlist.length, userInteractedProp]);
+  }, [playMusicNow, isLoading, playlist.length, onMusicStarted]);
 
   const togglePlayPause = () => {
     if (audioRef.current) {
@@ -190,7 +129,7 @@ export default function MusicPlayer({
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-full h-full bg-white rounded-full flex items-center justify-center shadow-inner">
                   <IoMdMusicalNote 
-                    className={`w-2 h-2 text-amber-700 transition-transform duration-300 ${isPlaying ? 'animate-spin' : ''}`} 
+                    className={`w-2 h-2 text-amber-700 transition-transform duration-300 eas ${isPlaying ? 'animate-spin' : ''}`} 
                     style={{ animationDuration: '3s' }}
                   />
                 </div>
