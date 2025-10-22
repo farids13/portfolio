@@ -30,14 +30,52 @@
   }
 }
 
+/* Mobile address bar fixes */
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), "Dosis", "Allura", Arial, Helvetica, sans-serif;
+  /* Prevent address bar issues */
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
-html {
-  scroll-behavior: smooth;
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile Safari specific fixes */
+@supports (-webkit-touch-callout: none) {
+  body {
+    /* Fix for iOS Safari address bar */
+    height: -webkit-fill-available;
+  }
+}
+
+/* Chrome Android specific fixes */
+@media screen and (max-width: 768px) {
+  body {
+    /* Prevent address bar from showing on scroll up */
+    height: 100vh;
+    height: 100dvh; /* Dynamic viewport height */
+  }
+
+  html {
+    /* Trigger address bar hiding */
+    height: 100%;
+    overflow: hidden;
+  }
 }
 
 /* Utility: hide scrollbar cross-browser */

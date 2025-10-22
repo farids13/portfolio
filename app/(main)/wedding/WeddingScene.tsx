@@ -267,6 +267,16 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
         }
         
         setScrollMax(maxScroll);
+
+        // Trigger mobile address bar hiding
+        // Hide address bar when scrolled down more than 100px
+        if (currentScroll > 100 && window.innerHeight < 800) {
+          // Only trigger on mobile devices
+          setTimeout(() => {
+            window.scrollTo(0, 1);
+            window.scrollTo(0, 0);
+          }, 100);
+        }
       }
     };
 
