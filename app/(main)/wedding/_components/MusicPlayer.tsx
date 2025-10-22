@@ -18,7 +18,6 @@ export default function MusicPlayer({
   const [currentTrackIndex, setCurrentTrackIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
   const hasUserRequestedPlay = useRef(false);
-  // Initialize playlist dan preload audio
   useEffect(() => {
     const musicFiles = [
       'Nyoman Paul, Andi Rianto – The Way You Look At Me (Official Music Video).mp3'
@@ -35,22 +34,13 @@ export default function MusicPlayer({
     }
   }, []);
 
-  // Set audio ready state
   useEffect(() => {
     const audio = audioRef.current;
-    if (!audio) {
-      return;
+    if (audio) {
+      audio.volume = 0.7;
     }
+  }, [playlist]);
 
-    const handleCanPlay = () => {
-      setIsLoading(false);
-    };
-
-    audio.addEventListener('canplaythrough', handleCanPlay);
-    return () => audio.removeEventListener('canplaythrough', handleCanPlay);
-  }, []);
-
-  // Play music ketika tombol diklik
   useEffect(() => {
     if (playMusicNow && !hasUserRequestedPlay.current && audioRef.current && !isLoading && playlist.length > 0) {
       hasUserRequestedPlay.current = true;
@@ -96,8 +86,16 @@ export default function MusicPlayer({
         });
       };
 
+      const handleCanPlay = () => {
+        setIsLoading(false);
+      };
+
       audio.addEventListener('ended', handleEnded);
-      return () => audio.removeEventListener('ended', handleEnded);
+      audio.addEventListener('canplaythrough', handleCanPlay);
+      return () => {
+        audio.removeEventListener('ended', handleEnded);
+        audio.removeEventListener('canplaythrough', handleCanPlay);
+      };
     }
   }, [currentTrackIndex, playlist]);
 
