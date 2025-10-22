@@ -74,7 +74,7 @@ export default function CommentForm({ scrollY, start, end }: CommentFormProps) {
     const formContent = (
         <div className="relative z-10 p-8 pointer-events-none">
             <div className='text-center mb-6'>
-                <h3 className="text-4xl font-bold text-amber-900 tracking-wider font-allura">Ucapan & Doa</h3>
+                <h3 className="text-3xl font-bold text-amber-900 tracking-wider font-allura">Ucapan & Doa</h3>
                 <div className='h-px w-48 mb-2 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto my-4' />
                 <p className="text-xs text-amber-700/80 mt-2 tracking-widest font-sans">KIRIM UCAPAN</p>
             </div>
@@ -132,11 +132,7 @@ export default function CommentForm({ scrollY, start, end }: CommentFormProps) {
             className="fixed inset-0 z-50 flex items-center justify-center p-8 pointer-events-none"
             style={createBackdropStyles()}
         >
-            <div className="relative w-full max-w-md min-w-[300px]" style={createContainerStyles()}>
-                <div className='absolute inset-0 rounded-2xl bg-gradient-to-br from-white/90 to-amber-50/80 backdrop-blur-sm shadow-lg overflow-hidden border border-amber-100/50'>
-                    <div className='absolute inset-0 bg-[linear-gradient(0deg,transparent_24%,rgba(180,83,9,0.05)_25%,rgba(180,83,9,0.05)_26%,transparent_27%,transparent_74%,rgba(180,83,9,0.05)_75%,rgba(180,83,9,0.05)_76%,transparent_77%,transparent),linear-gradient(90deg,transparent_24%,rgba(180,83,9,0.05)_25%,rgba(180,83,9,0.05)_26%,transparent_27%,transparent_74%,rgba(180,83,9,0.05)_75%,rgba(180,83,9,0.05)_76%,transparent_77%,transparent)] bg-[length:30px_30px] opacity-20'></div>
-                </div>
-
+            <div className="relative w-full max-w-md min-w-[300px] bg-gradient-to-br rounded-lg from-white/90 to-amber-50/80 backdrop-blur-xs shadow-lg" style={createContainerStyles()}>
                 {isSubmitted ? thankYouMessage : formContent}
             </div>
         </div>

@@ -38,7 +38,7 @@ export default function ThankYouSection({ scrollY, start }: ThankYouSectionProps
       }}
     >
       <div className='absolute top-[30vw] sm:top-[20vw] md:top-[15vw] lg:top-[10vw] xl:top-[5vw] transform transition-all'>
-        <h3 className='text-5xl sm:text-6xl md:text-7xl min-w-[250px] tracking-[6px] text-center bg-gradient-to-r from-white/60 via-amber-50/60 to-white/60 rounded-2xl p-2 shadow-lg text-amber-800/90 font-allura'>Terima Kasih</h3>
+        <h3 className='text-5xl sm:text-6xl md:text-7xl min-w-[250px] tracking-[4px] text-center bg-gradient-to-r from-white/60 via-amber-50/60 to-white/60 rounded-2xl p-2 shadow-lg text-amber-800/90 font-allura'>Thank You</h3>
       </div>
       <div
         className='transform transition-all shadow bg-gradient-to-r from-white/80 via-amber-50/95 to-white/80 rounded-2xl  text-amber-800 items-center justify-center p-4 inline-flex flex-col'

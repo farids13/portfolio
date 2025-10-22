@@ -83,7 +83,7 @@ const DigitalWallet: React.FC<DigitalWalletProps> = ({ scrollY, start, end }) =>
 
             <div className="relative z-10 p-6 md:p-8">
               <div className="text-center mb-6">
-                <h3 className="text-2xl sm:text-3xl font-bold md:text-4xl text-amber-900/90 font-widest font-allura mb-3">
+                <h3 className="text-3xl sm:text-4xl font-bold md:text-5xl text-amber-900/90 font-widest font-allura mb-3">
                   Amplop Digital
                 </h3>
                 <div className='h-0.5 w-32 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto' />

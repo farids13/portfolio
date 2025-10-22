@@ -236,7 +236,7 @@ export default function CommentsSection({ scrollY, start, end }: CommentsSection
       <div className="relative w-full max-w-lg min-w-[300px] inset-0 rounded-2xl bg-gradient-to-tl from-white/90 to-amber-50/40 backdrop-blur-sm shadow-xl border-2 border-amber-200/10" style={createContainerStyles()}>
         <div className="relative z-10 p-4">
           <div className='text-center mb-6'>
-            <h3 className="text-4xl font-bold text-amber-900 tracking-wider font-allura">Ucapan & Doa</h3>
+            <h3 className="text-3xl font-bold text-amber-900 tracking-wider font-allura">Ucapan & Doa</h3>
             <div className='h-px w-48 mb-2 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto my-4' />
             <p className="text-xs text-amber-700/80 mt-2 tracking-widest font-sans">UCAPAN TAMU</p>
           </div>

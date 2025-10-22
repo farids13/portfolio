@@ -294,12 +294,13 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
 
   return (
     <div ref={containerRef} className="w-full h-screen overflow-y-auto bg-white">
-      <MusicPlayer playMusicNow={playMusicNow} onMusicStarted={onMusicStarted} /> 
+      <MusicPlayer playMusicNow={playMusicNow} onMusicStarted={onMusicStarted} />
       <div className='relative z-1 h-[300vh] w-full'></div>
       <div className='h-full w-full relative z-1'>
-        <div className='fixed top-2 left-2 bg-black bg-opacity-50 text-white px-4 py-2 rounded-lg pointer-events-none'>
-          Scroll Position: {`${scrollYPercent.toFixed(0)}%/${scrollY.toFixed(0)}`}
-        </div>
+        <div
+          className='fixed bottom-0 left-0 bg-amber-400/80 p-1 rounded-r-lg pointer-events-none h-1'
+          style={{ width: `${scrollYPercent}%` }}
+        />
       </div>
       <div>
         {scrollYPercent >= 0 && scrollYPercent <= 5 && (
