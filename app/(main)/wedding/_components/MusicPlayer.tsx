@@ -5,12 +5,14 @@ interface MusicPlayerProps {
   className?: string;
   loadingComplete?: boolean;
   userInteracted?: boolean;
+  playMusicNow?: boolean;
 }
 
 export default function MusicPlayer({
   className = "",
   loadingComplete = false,
-  userInteracted: userInteractedProp = false
+  userInteracted: userInteractedProp = false,
+  playMusicNow = false
 }: MusicPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
@@ -75,6 +77,20 @@ export default function MusicPlayer({
       }, 200);
     }
   }, [loadingComplete, userInteractedProp, isLoading, playlist.length]);
+
+  // Play music ketika tombol diklik
+  useEffect(() => {
+    if (playMusicNow && audioRef.current && !isLoading && playlist.length > 0 && !isPlaying) {
+      audioRef.current.play()
+        .then(() => {
+          setIsPlaying(true);
+          console.log('🎵 Music started via button click!');
+        })
+        .catch((error) => {
+          console.warn('⚠️ Could not play music:', error.message);
+        });
+    }
+  }, [playMusicNow, isLoading, playlist.length, isPlaying]);
 
   // Fallback: autoplay dengan user interaction jika loadingComplete gagal
   useEffect(() => {

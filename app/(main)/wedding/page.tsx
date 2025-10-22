@@ -1,8 +1,8 @@
 "use client";
 import dynamic from 'next/dynamic';
-import { useState, useCallback } from 'react';
+import { useState } from 'react';
 
-import LoadingScreen from './_components/LoadingScreen';
+import DoorSection from './_components/DoorSection';
 import styles from './wedding.module.css';
 
 const WeddingScene = dynamic(
@@ -11,17 +11,19 @@ const WeddingScene = dynamic(
 );
 
 export default function Wedding() {
-  const [isLoading, setIsLoading] = useState(true);
+  const [showDoor, setShowDoor] = useState(true);
   const [showScene, setShowScene] = useState(false);
   const [loadingComplete, setLoadingComplete] = useState(false);
   const [userInteracted, setUserInteracted] = useState(false);
+  const [playMusicNow, setPlayMusicNow] = useState(false);
 
-  const handleUserInteraction = useCallback(() => {
+  const handlePlayMusic = () => {
     setUserInteracted(true);
-  }, []);
+    setPlayMusicNow(true);
+  };
 
-  const handleLoadComplete = () => {
-    setIsLoading(false);
+  const handleDoorComplete = () => {
+    setShowDoor(false);
     setTimeout(() => {
       setShowScene(true);
       // Signal ke MusicPlayer bahwa loading complete dan ready untuk autoplay
@@ -33,21 +35,19 @@ export default function Wedding() {
 
   return (
     <>
-      {isLoading && (
-        <LoadingScreen 
-          onLoadComplete={handleLoadComplete}
-          onUserInteraction={handleUserInteraction}
-        />
+      {showDoor && (
+        <DoorSection onOpenComplete={handleDoorComplete} onPlayMusic={handlePlayMusic} />
       )}
       <div 
         className={`w-full h-full ${styles.weddingScroll} ${showScene ? 'animate-fade-in-wedding' : 'opacity-0'}`}
         style={{ 
-          display: isLoading ? 'none' : 'block'
+          display: showDoor ? 'none' : 'block'
         }}
       >
         <WeddingScene 
           loadingComplete={loadingComplete}
           userInteracted={userInteracted}
+          playMusicNow={playMusicNow}
         />
       </div>
       <style jsx>{`

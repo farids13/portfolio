@@ -262,102 +262,113 @@ export default function LoadingScreen({ onLoadComplete, onUserInteraction }: Loa
     );
   }
 
-  // Default: tampilkan progress bar saat loading
+  // Jika tombol Open Invitation muncul, jangan tampilkan progress
+  if (showButton) {
+    return (
+      <div className={`fixed inset-0 z-[9998] flex items-center justify-center bg-gradient-to-br from-amber-50 via-white to-amber-50 transition-all duration-500 ease-in ${isFadingOut ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+        {/* Decorative background elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-10 left-10 w-32 h-32 bg-amber-200/20 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-10 right-10 w-40 h-40 bg-amber-300/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-amber-100/10 rounded-full blur-3xl" />
+        </div>
+
+        <div className="relative z-10 text-center max-w-md w-full px-6">
+          {/* Wedding rings icon */}
+          <div className="mb-8 flex justify-center">
+            <div className="relative">
+              <div className="absolute inset-0 bg-amber-400/30 rounded-full blur-xl animate-pulse" />
+              <div className="relative flex items-center justify-center">
+                <FaHeart className="text-6xl text-amber-600 animate-pulse" />
+              </div>
+            </div>
+          </div>
+
+          {/* Title */}
+          <h1 className="text-4xl md:text-5xl font-allura text-amber-800 mb-2">
+            Farid & Dilla
+          </h1>
+          <div className="h-px w-48 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mb-6" />
+          
+          <p className="text-amber-700 mb-8 font-light">
+            Undangan pernikahan sudah siap!
+          </p>
+
+          {/* Open Invitation Button */}
+          <button
+            onClick={handleOpenInvitation}
+            className="relative group w-full max-w-xs mx-auto"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-amber-400 to-amber-600 rounded-lg blur opacity-75 group-hover:opacity-100 transition duration-200" />
+            <div className="relative bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 rounded-lg px-8 py-4 text-white font-medium text-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">
+              <span className="flex items-center justify-center gap-2">
+                <FaHeart className="text-xl animate-pulse" />
+                Open Invitation
+              </span>
+            </div>
+          </button>
+
+        </div>
+      </div>
+    );
+  }
+
+  // Default: tampilkan loading dengan design minimal elegan dan mobile-friendly
   return (
     <div className={`fixed inset-0 z-[9998] flex items-center justify-center bg-gradient-to-br from-amber-50 via-white to-amber-50 transition-all duration-500 ease-in ${isFadingOut ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
-      {/* Decorative background elements */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-10 left-10 w-32 h-32 bg-amber-200/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-10 right-10 w-40 h-40 bg-amber-300/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-amber-100/10 rounded-full blur-3xl" />
-      </div>
-
-      <div className="relative z-10 text-center max-w-md w-full px-6">
-        {/* Wedding rings icon */}
-        <div className="mb-8 flex justify-center">
-          <div className="relative">
-            <div className="absolute inset-0 bg-amber-400/30 rounded-full blur-xl animate-pulse" />
-            <div className="relative flex items-center justify-center">
-              <FaHeart className="text-6xl text-amber-600 animate-pulse" />
-            </div>
-          </div>
-        </div>
-
-        {/* Title */}
-        <h1 className="text-4xl md:text-5xl font-allura text-amber-800 mb-2">
-          Farid & Dilla
-        </h1>
-        <div className="h-px w-48 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mb-6" />
-        
-        <p className="text-amber-700 mb-8 font-light">
-          Mempersiapkan undangan pernikahan kami...
-        </p>
-
-        {/* Progress bar */}
-        <div className="mb-4">
-          <div className="relative h-3 bg-amber-100 rounded-full overflow-hidden shadow-inner">
-            <div
-              className="absolute inset-y-0 left-0 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full transition-all duration-300 ease-out"
-              style={{ width: `${progress}%` }}
-            >
-              <div className="absolute inset-0 bg-white/30 animate-shimmer" />
-            </div>
-          </div>
-        </div>
-
-        {/* Progress info */}
-        <div className="flex justify-between items-center text-sm text-amber-700 mb-2">
-          <span className="font-medium">{Math.round(progress)}%</span>
-          <span className="text-xs">
-            {loadedAssets} / {ASSETS_TO_LOAD.length} aset
-          </span>
-        </div>
-
-        {/* Download size */}
-        <div className="text-xs text-amber-600 mb-4">
-          {formatSize(downloadedKB)} / {formatSize(TOTAL_SIZE_KB)}
-        </div>
-
-        {/* Current loading asset */}
-        <div className="min-h-[20px]">
-          {currentAsset && (
-            <p className="text-xs text-amber-500 truncate animate-fade-in">
-              Memuat: {currentAsset.length > 40 ? currentAsset.substring(0, 40) + '...' : currentAsset}
+      {/* Glass morphism container - positioned lower for mobile */}
+      <div className="relative w-full max-w-md mx-6 mt-32 md:mt-0">
+        <div className="relative rounded-2xl bg-gradient-to-br from-white/60 to-white/30 backdrop-blur-xl border border-white/30 shadow-2xl overflow-hidden">
+          {/* Content */}
+          <div className="relative z-10 p-8 md:p-10 text-center">
+            {/* Title */}
+            <h1 className="text-3xl md:text-4xl font-allura text-amber-800 mb-2">
+              Farid & Dilla
+            </h1>
+            <div className="h-px w-32 bg-gradient-to-r from-transparent via-amber-400 to-transparent mx-auto mb-6" />
+            
+            {/* Loading text */}
+            <p className="text-amber-700 mb-8 font-light text-lg">
+              Preparing your invitation...
             </p>
-          )}
+
+            {/* Clickable Progress bar */}
+            <div className="mb-8">
+              <div 
+                className="relative h-3 bg-amber-100 rounded-full overflow-hidden shadow-inner cursor-pointer hover:bg-amber-200 transition-colors"
+                onClick={handleOpenInvitation}
+              >
+                <div
+                  className="absolute inset-y-0 left-0 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full transition-all duration-300 ease-out"
+                  style={{ width: `${progress}%` }}
+                ></div>
+              </div>
+            </div>
+
+            {/* Progress info */}
+            <div className="flex justify-between items-center text-sm text-amber-700 mb-6">
+              <span className="font-medium">{Math.round(progress)}%</span>
+              <span className="text-xs">
+                {loadedAssets} / {ASSETS_TO_LOAD.length} assets
+              </span>
+            </div>
+
+            {/* Open Invitation Button */}
+            <button
+              onClick={handleOpenInvitation}
+              className="w-full bg-gradient-to-r from-amber-500 to-amber-700 hover:from-amber-600 hover:to-amber-800 text-white font-medium py-3 px-6 rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200"
+            >
+              Open Invitation
+            </button>
+          </div>
+
+          {/* Corner decorations */}
+          <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-amber-400/60" />
+          <div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-amber-400/60" />
+          <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-amber-400/60" />
+          <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-amber-400/60" />
         </div>
-
-        {/* Decorative corner elements */}
-        <div className="absolute top-0 left-0 w-16 h-16 border-t-2 border-l-2 border-amber-300/50 rounded-tl-lg" />
-        <div className="absolute top-0 right-0 w-16 h-16 border-t-2 border-r-2 border-amber-300/50 rounded-tr-lg" />
-        <div className="absolute bottom-0 left-0 w-16 h-16 border-b-2 border-l-2 border-amber-300/50 rounded-bl-lg" />
-        <div className="absolute bottom-0 right-0 w-16 h-16 border-b-2 border-r-2 border-amber-300/50 rounded-br-lg" />
       </div>
-
-      <style jsx>{`
-        @keyframes shimmer {
-          0% {
-            transform: translateX(-100%);
-          }
-          100% {
-            transform: translateX(100%);
-          }
-        }
-        @keyframes fade-in {
-          from {
-            opacity: 0;
-          }
-          to {
-            opacity: 1;
-          }
-        }
-        .animate-shimmer {
-          animation: shimmer 2s infinite;
-        }
-        .animate-fade-in {
-          animation: fade-in 0.3s ease-in;
-        }
-      `}</style>
     </div>
   );
 }
