@@ -74,7 +74,7 @@ const DigitalWallet: React.FC<DigitalWalletProps> = ({ scrollY, start, end }) =>
     <>
       {toastNotification}
       <div
-        className="fixed inset-0 z-100 flex items-center justify-center p-5 pb-10 pointer-events-none"
+        className="fixed inset-0 z-50 flex items-center justify-center p-10 pointer-events-none"
         style={createBackdropStyles()}
       >
         <div className="relative w-full max-w-md min-w-[300px]" style={createContainerStyles()}>

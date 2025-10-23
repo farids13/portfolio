@@ -256,6 +256,7 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
       if (containerRef.current) {
         const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
         const maxScroll = scrollHeight - clientHeight;
+        console.log(scrollTop, scrollHeight, clientHeight, maxScroll);
         const currentScroll = Math.max(0, Math.min(scrollTop, maxScroll));
 
         setScrollY(currentScroll);
@@ -283,9 +284,9 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
 
   return (
     <div ref={containerRef} className={`w-full h-screen overflow-y-auto`} style={{ WebkitOverflowScrolling: 'touch' }}>
+      <div className='relative z-1 h-[250vh] w-full'/>
       <MusicPlayer playMusicNow={playMusicNow} onMusicStarted={onMusicStarted} />
-      <div className='relative z-1 h-[200vh] w-full'></div>
-      <div className='h-full w-full relative z-999'>
+      <div className='h-full w-full relative z-200 pointer-events-none'>
         <div
           className='fixed top-0 left-0 bg-amber-400/80 p-1 rounded-r-lg pointer-events-none h-1 z-999'
           style={{ width: `${scrollYPercent}%` }}
@@ -378,8 +379,8 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
         )}
       </div>
 
-      <div className="fixed inset-0">
-        <Canvas camera={{ position: [0, 0, 0], fov: 80 }}>
+      <div className="fixed inset-0 pointer-events-none">
+        <Canvas camera={{ position: [0, 0, 0], fov: 80 }} style={{ pointerEvents: 'none' }}>
           <color attach="background" args={['#fff']} />
           <ambientLight args={[0xffffff, 0.5]} />
           <directionalLight
