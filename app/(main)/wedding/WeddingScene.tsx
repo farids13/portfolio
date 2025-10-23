@@ -285,9 +285,9 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
     <div ref={containerRef} className={`w-full h-screen overflow-y-auto`} style={{ WebkitOverflowScrolling: 'touch' }}>
       <MusicPlayer playMusicNow={playMusicNow} onMusicStarted={onMusicStarted} />
       <div className='relative z-1 h-[200vh] w-full'></div>
-      <div className='h-full w-full relative z-1'>
+      <div className='h-full w-full relative z-999'>
         <div
-          className='fixed top-0 left-0 bg-amber-400/80 p-1 rounded-r-lg pointer-events-none h-1'
+          className='fixed top-0 left-0 bg-amber-400/80 p-1 rounded-r-lg pointer-events-none h-1 z-999'
           style={{ width: `${scrollYPercent}%` }}
         />
       </div>
