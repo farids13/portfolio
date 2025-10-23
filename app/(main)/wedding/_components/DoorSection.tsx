@@ -210,17 +210,33 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
   );
 
   return (
-    <div className={`w-full h-[100vh] bg-white flex items-center justify-center overflow-hidden ${scaleClasses}`} style={{ overflow: 'hidden' }}>
-      <div className='absolute flex w-[800px] h-[700px] scale-80 xs:scale-85 sm:scale-90 md:scale-95 lg:scale-100 xl:scale-105  overflow-hidden' style={{ overflow: 'hidden' }}>
-        <style jsx global>{`
-          html, body {
-            overflow: hidden !important;
-            margin: 0 !important;
-            padding: 0 !important;
-            height: 100% !important;
-            width: 100% !important;
-          }
-        `}</style>
+    <div 
+      className={`w-full h-[100vh] bg-white flex items-center justify-center ${scaleClasses}`} 
+      style={{ 
+        overflow: 'hidden',
+        position: 'fixed',
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0
+      }}
+    >
+      <style jsx global>{`
+        html, body {
+          overflow: hidden !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          height: 100% !important;
+          width: 100% !important;
+          position: fixed;
+        }
+      `}</style>
+      <div 
+        className='absolute flex w-[800px] h-[700px] scale-80 xs:scale-85 sm:scale-90 md:scale-95 lg:scale-100 xl:scale-105'
+        style={{ 
+          overflow: 'hidden',
+        }}
+      >
         <Image
           src="/images/wedding/frame/outside-door.webp"
           alt="Background"

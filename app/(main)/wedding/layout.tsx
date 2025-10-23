@@ -16,7 +16,7 @@ export const viewport: Viewport = {
 
 export default function InvitationLayout({children}: {children: React.ReactNode;}) {
   return (
-    <main className="weddingScroll">
+    <main className="h-[100svh]">
       {children}
     </main>
   );

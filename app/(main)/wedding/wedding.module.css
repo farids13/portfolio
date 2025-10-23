@@ -36,29 +36,4 @@
   background: rgba(124, 45, 18, 0.7);
 }
 
-@media screen and (max-width: 768px) {
-  .weddingScroll {
-    /* Prevent address bar from showing on scroll up */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    height: 100dvh; /* Dynamic viewport height */
-    overflow-y: auto;
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-  }
-
-  html {
-    /* Trigger address bar hiding */
-    height: 100%;
-    overflow: hidden;
-  }
-
-  body {
-    height: 100%;
-    overflow: hidden;
-  }
-}
 

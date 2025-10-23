@@ -259,33 +259,22 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
         const currentScroll = Math.max(0, Math.min(scrollTop, maxScroll));
 
         setScrollY(currentScroll);
-        
         if (maxScroll > 0) {
           setScrollYPercent((currentScroll / maxScroll) * 100);
         } else {
           setScrollYPercent(0);
         }
-        
         setScrollMax(maxScroll);
-        if (currentScroll > 100 && window.innerHeight < 800) {
-          setTimeout(() => {
-            window.scrollTo(0, 1);
-            window.scrollTo(0, 0);
-          }, 100);
-        }
       }
     };
 
     const container = containerRef.current;
     if (container) {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      container.addEventListener('scroll', handleScroll, { passive: true });
       handleScroll();
-      window.dispatchEvent(new Event('resize'));
+      container.addEventListener('scroll', handleScroll, { passive: true });
     }
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       if (container) {
         container.removeEventListener('scroll', handleScroll);
       }
@@ -293,9 +282,9 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
   }, []);
 
   return (
-    <div ref={containerRef} className="w-full h-screen overflow-y-auto bg-white">
+    <div ref={containerRef} className={`w-full h-screen overflow-y-auto`} style={{ WebkitOverflowScrolling: 'touch' }}>
       <MusicPlayer playMusicNow={playMusicNow} onMusicStarted={onMusicStarted} />
-      <div className='relative z-1 h-[300vh] w-full'></div>
+      <div className='relative z-1 h-[200vh] w-full'></div>
       <div className='h-full w-full relative z-1'>
         <div
           className='fixed bottom-0 left-0 bg-amber-400/80 p-1 rounded-r-lg pointer-events-none h-1'
@@ -405,6 +394,5 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
         </Canvas>
       </div>
     </div>
-
   );
 }
