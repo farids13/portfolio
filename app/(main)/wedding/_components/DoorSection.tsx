@@ -181,49 +181,37 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
   };
 
   const renderLoadingButton = () => (
-    <div className="absolute z-5 mt-40 w-[300px] transition-all duration-300">
+    <div className="absolute z-5 mt-40 w-[200px] transition-all duration-300  ">
       <button
         id='open-invitation-button'
         disabled={progress < 100}
         onClick={progress >= 100 ? handleOpenInvitation : undefined}
-        className={`relative w-full h-[50px] rounded-full font-bold text-lg text-white shadow-lg hover:shadow-xl transform transition-all duration-300 border-2 overflow-hidden group ${
+        className={`relative w-full h-[50px] rounded-lg font-bold shadow-lg hover:shadow-xl transform transition-all duration-300 border-2 overflow-hidden group ${
           progress >= 100
-            ? 'bg-gradient-to-r from-amber-200/90 to-amber-300/90 border-amber-300 hover:border-amber-200 hover:scale-105 cursor-pointer'
-            : 'bg-gradient-to-r from-amber-100/90 to-amber-300/90 border-amber-300 cursor-not-allowed'
+            ? 'bg-gradient-to-r from-amber-100/90 to-amber-200/90 border-amber-200 hover:border-amber-200 hover:scale-105 cursor-pointer'
+            : 'bg-gradient-to-r from-amber-100/90 to-amber-200/90 border-amber-200 cursor-not-allowed'
         }`}
       >
         {progress < 100 && (
-          <div className="absolute inset-0 bg-amber-100 rounded-full overflow-hidden">
+          <div className="absolute inset-0 bg-amber-100 rounded-lg overflow-hidden">
             <div
-              className="h-full bg-gradient-to-r from-amber-200/90 to-amber-300/90 rounded-full transition-all duration-500 ease-out"
+              className="h-full bg-gradient-to-r from-amber-200/90 to-amber-300/90 rounded-lg transition-all duration-500 ease-out"
               style={{ width: `${progress}%` }}
             />
           </div>
         )}
 
-        <span className={`relative z-10 drop-shadow-md ${progress < 100 ? 'animate-pulse text-amber-800 text-sm' : 'animate-pulse text-white'}`}>
-          {progress >= 100 ? 'Buka Undangan' : `Loading... ${downloadedKB} KB / ${TOTAL_SIZE_KB} KB`}
+        <span className={`relative z-10 drop-shadow-md font-sans tracking-wider text-lg ${progress < 100 ? 'animate-pulse text-amber-800 text-sm' : 'animate-pulse text-amber-800 '}`}>
+          {progress >= 100 ? 'Buka Undangan' : `Mohon Tunggu...`}
         </span>
 
-        {isLoading && (
-          <div className="absolute top-1/2 right-3 text-xs font-medium text-amber-800 z-20">
-            <span className="text-[6px]">{currentAsset}</span> <span className="text-[6px]">{loadedAssets}/{ASSETS_TO_LOAD.length}</span>
-          </div>
-        )}
-
-        {progress >= 100 && (
-          <>
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-transparent via-white to-transparent opacity-0 group-hover:opacity-20 transform -skew-x-12 group-hover:animate-ping"></div>
-            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-yellow-300 to-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-          </>
-        )}
       </button>
     </div>
   );
 
   return (
     <div className={`w-full h-[100vh] bg-white flex items-center justify-center overflow-hidden ${scaleClasses}`} style={{ overflow: 'hidden' }}>
-      <div className='absolute flex w-[800px] h-[700px] overflow-hidden' style={{ overflow: 'hidden' }}>
+      <div className='absolute flex w-[800px] h-[700px] scale-80 xs:scale-85 sm:scale-90 md:scale-95 lg:scale-100 xl:scale-105  overflow-hidden' style={{ overflow: 'hidden' }}>
         <style jsx global>{`
           html, body {
             overflow: hidden !important;
@@ -249,12 +237,12 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
             priority
           />
         </div>
-        <div className='absolute -bottom-0 -right-10 z-4 w-[500px] h-[500px]'>
+        <div className='absolute -bottom-0 right-30 z-4  scale-95 w-[210px] h-[500px]'>
           <Image
-            src="/images/wedding/frame/gueses.webp"
+            src="/images/wedding/frame/gueses-woman.webp"
             alt="Gueses"
             fill
-            className="object-cover scale-x-[-1]"
+            className="object-cover "
             priority
           />
         </div>
