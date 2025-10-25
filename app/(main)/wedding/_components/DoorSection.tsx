@@ -249,6 +249,7 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
             src="/images/wedding/frame/gueses.webp"
             alt="Gueses"
             fill
+            sizes='500px'
             className="object-cover"
             priority
           />
@@ -258,6 +259,7 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
             src="/images/wedding/frame/gueses-woman.webp"
             alt="Gueses"
             fill
+            sizes='210px'
             className="object-cover "
             priority
           />

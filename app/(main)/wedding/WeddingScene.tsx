@@ -256,7 +256,7 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
       if (containerRef.current) {
         const { scrollTop, scrollHeight, clientHeight } = containerRef.current;
         const maxScroll = scrollHeight - clientHeight;
-        console.log(scrollTop, scrollHeight, clientHeight, maxScroll);
+        // console.log(scrollTop, scrollHeight, clientHeight, maxScroll);
         const currentScroll = Math.max(0, Math.min(scrollTop, maxScroll));
 
         setScrollY(currentScroll);
@@ -284,7 +284,7 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
 
   return (
     <div ref={containerRef} className={`w-full h-screen overflow-y-auto`} style={{ WebkitOverflowScrolling: 'touch' }}>
-      <div className='relative z-1 h-[250vh] w-full'/>
+      <div className='relative z-1 h-[250vh] md:h-[600vh] lg:h-[1100vh] xl:h-[1200vh] w-full'/>
       <MusicPlayer playMusicNow={playMusicNow} onMusicStarted={onMusicStarted} />
       <div className='h-full w-full relative z-200 pointer-events-none'>
         <div
