@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
 
+import { trackEvent } from '../_utils/tracking';
+
 interface DoorSectionProps {
   onOpenComplete: () => void;
   onPlayMusic?: () => void;
@@ -8,30 +10,50 @@ interface DoorSectionProps {
 
 // Daftar semua aset yang perlu dimuat
 const ASSETS_TO_LOAD = [
-  // 3D Textures dari WeddingScene
-  { url: '/images/wedding/frame/vector-stage.webp', size: 177 },
+  // Main wedding image
+  { url: '/images/wedding/couple_image.webp', size: 92 }, // Size in KB
+
+  // Frame assets
+  { url: '/images/wedding/frame/vector-stage.webp', size: 176 },
   { url: '/images/wedding/frame/sofa.webp', size: 58 },
-  { url: '/images/wedding/couple_image.webp', size: 92 },
   { url: '/images/wedding/frame/outside-door.webp', size: 170 },
-  { url: '/images/wedding/frame/table-flower.webp', size: 45 },
-  // Images dari komponen lain
+  { url: '/images/wedding/frame/table-flower.webp', size: 44 },
   { url: '/images/wedding/frame/cloud.webp', size: 85 },
+  { url: '/images/wedding/frame/door.webp', size: 32 },
+  { url: '/images/wedding/frame/envelope.webp', size: 2 },
+  { url: '/images/wedding/frame/frame-top.webp', size: 88 },
+  { url: '/images/wedding/frame/gueses.webp', size: 54 },
+  { url: '/images/wedding/frame/gueses-woman.webp', size: 71 },
+  { url: '/images/wedding/frame/stage.webp', size: 183 },
+  { url: '/images/wedding/frame/bottom-ornamen.webp', size: 58 },
+  { url: '/images/wedding/frame/decoration-walk.webp', size: 236 },
+  { url: '/images/wedding/frame/top-ornamen.webp', size: 81 },
+  { url: '/images/wedding/frame/vas-flower.webp', size: 58 },
+
+  // Logo assets
   { url: '/images/wedding/frame/logo/jago.webp', size: 20 },
   { url: '/images/wedding/frame/logo/sea-bank.webp', size: 20 },
-  // Musik
-  { url: '/music/Nyoman Paul, Andi Rianto – The Way You Look At Me (Official Music Video).mp3', size: 10180 },
+
+  // Audio
+  {
+    url: '/music/Nyoman Paul, Andi Rianto – The Way You Look At Me (Official Music Video).mp3',
+    size: 10180
+  },
+  {
+    url: '/effect/door-open.mp3',
+    size: 72  // 72.41KB
+  },
+  {
+    url: '/effect/woosh.mp3',
+    size: 49  // 49.04KB
+  },
 ];
 
-const TOTAL_SIZE_KB = ASSETS_TO_LOAD.reduce((sum, asset) => sum + asset.size, 0);
 
 export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSectionProps) {
   const [isDoorOpening, setIsDoorOpening] = useState(false);
   const [isScaleAnimating, setIsScaleAnimating] = useState(false);
   const [progress, setProgress] = useState(0);
-  const [loadedAssets, setLoadedAssets] = useState(0);
-  const [currentAsset, setCurrentAsset] = useState('');
-  const [downloadedKB, setDownloadedKB] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
   const [showButton, setShowButton] = useState(true);
   const playSoundEffect = (soundFile: string) => {
     const audio = new Audio(`/effect/${soundFile}`);
@@ -44,7 +66,6 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
   useEffect(() => {
     let isMounted = true;
     let loadedCount = 0;
-    let totalDownloaded = 0;
 
     const loadAsset = (asset: { url: string; size: number }): Promise<void> => {
       return new Promise((resolve) => {
@@ -56,11 +77,7 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
           img.onload = () => {
             if (isMounted) {
               loadedCount++;
-              totalDownloaded += asset.size;
-              setLoadedAssets(loadedCount);
               setProgress((loadedCount / ASSETS_TO_LOAD.length) * 100);
-              setDownloadedKB(totalDownloaded);
-              setCurrentAsset(asset.url.split('/').pop() || '');
             }
             resolve();
           };
@@ -68,10 +85,7 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
             console.warn(`Failed to load image: ${asset.url}`);
             if (isMounted) {
               loadedCount++;
-              totalDownloaded += asset.size;
-              setLoadedAssets(loadedCount);
               setProgress((loadedCount / ASSETS_TO_LOAD.length) * 100);
-              setDownloadedKB(totalDownloaded);
             }
             resolve();
           };
@@ -82,11 +96,7 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
           audio.oncanplaythrough = () => {
             if (isMounted) {
               loadedCount++;
-              totalDownloaded += asset.size;
-              setLoadedAssets(loadedCount);
               setProgress((loadedCount / ASSETS_TO_LOAD.length) * 100);
-              setDownloadedKB(totalDownloaded);
-              setCurrentAsset(asset.url.split('/').pop() || '');
             }
             resolve();
           };
@@ -94,10 +104,7 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
             console.warn(`Failed to load audio: ${asset.url}`);
             if (isMounted) {
               loadedCount++;
-              totalDownloaded += asset.size;
-              setLoadedAssets(loadedCount);
               setProgress((loadedCount / ASSETS_TO_LOAD.length) * 100);
-              setDownloadedKB(totalDownloaded);
             }
             resolve();
           };
@@ -108,11 +115,7 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
             .then(() => {
               if (isMounted) {
                 loadedCount++;
-                totalDownloaded += asset.size;
-                setLoadedAssets(loadedCount);
                 setProgress((loadedCount / ASSETS_TO_LOAD.length) * 100);
-                setDownloadedKB(totalDownloaded);
-                setCurrentAsset(asset.url.split('/').pop() || '');
               }
               resolve();
             })
@@ -120,10 +123,7 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
               console.warn(`Failed to load asset: ${asset.url}`);
               if (isMounted) {
                 loadedCount++;
-                totalDownloaded += asset.size;
-                setLoadedAssets(loadedCount);
                 setProgress((loadedCount / ASSETS_TO_LOAD.length) * 100);
-                setDownloadedKB(totalDownloaded);
               }
               resolve();
             });
@@ -136,7 +136,6 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
         await loadAsset(asset);
       }
       if (loadedCount >= ASSETS_TO_LOAD.length && isMounted) {
-        setIsLoading(false);
         setTimeout(() => {
         }, 500);
       }
@@ -164,7 +163,9 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
   const handleOpenInvitation = () => {
     onPlayMusic?.();
     setShowButton(false);
-    
+
+    trackEvent('door-open', null, 0, {});
+
     setTimeout(() => {
       setIsDoorOpening(true);
       playSoundEffect('door-open.mp3');
@@ -186,11 +187,10 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
         id='open-invitation-button'
         disabled={progress < 100}
         onClick={progress >= 100 ? handleOpenInvitation : undefined}
-        className={`relative w-full h-[50px] rounded-lg font-bold shadow-lg hover:shadow-xl transform transition-all duration-300 border-2 overflow-hidden group ${
-          progress >= 100
-            ? 'bg-gradient-to-r from-amber-100/90 to-amber-200/90 border-amber-200 hover:border-amber-200 hover:scale-105 cursor-pointer'
-            : 'bg-gradient-to-r from-amber-100/90 to-amber-200/90 border-amber-200 cursor-not-allowed'
-        }`}
+        className={`relative w-full h-[50px] rounded-lg font-bold shadow-lg hover:shadow-xl transform transition-all duration-300 border-2 overflow-hidden group ${progress >= 100
+          ? 'bg-gradient-to-r from-amber-100/90 to-amber-200/90 border-amber-200 hover:border-amber-200 hover:scale-105 cursor-pointer'
+          : 'bg-gradient-to-r from-amber-100/90 to-amber-200/90 border-amber-200 cursor-not-allowed'
+          }`}
       >
         {progress < 100 && (
           <div className="absolute inset-0 bg-amber-100 rounded-lg overflow-hidden">
@@ -210,9 +210,9 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
   );
 
   return (
-    <div 
-      className={`w-full h-[100vh] bg-white flex items-center justify-center ${scaleClasses}`} 
-      style={{ 
+    <div
+      className={`w-full h-[100vh] bg-white flex items-center justify-center ${scaleClasses}`}
+      style={{
         overflow: 'hidden',
         position: 'fixed',
         top: 0,
@@ -231,9 +231,9 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
           position: fixed;
         }
       `}</style>
-      <div 
+      <div
         className='absolute flex w-[800px] h-[700px] scale-80 xs:scale-85 sm:scale-90 md:scale-95 lg:scale-100 xl:scale-105'
-        style={{ 
+        style={{
           overflow: 'hidden',
         }}
       >

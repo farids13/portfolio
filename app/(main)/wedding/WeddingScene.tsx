@@ -15,6 +15,7 @@ import RSVPSection from './_components/RSVPSection';
 import SaveTheDateSection from './_components/SaveTheDateSection';
 import ThankYouSection from './_components/ThankYouSection';
 import WelcomeSection from './_components/WelcomeSection';
+import { trackEvent } from './_utils/tracking';
 
 function ScrollControls({ scrollY, scrollMax }: { scrollY: number; scrollMax: number }) {
   const groupRef = useRef<THREE.Group>(null);
@@ -250,6 +251,7 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
   const [scrollYPercent, setScrollYPercent] = useState(0);
   const [scrollMax, setScrollMax] = useState(1);
   const containerRef = useRef<HTMLDivElement>(null);
+  const trackedThresholds = useRef<number[]>([]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -261,7 +263,22 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
 
         setScrollY(currentScroll);
         if (maxScroll > 0) {
-          setScrollYPercent((currentScroll / maxScroll) * 100);
+          const percentage = Number(((currentScroll / maxScroll) * 100).toFixed(0));
+          const thresholds = [25, 50, 75, 100];
+          const currentThreshold = thresholds.find(
+            (threshold) =>
+              percentage >= threshold &&
+              !trackedThresholds.current.includes(threshold)
+          );
+
+          if (currentThreshold !== undefined) {
+            trackEvent('scroll_threshold', null, currentThreshold, {
+              scrollPosition: currentScroll,
+              maxScroll: maxScroll
+            });
+            trackedThresholds.current = [...trackedThresholds.current, currentThreshold];
+          }
+          setScrollYPercent(percentage);
         } else {
           setScrollYPercent(0);
         }
@@ -284,7 +301,7 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
 
   return (
     <div ref={containerRef} className={`w-full h-screen overflow-y-auto`} style={{ WebkitOverflowScrolling: 'touch' }}>
-      <div className='relative z-1 h-[250vh] md:h-[600vh] lg:h-[1100vh] xl:h-[1200vh] w-full'/>
+      <div className='relative z-1 h-[250vh] md:h-[600vh] lg:h-[1100vh] xl:h-[1200vh] w-full' />
       <MusicPlayer playMusicNow={playMusicNow} onMusicStarted={onMusicStarted} />
       <div className='h-full w-full relative z-200 pointer-events-none'>
         <div

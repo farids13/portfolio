@@ -44,10 +44,7 @@ const RSVPSection: React.FC<RSVPSectionProps> = ({ scrollY, start, end }) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedOption || !name.trim()) { return; }
-    
     setIsLoading(true);
-
-    // Ensure the selectedOption is a valid RSVPStatus
     const status = selectedOption as 'hadir' | 'tidak-hadir' | 'belum-tau';
 
     try {
