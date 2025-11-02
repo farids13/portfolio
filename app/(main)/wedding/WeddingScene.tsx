@@ -13,6 +13,7 @@ import MusicPlayer from './_components/MusicPlayer';
 import QuranSection from './_components/QuranSection';
 import RSVPSection from './_components/RSVPSection';
 import SaveTheDateSection from './_components/SaveTheDateSection';
+import CustomScrollControls from './_components/ScrollControls';
 import ThankYouSection from './_components/ThankYouSection';
 import WelcomeSection from './_components/WelcomeSection';
 import { trackEvent } from './_utils/tracking';
@@ -301,13 +302,14 @@ export default function WeddingScene({ playMusicNow = false, onMusicStarted }: W
 
   return (
     <div ref={containerRef} className={`w-full h-screen overflow-y-auto`} style={{ WebkitOverflowScrolling: 'touch' }}>
-      <div className='relative z-1 h-[250vh] md:h-[600vh] lg:h-[1100vh] xl:h-[1200vh] w-full' />
+      <div className='relative z-1 h-[400vh] md:h-[600vh] lg:h-[1100vh] xl:h-[1200vh] w-full' />
       <MusicPlayer playMusicNow={playMusicNow} onMusicStarted={onMusicStarted} />
       <div className='h-full w-full relative z-200 pointer-events-none'>
         <div
           className='fixed top-0 left-0 bg-amber-400/80 p-1 rounded-r-lg pointer-events-none h-1 z-999'
           style={{ width: `${scrollYPercent}%` }}
         />
+        <CustomScrollControls containerRef={containerRef} scrollSpeed={0.3}/>
       </div>
       <div>
         {scrollYPercent >= 0 && scrollYPercent <= 5 && (

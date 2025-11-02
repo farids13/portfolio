@@ -110,7 +110,7 @@ export default function MusicPlayer({
   }
 
   return (
-    <div className={`fixed bottom-4 right-4 z-[9999] ${className}`}>
+    <div className={`fixed bottom-4 left-4 z-[9999] ${className}`}>
       <audio
         ref={audioRef}
         preload="auto"
