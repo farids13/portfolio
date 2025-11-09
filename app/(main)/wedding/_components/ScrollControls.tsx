@@ -24,7 +24,7 @@ export default function ScrollControls({ containerRef, scrollSpeed = 5 }: Scroll
     62.5,  // 54-71% (midpoint)
     74.5,  // 69-80% (midpoint)
     83.5,  // 79-88% (midpoint)
-    89,    // 88-96% (midpoint)
+    94,    // 88-96% (midpoint)
     100   // 94-101% (midpoint)
   ], []);
 
