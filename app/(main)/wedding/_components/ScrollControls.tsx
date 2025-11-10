@@ -24,7 +24,7 @@ export default function ScrollControls({ containerRef, scrollSpeed = 5 }: Scroll
     62.5,  // 54-71% (midpoint)
     74.5,  // 69-80% (midpoint)
     83.5,  // 79-88% (midpoint)
-    94,    // 88-96% (midpoint)
+    90,    // 88-96% (midpoint)
     100   // 94-101% (midpoint)
   ], []);
 
@@ -120,7 +120,7 @@ export default function ScrollControls({ containerRef, scrollSpeed = 5 }: Scroll
 
   return (
     <div 
-      className={`fixed pointer-events-auto right-2 bottom-1/4 z-50 flex flex-col space-y-3 transition-opacity duration-300 ${
+      className={`fixed pointer-events-auto right-2 bottom-1/4 z-50 flex flex-col space-y-8 transition-opacity duration-300 ${
         isHovered ? 'opacity-100' : 'opacity-70 hover:opacity-100'
       }`}
       onMouseEnter={() => setIsHovered(true)}
