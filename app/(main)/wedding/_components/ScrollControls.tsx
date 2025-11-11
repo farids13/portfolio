@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState, useMemo } from 'react';
-import { FaChevronUp, FaChevronDown } from 'react-icons/fa';
+import { FaChevronUp, FaChevronDown, FaQuestion, FaTimes, FaHome } from 'react-icons/fa';
 
 type ScrollControlsProps = {
   containerRef: React.RefObject<HTMLDivElement | null>;
@@ -9,9 +9,24 @@ type ScrollControlsProps = {
 };
 
 export default function ScrollControls({ containerRef, scrollSpeed = 5 }: ScrollControlsProps) {
-  const [isHovered, setIsHovered] = useState(false);
+  const [showNav, setShowNav] = useState(false);
   const [currentScroll, setCurrentScroll] = useState(0);
   const isScrolling = useRef(false);
+  const navRef = useRef<HTMLDivElement>(null);
+
+  // Close nav when clicking outside
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (navRef.current && !navRef.current.contains(event.target as Node)) {
+        setShowNav(false);
+      }
+    }
+    
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   // Memoize section positions to prevent unnecessary re-renders
   const sectionPositions = useMemo(() => [
@@ -81,7 +96,6 @@ export default function ScrollControls({ containerRef, scrollSpeed = 5 }: Scroll
     isScrolling.current = true;
     const start = containerRef.current.scrollTop;
     const startTime = performance.now();
-    // Convert scrollSpeed (1-10) to duration (1000ms to 200ms)
     const duration = 1000 - (scrollSpeed * 80); // Faster with higher scrollSpeed
 
     const animateScroll = (currentTime: number) => {
@@ -114,38 +128,52 @@ export default function ScrollControls({ containerRef, scrollSpeed = 5 }: Scroll
     scrollBy(amount);
   }, [scrollBy, calculateScrollStep]);
 
-  // Check if buttons should be visible
-  const showUpButton = currentScroll > 5; // Don't show at very top
-  const showDownButton = currentScroll < 95; // Don't show at very bottom
+  const isAtBottom = currentScroll >= 95;
+  const isAtTop = currentScroll <= 5;
 
   return (
-    <div 
-      className={`fixed pointer-events-auto right-2 bottom-1/4 z-50 flex flex-col space-y-8 transition-opacity duration-300 ${
-        isHovered ? 'opacity-100' : 'opacity-70 hover:opacity-100'
-      }`}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      {showUpButton && (
+    <div ref={navRef} className="fixed right-2 sm:right-6 lg:right-8 bottom-4 scale-80 xs:scale-85 sm:scale-90 z-50 flex flex-col items-end gap-3">
+      <div 
+        className={`flex flex-col gap-10 transition-all duration-300 origin-bottom ${
+          showNav 
+            ? 'opacity-100 -translate-y-10' 
+            : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        {showNav && (
         <button
           type="button"
           onClick={() => handleScrollClick('up')}
-          className="p-2 rounded-full bg-amber-600 text-white/80 shadow-lg hover:bg-amber-700 transition-colors"
-          aria-label="Scroll up"
+          className={`p-3 rounded-full bg-amber-600/90 text-white shadow-lg hover:bg-amber-700 transition-all transform pointer-events-auto ${
+            isAtTop ? 'opacity-50 cursor-not-allowed' : 'hover:scale-110'
+          }`}
+          disabled={isAtTop}
+          aria-label="Ke atas"
         >
-          <FaChevronUp size={20} />
+          {isAtBottom ? <FaHome size={20} /> : <FaChevronUp size={20} />}
         </button>
-      )}
-      {showDownButton && (
+        )}
+        {showNav && ( 
         <button
           type="button"
           onClick={() => handleScrollClick('down')}
-          className="p-2 rounded-full bg-amber-600 text-white/80 shadow-lg hover:bg-amber-700 transition-colors"
-          aria-label="Scroll down"
+          className="p-3 rounded-full bg-amber-600/90 text-white shadow-lg hover:bg-amber-700 transition-all transform hover:scale-110 pointer-events-auto"
+          aria-label="Ke bawah"
         >
           <FaChevronDown size={20} />
         </button>
-      )}
+        )}
+      </div>
+      
+      <button
+        onClick={() => setShowNav(!showNav)}
+        className="p-3 rounded-full bg-amber-600/90 text-white shadow-lg transition-all duration-300 transform hover:scale-110 pointer-events-auto"
+        aria-label={showNav ? 'Tutup menu' : 'Bantuan navigasi'}
+      >
+        <div className={`transition-transform duration-300 ${showNav ? 'rotate-180' : 'rotate-0'}`}>
+          {showNav ? <FaTimes size={20} /> : <FaQuestion size={20} />}
+        </div>
+      </button>
     </div>
   );
 }

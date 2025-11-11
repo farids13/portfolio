@@ -10,14 +10,12 @@ const ScrollIndicator = () => {
     let scrollTimer: NodeJS.Timeout;
 
     const handleUserActivity = () => {
-      // Reset timer saat ada aktivitas
       clearTimeout(timeoutId);
       setIsVisible(false);
-      
-      // Set timeout untuk menampilkan indikator setelah 10 detik tidak ada aktivitas
+
       timeoutId = setTimeout(() => {
         setIsVisible(true);
-      }, 1000);
+      }, 8000);
     };
 
     const handleScroll = () => {
@@ -25,7 +23,7 @@ const ScrollIndicator = () => {
         setIsScrolling(true);
         setIsVisible(false);
       }
-      
+
       clearTimeout(scrollTimer);
       scrollTimer = setTimeout(() => {
         setIsScrolling(false);
@@ -37,11 +35,9 @@ const ScrollIndicator = () => {
       setIsMobile(window.innerWidth < 800);
     };
 
-    // Set initial state
     checkIfMobile();
     handleUserActivity();
 
-    // Event listeners
     window.addEventListener('resize', checkIfMobile);
     window.addEventListener('mousemove', handleUserActivity);
     window.addEventListener('scroll', handleScroll);
@@ -65,7 +61,7 @@ const ScrollIndicator = () => {
 
   // Render untuk desktop (scroll)
   const renderDesktopIndicator = () => (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mb-20">
       <span className="text-amber-600 text-sm font-medium mb-2">Scroll</span>
       <div className="w-8 h-12 border-2 border-amber-600 rounded-full flex justify-center p-1">
         <div className="w-1 h-2 bg-amber-600 rounded-full animate-scroll-pulse" />
@@ -75,11 +71,12 @@ const ScrollIndicator = () => {
 
   // Render untuk mobile (swipe)
   const renderMobileIndicator = () => (
-    <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center mb-20">
       <div className="relative w-12 h-20 flex flex-col items-center">
         <div className="animate-swipe-up">
-          <svg 
-            viewBox="0 0 24 24" 
+          <span className="text-amber-600 text-sm font-medium mb-2">Geser</span>
+          <svg
+            viewBox="0 0 24 24"
             className="w-10 h-10 text-amber-600"
             fill="currentColor"
           >
