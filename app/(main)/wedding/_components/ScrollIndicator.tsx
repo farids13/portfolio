@@ -15,7 +15,7 @@ const ScrollIndicator = () => {
 
       timeoutId = setTimeout(() => {
         setIsVisible(true);
-      }, 8000);
+      }, 12000);
     };
 
     const handleScroll = () => {
