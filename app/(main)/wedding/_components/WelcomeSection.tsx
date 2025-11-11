@@ -1,6 +1,7 @@
 import { useSearchParams } from 'next/navigation';
 import React from 'react';
 
+import ScrollIndicator from './ScrollIndicator';
 import { FadeType, useScrollAnimations } from '../_utils/scrollAnimations';
 
 interface WelcomeSectionProps {
@@ -41,6 +42,7 @@ export default function WelcomeSection({ scrollY, start, end }: WelcomeSectionPr
       className={`fixed inset-0 z-100 flex items-center justify-center p-5 pb-10 pointer-events-none`}
       style={createBackdropStyles()}
     >
+      <ScrollIndicator />
       <div
         className={`relative w-full max-w-2xl transform ease-out`}
         style={createContainerStyles(25, 0.9, 1.1)}

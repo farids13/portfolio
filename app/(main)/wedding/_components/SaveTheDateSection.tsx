@@ -75,8 +75,8 @@ const SaveTheDateSection: React.FC<SaveTheDateProps> = ({ scrollY, start, end })
                                 })}
                             </div>
                             <div className="text-left text-xs text-amber-600 mt-2">
-                                <p>06 Desember 2025 : Acara Akad Nikah</p>
-                                <p>14 Desember 2025 : Acara Resepsi</p>
+                                <p>06 Desember 2025 : Akad Nikah</p>
+                                <p>14 Desember 2025 : Resepsi</p>
                             </div>
                         </div>
                     </div>

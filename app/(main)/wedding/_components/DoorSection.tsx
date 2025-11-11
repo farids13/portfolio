@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 
 import { trackEvent } from '../_utils/tracking';
 
@@ -54,6 +54,48 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
   const [isDoorOpening, setIsDoorOpening] = useState(false);
   const [isScaleAnimating, setIsScaleAnimating] = useState(false);
   const [progress, setProgress] = useState(0);
+  
+  const LoadingText = () => {
+    const [currentText, setCurrentText] = useState('Mohon Tunggu');
+    const [dots, setDots] = useState('');
+    
+    const updateText = useCallback(() => {
+      setCurrentText(prev => {
+        if (prev === 'Mohon Tunggu') {
+          return 'Memuat Gambar';
+        }
+        if (prev === 'Memuat Gambar') {
+          return 'Memuat Audio';
+        }
+        if (prev === 'Memuat Audio') {
+          return 'Downloading';
+        }
+        return 'Mohon Tunggu';
+      });
+    }, []);
+    
+    useEffect(() => {
+      const dotsInterval = setInterval(() => {
+        setDots(prev => prev.length >= 3 ? '' : prev + '.');
+      }, 500);
+      
+      const textInterval = setInterval(updateText, 2000);
+      
+      return () => {
+        clearInterval(dotsInterval);
+        clearInterval(textInterval);
+      };
+    }, [updateText]);
+    
+    return (
+      <span className="inline-flex items-center justify-center min-w-[180px] text-center">
+        <span className="whitespace-nowrap">
+          {currentText}
+          <span className="inline-block w-4 text-left">{dots}</span>
+        </span>
+      </span>
+    );
+  };
   const [showButton, setShowButton] = useState(true);
   const playSoundEffect = (soundFile: string) => {
     const audio = new Audio(`/effect/${soundFile}`);
@@ -67,77 +109,84 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
     let isMounted = true;
     let loadedCount = 0;
 
-    const loadAsset = (asset: { url: string; size: number }): Promise<void> => {
-      return new Promise((resolve) => {
-        const isImage = asset.url.match(/\.(webp|png|jpg|jpeg)$/i);
-        const isAudio = asset.url.match(/\.(mp3|wav|ogg)$/i);
+    const loadWithTimeout = async (url: string, timeout = 5000): Promise<boolean> => {
+      try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+        const isImage = url.match(/\.(webp|png|jpg|jpeg)$/i);
+        const isAudio = url.match(/\.(mp3|wav|ogg)$/i);
 
         if (isImage) {
-          const img = new window.Image();
-          img.onload = () => {
-            if (isMounted) {
-              loadedCount++;
-              setProgress((loadedCount / ASSETS_TO_LOAD.length) * 100);
-            }
-            resolve();
-          };
-          img.onerror = () => {
-            console.warn(`Failed to load image: ${asset.url}`);
-            if (isMounted) {
-              loadedCount++;
-              setProgress((loadedCount / ASSETS_TO_LOAD.length) * 100);
-            }
-            resolve();
-          };
-          img.src = asset.url;
-        } else if (isAudio) {
-          const audio = new Audio();
-          audio.preload = 'auto';
-          audio.oncanplaythrough = () => {
-            if (isMounted) {
-              loadedCount++;
-              setProgress((loadedCount / ASSETS_TO_LOAD.length) * 100);
-            }
-            resolve();
-          };
-          audio.onerror = () => {
-            console.warn(`Failed to load audio: ${asset.url}`);
-            if (isMounted) {
-              loadedCount++;
-              setProgress((loadedCount / ASSETS_TO_LOAD.length) * 100);
-            }
-            resolve();
-          };
-          audio.src = asset.url;
-        } else {
-          // Fallback untuk file lain
-          fetch(asset.url)
-            .then(() => {
-              if (isMounted) {
-                loadedCount++;
-                setProgress((loadedCount / ASSETS_TO_LOAD.length) * 100);
-              }
-              resolve();
-            })
-            .catch(() => {
-              console.warn(`Failed to load asset: ${asset.url}`);
-              if (isMounted) {
-                loadedCount++;
-                setProgress((loadedCount / ASSETS_TO_LOAD.length) * 100);
-              }
-              resolve();
-            });
+          return new Promise((resolve) => {
+            const img = new window.Image();
+            img.onload = () => {
+              clearTimeout(timeoutId);
+              resolve(true);
+            };
+            img.onerror = () => {
+              console.warn(`Skipping image: ${url}`);
+              clearTimeout(timeoutId);
+              resolve(false);
+            };
+            img.src = url;
+          });
         }
-      });
+
+        if (isAudio) {
+          return new Promise((resolve) => {
+            const audio = new Audio();
+            audio.oncanplaythrough = () => {
+              clearTimeout(timeoutId);
+              resolve(true);
+            };
+            audio.onerror = () => {
+              console.warn(`Skipping audio: ${url}`);
+              clearTimeout(timeoutId);
+              resolve(false);
+            };
+            audio.src = url;
+          });
+        }
+
+        // Untuk tipe file lain, gunakan fetch dengan timeout
+        const response = await fetch(url, { signal: controller.signal });
+        clearTimeout(timeoutId);
+        return response.ok;
+      } catch (error) {
+        console.warn(`Skipping asset (${error instanceof Error ? error.message : 'timeout'}): ${url}`);
+        return false;
+      }
+    };
+
+    const loadAsset = async (asset: { url: string; size: number }): Promise<void> => {
+      try {
+        await loadWithTimeout(asset.url);
+      } finally {
+        if (isMounted) {
+          loadedCount++;
+          setProgress((loadedCount / ASSETS_TO_LOAD.length) * 100);
+        }
+      }
     };
 
     const loadAllAssets = async () => {
-      for (const asset of ASSETS_TO_LOAD) {
-        await loadAsset(asset);
-      }
-      if (loadedCount >= ASSETS_TO_LOAD.length && isMounted) {
-        setTimeout(() => {
-        }, 500);
+      try {
+        const importantAssets = ASSETS_TO_LOAD.filter(asset => 
+          asset.url.includes('main') || asset.url.includes('couple') || asset.url.includes('hero')
+        );
+        
+        const otherAssets = ASSETS_TO_LOAD.filter(asset => 
+          !importantAssets.includes(asset)
+        );
+        for (const asset of importantAssets) {
+          await loadAsset(asset);
+        }
+        otherAssets.forEach(asset => {
+          loadAsset(asset).catch(console.error);
+        });
+      } catch (error) {
+        console.error('Error in loadAllAssets:', error);
       }
     };
 
@@ -187,8 +236,8 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
         id='open-invitation-button'
         disabled={progress < 100}
         onClick={progress >= 100 ? handleOpenInvitation : undefined}
-        className={`relative w-full h-[50px] rounded-lg font-bold shadow-lg hover:shadow-xl transform transition-all duration-300 border-2 overflow-hidden group ${progress >= 100
-          ? 'bg-gradient-to-r from-amber-100/90 to-amber-200/90 border-amber-200 hover:border-amber-200 hover:scale-105 cursor-pointer'
+        className={`relative w-full h-[50px] rounded-lg font-bold shadow-lg hover:shadow-xl transform transition-all duration-200 border-2 overflow-hidden group ${progress >= 100
+          ? 'bg-gradient-to-r from-amber-100/90 to-amber-200/90 border-amber-200 hover:border-amber-200 hover:scale-105 cursor-pointer animate-bounce'
           : 'bg-gradient-to-r from-amber-100/90 to-amber-200/90 border-amber-200 cursor-not-allowed'
           }`}
       >
@@ -201,8 +250,12 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
           </div>
         )}
 
-        <span className={`relative z-10 drop-shadow-md font-sans tracking-wider text-lg ${progress < 100 ? 'animate-pulse text-amber-800 text-sm' : 'animate-pulse text-amber-800 '}`}>
-          {progress >= 100 ? 'Buka Undangan' : `Mohon Tunggu...`}
+        <span className={`relative z-10 drop-shadow-md font-sans tracking-wider text-lg w-full flex justify-center ${progress < 100 ? 'text-amber-800 text-sm' : 'text-amber-800 text-[16px]'}`}>
+          {progress >= 100 ? (
+            'Buka Undangan'
+          ) : (
+            <LoadingText />
+          )}
         </span>
 
       </button>
