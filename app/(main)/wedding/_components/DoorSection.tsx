@@ -110,23 +110,32 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
     let loadedCount = 0;
 
     const loadWithTimeout = async (url: string, timeout = 5000): Promise<boolean> => {
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), timeout);
+      const controller = new AbortController();
+      let timeoutId: NodeJS.Timeout | null = null;
 
+      try {
         const isImage = url.match(/\.(webp|png|jpg|jpeg)$/i);
         const isAudio = url.match(/\.(mp3|wav|ogg)$/i);
 
         if (isImage) {
-          return new Promise((resolve) => {
+          return await new Promise<boolean>((resolve) => {
+            timeoutId = setTimeout(() => {
+              console.warn(`Image load timeout: ${url}`);
+              resolve(false);
+            }, timeout);
+
             const img = new window.Image();
             img.onload = () => {
-              clearTimeout(timeoutId);
+              if (timeoutId) {
+                clearTimeout(timeoutId);
+              }
               resolve(true);
             };
             img.onerror = () => {
+              if (timeoutId) {
+                clearTimeout(timeoutId);
+              }
               console.warn(`Skipping image: ${url}`);
-              clearTimeout(timeoutId);
               resolve(false);
             };
             img.src = url;
@@ -134,26 +143,27 @@ export default function DoorSection({ onOpenComplete, onPlayMusic }: DoorSection
         }
 
         if (isAudio) {
-          return new Promise((resolve) => {
-            const audio = new Audio();
-            audio.oncanplaythrough = () => {
-              clearTimeout(timeoutId);
-              resolve(true);
-            };
-            audio.onerror = () => {
-              console.warn(`Skipping audio: ${url}`);
-              clearTimeout(timeoutId);
-              resolve(false);
-            };
-            audio.src = url;
-          });
+          // Untuk audio, gunakan fetch + timeout, jangan preload
+          const response = await fetch(url, { signal: controller.signal });
+          if (!response.ok) {
+            console.warn(`Audio fetch failed: ${url}`);
+            return false;
+          }
+          // Hanya check jika file ada, jangan load ke memory
+          return true;
         }
 
         // Untuk tipe file lain, gunakan fetch dengan timeout
+        timeoutId = setTimeout(() => controller.abort(), timeout);
         const response = await fetch(url, { signal: controller.signal });
-        clearTimeout(timeoutId);
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
         return response.ok;
       } catch (error) {
+        if (timeoutId) {
+          clearTimeout(timeoutId);
+        }
         console.warn(`Skipping asset (${error instanceof Error ? error.message : 'timeout'}): ${url}`);
         return false;
       }
